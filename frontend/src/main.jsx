@@ -8,6 +8,7 @@ import Help from "./Pages/Help.jsx";
 import Contact from "./Pages/Contact.jsx";
 import AppliedJobs from "./Pages/AppliedJobs.jsx";
 import SavedJobs from "./Pages/SavedJobs.jsx";
+import './index.css'
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
