@@ -1,15 +1,15 @@
 import React from 'react'
-import Navbar from '../Components/Navbar';
+import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer.jsx';
 
-function SavedJobs() {
+function MyApplicant() {
   return (
     <div>
       <Navbar/>
-      saved jobs
+      <div>my applicant</div>
       <Footer/>
     </div>
   )
 }
 
-export default SavedJobs;
+export default MyApplicant

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { TfiFaceSad } from "react-icons/tfi";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 function Unauthorized() {
   return (
@@ -69,6 +70,7 @@ function Unauthorized() {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }

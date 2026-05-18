@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../Components/Navbar.jsx";
+import Footer from '../Components/Footer.jsx';
 
 function Help() {
   return (
@@ -113,6 +114,7 @@ function Help() {
 
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }
