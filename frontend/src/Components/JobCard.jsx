@@ -24,7 +24,7 @@ function JobCard() {
 
   return (
     <div className="flex w-full items-center justify-center bg-gray-100 p-4">
-      <article className="w-full max-w-2xl rounded-2xl bg-gray-900 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+      <article className="w-full max-w-4xl rounded-2xl bg-gray-900 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
         <div className="flex items-start justify-between gap-4">
           <div className="flex gap-4">
             <img

@@ -27,9 +27,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route
         path="/saved-jobs"
         element={
-          <ProtectedRoute>
             <SavedJobs />
-          </ProtectedRoute>
         }
       />
       <Route

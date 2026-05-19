@@ -1,12 +1,13 @@
 import React from 'react'
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer.jsx';
+import JobCard from '../Components/JobCard.jsx';
 
 function SavedJobs() {
   return (
     <div>
       <Navbar/>
-      saved jobs
+      <JobCard/>
       <Footer/>
     </div>
   )
