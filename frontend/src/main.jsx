@@ -11,10 +11,12 @@ import SavedJobs from "./Pages/SavedJobs.jsx";
 import AboutUs from "./pages/AboutUs";
 import TechUsed from "./pages/TechUsed";
 import ProtectedRoute from "./Components/ProtectedRoute.jsx";
+import { AuthProvider } from "./Contexts/AuthContext.jsx";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
+  <AuthProvider>
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
@@ -47,5 +49,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         }
       />
     </Routes>
+    </AuthProvider>
   </BrowserRouter>,
 );

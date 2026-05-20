@@ -5,7 +5,6 @@ import JobCard from '../Components/JobCard.jsx';
 
 function AppliedJobs() {
   return (
-    
     <div>
       <Navbar/>
       <JobCard/>
