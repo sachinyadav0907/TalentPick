@@ -11,8 +11,11 @@ import SavedJobs from "./Pages/SavedJobs.jsx";
 import AboutUs from "./pages/AboutUs";
 import TechUsed from "./pages/TechUsed";
 import ProtectedRoute from "./Components/ProtectedRoute.jsx";
+import MyJobs from './Pages/MyJobs.jsx'
+import MyApplicants from "./Pages/MyApplicants.jsx"
 import { AuthProvider } from "./Contexts/AuthContext.jsx";
 import "./index.css";
+import PostJobs from "./Pages/PostJobs.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -45,6 +48,30 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         element={
           <ProtectedRoute>
             <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/my-jobs"
+        element={
+          <ProtectedRoute>
+            <MyJobs />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/my-applicants"
+        element={
+          <ProtectedRoute>
+            <MyApplicants />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/post-jobs"
+        element={
+          <ProtectedRoute>
+            <PostJobs />
           </ProtectedRoute>
         }
       />
