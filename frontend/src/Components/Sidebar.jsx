@@ -4,9 +4,13 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
+import { useAuth } from "../Contexts/AuthContext";
+import { FaRegSquarePlus } from "react-icons/fa6";
+import { IoMdExit } from "react-icons/io";
 
 function Sidebar({ isOpen, setIsOpen }) {
-  const [idName] = useState("Sachin Yadav");
+  const idName = "Sachin Yadav";
+  const tokenValue = useAuth();
 
   return (
     <div
@@ -45,37 +49,56 @@ function Sidebar({ isOpen, setIsOpen }) {
         </li>
 
         <li>
-          <Link
+          {tokenValue.role == "jobseeker"? <Link
             to="/applied-jobs"
             className="block px-3 py-2 rounded-lg text-lg font-medium hover:bg-emerald-100 transition"
             onClick={() => setIsOpen(false)}
           >
             Applied Jobs
-          </Link>
+          </Link> : <Link
+            to="/post-jobs"
+            className="flex items-center gap-1 px-3 py-2 rounded-lg text-lg font-medium hover:bg-emerald-100 transition"
+            onClick={() => setIsOpen(false)}
+          >
+            <FaRegSquarePlus className="text-xl"/> Post Jobs           
+          </Link>}
         </li>
 
         <li>
-          <Link
+          {tokenValue.role == "jobseeker" ? <Link
             to="/saved-jobs"
             className="block px-3 py-2 rounded-lg text-lg font-medium hover:bg-emerald-100 transition"
             onClick={() => setIsOpen(false)}
           >
             Saved Jobs
-          </Link>
+          </Link> : <Link
+            to="/my-applicants"
+            className="block px-3 py-2 rounded-lg text-lg font-medium hover:bg-emerald-100 transition"
+            onClick={() => setIsOpen(false)}
+          >
+            My applicants
+          </Link>}
         </li>
 
         <li>
-          <Link
+          {tokenValue.role=="jobseeker" ? <Link
             to="/help"
             className="block px-3 py-2 rounded-lg text-lg font-medium hover:bg-emerald-100 transition"
             onClick={() => setIsOpen(false)}
           >
             Help
-          </Link>
+          </Link>: <Link
+            to="/my-jobs"
+            className="block px-3 py-2 rounded-lg text-lg font-medium hover:bg-emerald-100 transition"
+            onClick={() => setIsOpen(false)}
+          >
+            My Jobs
+          </Link>}
         </li>
 
         <li>
-          <button className="w-full text-left px-3 py-2 rounded-lg text-lg font-medium hover:bg-red-100 hover:text-red-600 transition">
+          <button className=" flex items-center gap-1 w-full text-left px-3 py-2 rounded-lg text-lg font-medium hover:bg-red-100 hover:text-red-600 transition">
+            <IoMdExit className="text-2xl text-red-500"/>
             Logout
           </button>
         </li>

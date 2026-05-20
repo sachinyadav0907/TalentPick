@@ -4,10 +4,14 @@ import { useState } from "react";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { useNavigate, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
+import { useAuth } from "../Contexts/AuthContext";
+import { FaRegSquarePlus } from "react-icons/fa6";
+import { IoMdExit } from "react-icons/io";
 
 function Navbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const tokenValue = useAuth();
 
   return (
     <>
@@ -28,34 +32,63 @@ function Navbar() {
           </li>
 
           <li>
-            <Link
-              to="/applied-jobs"
-              className="text-lg font-medium hover:text-emerald-600 transition"
-            >
-              Applied Jobs
-            </Link>
+            {tokenValue.role == "jobseeker" ? (
+              <Link
+                to="/applied-jobs"
+                className="text-lg font-medium hover:text-emerald-600 transition"
+              >
+                Applied Jobs
+              </Link>
+            ) : (
+              <Link
+                to="/post-jobs"
+                className="flex items-center gap-1 text-lg font-medium hover:text-emerald-600 transition"
+              >
+                <FaRegSquarePlus className="text-xl" />
+                <span>Post Jobs</span>
+              </Link>
+            )}
           </li>
 
           <li>
-            <Link
-              to="/saved-jobs"
-              className="text-lg font-medium hover:text-emerald-600 transition"
-            >
-              Saved Jobs
-            </Link>
+            {tokenValue.role == "jobseeker" ? (
+              <Link
+                to="/saved-jobs"
+                className="text-lg font-medium hover:text-emerald-600 transition"
+              >
+                Saved Jobs
+              </Link>
+            ) : (
+              <Link
+                to="/my-applicants"
+                className="text-lg font-medium hover:text-emerald-600 transition"
+              >
+                My Applicants
+              </Link>
+            )}
           </li>
 
           <li>
-            <Link
-              to="/help"
-              className="text-lg font-medium hover:text-emerald-600 transition"
-            >
-              Help
-            </Link>
+            {tokenValue.role == "jobseeker" ? (
+              <Link
+                to="/help"
+                className="text-lg font-medium hover:text-emerald-600 transition"
+              >
+                Help
+              </Link>
+            ) : (
+              <Link
+                to="/my-jobs"
+                className="text-lg font-medium hover:text-emerald-600 transition"
+              >
+                My Jobs
+              </Link>
+            )}
           </li>
 
           <li>
-            <button className="text-lg font-medium hover:text-red-500 transition">
+            <button className="flex items-center gap-1 text-lg font-medium hover:text-red-500 transition">
+              <IoMdExit className="text-red-500 text-2xl"/>
               Logout
             </button>
           </li>
