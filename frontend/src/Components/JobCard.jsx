@@ -5,6 +5,9 @@ import { IoStarOutline } from "react-icons/io5";
 import { CiLocationOn, CiBookmark } from "react-icons/ci";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { AiOutlineThunderbolt } from "react-icons/ai";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { FaRegEdit } from "react-icons/fa";
+import { useAuth } from "../Contexts/AuthContext.jsx";
 
 function JobCard() {
   const companyTags =
@@ -21,6 +24,8 @@ function JobCard() {
     "Express",
     "JavaScript",
   ];
+
+  const tokenValue = useAuth();
 
   return (
     <div className="flex w-full items-center justify-center bg-gray-100 p-4">
@@ -55,6 +60,9 @@ function JobCard() {
             </div>
           </div>
         </div>
+        <div className="flex justify-end mt-1.5">
+        <p className="text-gray-400 text-sm">Posted 2 days ago</p>
+        </div>
 
         <div className="my-4 border-t border-gray-700"></div>
 
@@ -76,7 +84,7 @@ function JobCard() {
           </div>
 
           <p className="text-right text-sm text-gray-400">
-            Posted 2 days ago
+            120+ Applicants
           </p>
         </div>
 
@@ -108,15 +116,19 @@ function JobCard() {
         </p>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          <button className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-600 bg-gray-100 py-3 text-lg font-medium text-gray-900 transition duration-200 hover:scale-[1.02] hover:bg-white">
+          {tokenValue.role == "jobseeker" ? <button className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-600 bg-gray-100 py-3 text-lg font-medium text-gray-900 transition duration-200 hover:scale-[1.02] hover:bg-white">
             <CiBookmark className="text-2xl" />
             Save Job
-          </button>
-
-          <button className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-3 text-lg font-medium text-white transition duration-200 hover:scale-[1.02] hover:bg-blue-500">
+          </button> : <button className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-600 bg-red-700 py-3 text-lg font-medium text-gray-200 transition duration-200 hover:scale-[1.02] hover:bg-red-600">
+            <RiDeleteBin6Line className="text-2xl" />
+            Remove Job</button>}
+          {tokenValue.role == "jobseeker" ? <button className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-3 text-lg font-medium text-white transition duration-200 hover:scale-[1.02] hover:bg-blue-500">
             <AiOutlineThunderbolt className="text-2xl" />
             Apply Now
-          </button>
+          </button> : <button className="flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 py-3 text-lg font-medium text-white transition duration-200 hover:scale-[1.02] hover:bg-green-500">
+            <FaRegEdit className="text-2xl" />
+            Edit Details
+          </button> }
         </div>
       </article>
     </div>
