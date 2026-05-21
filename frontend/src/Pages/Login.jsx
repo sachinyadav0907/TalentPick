@@ -1,22 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../Components/Navbar.jsx";
-import Footer from '../Components/Footer.jsx';
+import Footer from "../Components/Footer.jsx";
 
 function Login() {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-slate-950 text-slate-100">
       <Navbar />
 
       <div className="flex items-center justify-center px-4 py-10">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+        <div className="w-full max-w-md rounded-2xl border border-white/10 bg-slate-900/80 p-8 shadow-2xl backdrop-blur-xl">
 
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-800">
+          <div className="mb-8 text-center">
+            <h1 className="text-4xl font-bold text-white">
               Welcome Back
             </h1>
 
-            <p className="text-gray-500 mt-2">
+            <p className="mt-2 text-slate-300">
               Login to continue your journey
             </p>
           </div>
@@ -26,24 +26,24 @@ function Login() {
             <div>
               <label
                 htmlFor="role"
-                className="block mb-2 font-medium text-gray-700"
+                className="mb-2 block font-medium text-slate-200"
               >
                 I'm a
               </label>
 
               <select
                 id="role"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-400"
+                className="w-full rounded-xl border border-white/10 bg-[#0B1120] px-3 py-3 text-slate-100 outline-none focus:border-violet-500"
               >
-                <option>Job Seeker</option>
-                <option>Recruiter</option>
+                <option className="bg-[#0B1120]">Job Seeker</option>
+                <option className="bg-[#0B1120]">Recruiter</option>
               </select>
             </div>
 
             <div>
               <label
                 htmlFor="email"
-                className="block mb-2 font-medium text-gray-700"
+                className="mb-2 block font-medium text-slate-200"
               >
                 Email Address
               </label>
@@ -53,14 +53,14 @@ function Login() {
                 id="email"
                 placeholder="Enter your email"
                 required
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-400"
+                className="w-full rounded-xl border border-white/10 bg-[#0B1120] px-3 py-3 text-slate-100 outline-none placeholder:text-slate-400 focus:border-violet-500"
               />
             </div>
 
             <div>
               <label
                 htmlFor="password"
-                className="block mb-2 font-medium text-gray-700"
+                className="mb-2 block font-medium text-slate-200"
               >
                 Password
               </label>
@@ -70,14 +70,14 @@ function Login() {
                 id="password"
                 placeholder="Enter your password"
                 required
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-400"
+                className="w-full rounded-xl border border-white/10 bg-[#0B1120] px-3 py-3 text-slate-100 outline-none placeholder:text-slate-400 focus:border-violet-500"
               />
             </div>
 
             <div className="flex justify-end">
               <Link
                 to="/forgot-password"
-                className="text-sm text-blue-500 hover:underline"
+                className="text-sm text-violet-400 hover:text-violet-300"
               >
                 Forgot Password?
               </Link>
@@ -85,27 +85,29 @@ function Login() {
 
             <button
               type="submit"
-              className="bg-emerald-500 text-white py-2 rounded-lg font-medium hover:bg-emerald-600 transition duration-300"
+              className="rounded-xl bg-linear-to-r from-violet-600 to-blue-600 py-3 font-medium text-white transition duration-300 hover:opacity-90"
             >
               Login
             </button>
+
           </form>
 
-          <div className="text-center mt-6">
-            <p className="text-gray-600">
+          <div className="mt-6 text-center">
+            <p className="text-slate-300">
               New here?{" "}
               <Link
                 to="/register"
-                className="text-blue-500 font-medium hover:underline"
+                className="font-medium text-violet-400 hover:text-violet-300"
               >
-               Create an account
+                Create an account
               </Link>
             </p>
           </div>
 
         </div>
       </div>
-      <Footer/>
+
+      <Footer />
     </div>
   );
 }

@@ -121,7 +121,7 @@ function JobCard() {
           )}
 
           {tokenValue.role === "jobseeker" ? (
-            <button className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3 text-lg font-medium text-white shadow-lg shadow-violet-900/30 transition-all duration-300 hover:-translate-y-1 hover:from-violet-500 hover:to-indigo-500">
+            <button className="group flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-violet-600 to-indigo-600 py-3 text-lg font-medium text-white shadow-lg shadow-violet-900/30 transition-all duration-300 hover:-translate-y-1 hover:from-violet-500 hover:to-indigo-500">
               <AiOutlineThunderbolt className="text-2xl transition-transform duration-300 group-hover:rotate-12" />
               Apply Now
             </button>

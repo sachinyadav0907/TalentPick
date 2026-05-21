@@ -6,53 +6,53 @@ import Footer from "./Footer";
 
 function Unauthorized() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-slate-950 text-slate-100">
       <Navbar />
 
       <div className="flex items-center justify-center px-4 py-10">
-        <div className="w-full max-w-xl bg-white/80 backdrop-blur-md shadow-2xl rounded-3xl p-8 sm:p-12 text-center border border-white/40">
+        <div className="w-full max-w-xl rounded-3xl border border-white/10 bg-slate-900/80 p-8 text-center shadow-2xl backdrop-blur-xl sm:p-12">
 
-          <div className="flex justify-center mb-6">
-            <div className="bg-red-100 p-5 rounded-full shadow-md">
-              <TfiFaceSad className="text-6xl text-red-500" />
+          <div className="mb-6 flex justify-center">
+            <div className="rounded-full bg-red-500/10 p-5 border border-red-500/20">
+              <TfiFaceSad className="text-6xl text-red-400" />
             </div>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-500 tracking-tight">
+          <h1 className="bg-linear-to-r from-red-400 to-pink-500 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl">
             Oops!!!!
           </h1>
 
-          <p className="mt-4 text-lg sm:text-xl text-gray-700 font-medium">
+          <p className="mt-4 text-lg font-medium text-slate-200 sm:text-xl">
             You are not logged in
           </p>
 
-          <p className="mt-3 text-gray-500 text-sm sm:text-base leading-relaxed">
+          <p className="mt-3 text-sm leading-relaxed text-slate-400 sm:text-base">
             Login or create an account to continue exploring this page
             and unlock all features.
           </p>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
             <Link
               to="/login"
-              className="px-6 py-3 rounded-xl bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold shadow-lg hover:scale-110 hover:shadow-xl transition duration-300"
+              className="rounded-xl bg-linear-to-r from-violet-600 to-blue-600 px-6 py-3 font-semibold text-white transition duration-300 hover:opacity-90 hover:scale-105"
             >
               Login
             </Link>
 
             <Link
               to="/register"
-              className="px-6 py-3 rounded-xl border border-gray-300 bg-white text-gray-700 font-semibold hover:bg-gray-100 hover:scale-110 transition duration-300"
+              className="rounded-xl border border-white/10 bg-slate-950 px-6 py-3 font-semibold text-slate-100 transition duration-300 hover:border-violet-500/30 hover:bg-slate-900 hover:scale-105"
             >
               Register
             </Link>
           </div>
 
-          <div className="mt-8 text-sm text-gray-500 space-y-2">
+          <div className="mt-8 space-y-2 text-sm text-slate-400">
             <p>
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="text-red-500 font-semibold hover:underline"
+                className="font-semibold text-violet-400 hover:text-violet-300"
               >
                 Login
               </Link>
@@ -62,15 +62,17 @@ function Unauthorized() {
               New here?{" "}
               <Link
                 to="/register"
-                className="text-pink-500 font-semibold hover:underline"
+                className="font-semibold text-pink-400 hover:text-pink-300"
               >
                 Create an account
               </Link>
             </p>
           </div>
+
         </div>
       </div>
-      <Footer/>
+
+      <Footer />
     </div>
   );
 }
