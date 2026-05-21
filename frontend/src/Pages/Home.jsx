@@ -3,6 +3,7 @@ import Navbar from '../Components/Navbar.jsx';
 import Footer from '../Components/Footer.jsx';
 import JobCard from '../Components/JobCard.jsx';
 import { useAuth } from '../Contexts/AuthContext.jsx';
+import Hero from '../Components/Hero.jsx';
 
 function Home() {
 
@@ -10,8 +11,7 @@ function Home() {
   return (
     <div>
       <Navbar/>
-      <h1>{tokenValue.role}</h1>
-      <JobCard/>
+      <Hero/>
       <Footer/>
     </div>
   )
