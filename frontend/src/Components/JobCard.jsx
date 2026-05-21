@@ -28,8 +28,8 @@ function JobCard() {
   const tokenValue = useAuth();
 
   return (
-    <div className="flex w-full items-center justify-center bg-gray-100 p-4">
-      <article className="w-full max-w-4xl rounded-2xl bg-gray-900 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+    <div className="flex w-full items-center justify-center bg-[#081028] p-4">
+      <article className="w-full max-w-4xl rounded-2xl bg-gray-800 p-5 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
         <div className="flex items-start justify-between gap-4">
           <div className="flex gap-4">
             <img
@@ -61,15 +61,13 @@ function JobCard() {
           </div>
         </div>
         <div className="flex justify-end mt-1.5">
-        <p className="text-gray-400 text-sm">Posted 2 days ago</p>
+          <p className="text-gray-300 text-sm">Posted 2 days ago</p>
         </div>
 
         <div className="my-4 border-t border-gray-700"></div>
 
         <div className="flex flex-col gap-3">
-          <h1 className="text-3xl font-bold text-white">
-            Frontend Developer
-          </h1>
+          <h1 className="text-3xl font-bold text-white">Frontend Developer</h1>
 
           <div className="flex flex-wrap gap-3">
             <div className={extraTags}>
@@ -83,17 +81,13 @@ function JobCard() {
             </div>
           </div>
 
-          <p className="text-right text-sm text-gray-400">
-            120+ Applicants
-          </p>
+          <p className="text-right text-sm text-gray-300">120+ Applicants</p>
         </div>
 
         <div className="my-4 border-t border-gray-700"></div>
 
         <div className="flex flex-col gap-3">
-          <h2 className="text-xl font-semibold text-white">
-            Skills
-          </h2>
+          <h2 className="text-xl font-semibold text-white">Skills</h2>
 
           <div className="flex gap-2 overflow-x-auto scrollbar-none">
             {skills.map((skill, index) => (
@@ -101,34 +95,42 @@ function JobCard() {
                 key={index}
                 className="whitespace-nowrap rounded-full border border-gray-600 bg-gray-800 px-4 py-1"
               >
-                <p className="text-sm text-gray-200">
-                  {skill}
-                </p>
+                <p className="text-sm text-white">{skill}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <p className="mt-4 text-sm leading-6 text-gray-300">
-          We are looking for a passionate frontend developer with
-          strong React and Tailwind CSS skills to build modern,
-          responsive, and scalable web applications.
+        <p className="mt-4 text-sm leading-6 text-gray-100">
+          We are looking for a passionate frontend developer with strong React
+          and Tailwind CSS skills to build modern, responsive, and scalable web
+          applications.
         </p>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          {tokenValue.role == "jobseeker" ? <button className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-600 bg-gray-100 py-3 text-lg font-medium text-gray-900 transition duration-200 hover:scale-[1.02] hover:bg-white">
-            <CiBookmark className="text-2xl" />
-            Save Job
-          </button> : <button className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-600 bg-red-700 py-3 text-lg font-medium text-gray-200 transition duration-200 hover:scale-[1.02] hover:bg-red-600">
-            <RiDeleteBin6Line className="text-2xl" />
-            Remove Job</button>}
-          {tokenValue.role == "jobseeker" ? <button className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-3 text-lg font-medium text-white transition duration-200 hover:scale-[1.02] hover:bg-blue-500">
-            <AiOutlineThunderbolt className="text-2xl" />
-            Apply Now
-          </button> : <button className="flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 py-3 text-lg font-medium text-white transition duration-200 hover:scale-[1.02] hover:bg-green-500">
-            <FaRegEdit className="text-2xl" />
-            Edit Details
-          </button> }
+          {tokenValue.role === "jobseeker" ? (
+            <button className="group flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/70 py-3 text-lg font-medium text-slate-200 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:bg-slate-800">
+              <CiBookmark className="text-2xl transition-transform duration-300 group-hover:scale-110" />
+              Save Job
+            </button>
+          ) : (
+            <button className="group flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 py-3 text-lg font-medium text-red-300 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-red-500/40 hover:bg-red-500/20">
+              <RiDeleteBin6Line className="text-2xl transition-transform duration-300 group-hover:scale-110" />
+              Remove Job
+            </button>
+          )}
+
+          {tokenValue.role === "jobseeker" ? (
+            <button className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3 text-lg font-medium text-white shadow-lg shadow-violet-900/30 transition-all duration-300 hover:-translate-y-1 hover:from-violet-500 hover:to-indigo-500">
+              <AiOutlineThunderbolt className="text-2xl transition-transform duration-300 group-hover:rotate-12" />
+              Apply Now
+            </button>
+          ) : (
+            <button className="group flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/10 py-3 text-lg font-medium text-emerald-300 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-emerald-500/20">
+              <FaRegEdit className="text-2xl transition-transform duration-300 group-hover:scale-110" />
+              Edit Details
+            </button>
+          )}
         </div>
       </article>
     </div>

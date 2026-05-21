@@ -15,17 +15,17 @@ function Navbar() {
 
   return (
     <>
-      <nav className="w-full h-16 flex justify-between items-center sticky top-0 z-40 bg-emerald-50 shadow-md px-3">
+      <nav className="w-full h-16 flex justify-between items-center sticky top-0 z-40 bg-slate-950 border-b border-white/10 px-3 text-slate-200">
         <AiOutlineMenuUnfold
-          className="text-4xl opacity-70 cursor-pointer sm:hidden"
+          className="text-4xl opacity-70 cursor-pointer sm:hidden hover:text-violet-400 transition"
           onClick={() => setIsOpen(true)}
         />
 
-        <ul className="hidden sm:flex gap-8 opacity-80 items-center">
+        <ul className="hidden sm:flex gap-8 opacity-90 items-center">
           <li>
             <Link
               to="/home"
-              className="text-lg font-medium hover:text-emerald-600 transition"
+              className="text-lg font-medium hover:text-violet-400 transition"
             >
               Home
             </Link>
@@ -35,14 +35,14 @@ function Navbar() {
             {tokenValue.role == "jobseeker" ? (
               <Link
                 to="/applied-jobs"
-                className="text-lg font-medium hover:text-emerald-600 transition"
+                className="text-lg font-medium hover:text-violet-400 transition"
               >
                 Applied Jobs
               </Link>
             ) : (
               <Link
                 to="/post-jobs"
-                className="flex items-center gap-1 text-lg font-medium hover:text-emerald-600 transition"
+                className="flex items-center gap-1 text-lg font-medium hover:text-violet-400 transition"
               >
                 <FaRegSquarePlus className="text-xl" />
                 <span>Post Jobs</span>
@@ -54,14 +54,14 @@ function Navbar() {
             {tokenValue.role == "jobseeker" ? (
               <Link
                 to="/saved-jobs"
-                className="text-lg font-medium hover:text-emerald-600 transition"
+                className="text-lg font-medium hover:text-violet-400 transition"
               >
                 Saved Jobs
               </Link>
             ) : (
               <Link
                 to="/my-applicants"
-                className="text-lg font-medium hover:text-emerald-600 transition"
+                className="text-lg font-medium hover:text-violet-400 transition"
               >
                 My Applicants
               </Link>
@@ -72,14 +72,14 @@ function Navbar() {
             {tokenValue.role == "jobseeker" ? (
               <Link
                 to="/help"
-                className="text-lg font-medium hover:text-emerald-600 transition"
+                className="text-lg font-medium hover:text-violet-400 transition"
               >
                 Help
               </Link>
             ) : (
               <Link
                 to="/my-jobs"
-                className="text-lg font-medium hover:text-emerald-600 transition"
+                className="text-lg font-medium hover:text-violet-400 transition"
               >
                 My Jobs
               </Link>
@@ -87,8 +87,8 @@ function Navbar() {
           </li>
 
           <li>
-            <button className="flex items-center gap-1 text-lg font-medium hover:text-red-500 transition">
-              <IoMdExit className="text-red-500 text-2xl"/>
+            <button className="flex items-center gap-1 text-lg font-medium text-slate-300 hover:text-red-400 transition">
+              <IoMdExit className="text-red-400 text-2xl" />
               Logout
             </button>
           </li>
