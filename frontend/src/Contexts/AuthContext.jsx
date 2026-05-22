@@ -5,7 +5,7 @@ const AuthContext = createContext();
 
  export const AuthProvider =({children})=>{
   const token = localStorage.getItem("token");
-  const tokenValue = jwtDecode(token);
+  const tokenValue = {role:"jobseeker"};
    return (
     <AuthContext.Provider value={tokenValue}>
       {children}
