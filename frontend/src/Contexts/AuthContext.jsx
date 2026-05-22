@@ -5,7 +5,7 @@ const AuthContext = createContext();
 
  export const AuthProvider =({children})=>{
   const token = localStorage.getItem("token");
-  const tokenValue = {role:"jobseeker"};
+  const tokenValue = {role:"recruiter"};
    return (
     <AuthContext.Provider value={tokenValue}>
       {children}
@@ -13,4 +13,4 @@ const AuthContext = createContext();
   );
  }
 
- export const useAuth = () => useContext(AuthContext);
+ export const useAuth = () => useContext(AuthContext);  

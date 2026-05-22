@@ -71,10 +71,10 @@ function Navbar() {
           <li>
             {tokenValue.role == "jobseeker" ? (
               <Link
-                to="/help"
+                to="/profile"
                 className="text-lg font-medium hover:text-violet-400 transition"
               >
-                Help
+                Profile
               </Link>
             ) : (
               <Link

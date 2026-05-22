@@ -17,7 +17,7 @@ function Footer() {
   return (
     <footer className="w-full bg-slate-900 border-t border-slate-700 px-6 py-10">
       <div className="max-w-7xl mx-auto flex flex-wrap justify-between gap-10">
-        <div className="max-w-sm">
+        <div className="hidden sm:block max-w-sm ">
           <img
             src="/tplogo.png"
             alt="Talent Pick Logo"

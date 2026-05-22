@@ -2,4 +2,6 @@
 
 @theme{
   --breakpoint-sm : 50rem;
+  --breakpoint-own : 25rem;
+  --breakpoint-dsm : 40rem;
 }

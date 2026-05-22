@@ -46,9 +46,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route
         path="/profile"
         element={
-          <ProtectedRoute>
             <Profile />
-          </ProtectedRoute>
         }
       />
       <Route
