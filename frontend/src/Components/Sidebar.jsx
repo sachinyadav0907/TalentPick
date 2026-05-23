@@ -1,12 +1,9 @@
-// Sidebar.jsx
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import { useAuth } from "../Contexts/AuthContext";
 import { FaRegSquarePlus } from "react-icons/fa6";
-import { IoMdExit } from "react-icons/io";
 
 function Sidebar({ isOpen, setIsOpen }) {
   const idName = "Sachin Yadav";
@@ -109,12 +106,6 @@ function Sidebar({ isOpen, setIsOpen }) {
       )}
     </li>
 
-    <li>
-      <button className="flex items-center gap-1 w-full text-left px-3 py-2 rounded-lg text-lg font-medium text-slate-300 hover:bg-red-500/10 hover:text-red-400 transition">
-        <IoMdExit className="text-2xl text-red-400" />
-        Logout
-      </button>
-    </li>
   </ul>
 </div>
   );

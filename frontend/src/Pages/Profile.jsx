@@ -10,6 +10,7 @@ import {
   FaGlobe,
 } from "react-icons/fa";
 import { useAuth } from "../Contexts/AuthContext.jsx";
+import { IoMdExit } from "react-icons/io";
 
 function Profile() {
   const isRecruiter = useAuth();
@@ -152,6 +153,10 @@ function Profile() {
                     </a>
                   </div>
                 </div>
+                <button className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2">
+  <IoMdExit className="text-xl" />
+  Logout
+</button>
               </div>
             ) : (
               <div className="flex flex-col gap-8">
@@ -214,10 +219,15 @@ function Profile() {
                     www.technova.com
                   </a>
                 </div>
+                <button className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2">
+  <IoMdExit className="text-xl" />
+  Logout
+</button>
               </div>
             )}
           </div>
         </div>
+        
       </div>
 
       <Footer />
