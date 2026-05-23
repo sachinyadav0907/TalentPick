@@ -10,7 +10,7 @@ import { IoMdExit } from "react-icons/io";
 
 function Sidebar({ isOpen, setIsOpen }) {
   const idName = "Sachin Yadav";
-  const tokenValue = useAuth();
+  const isRecruiter = useAuth();
 
   return (
     <div
@@ -49,7 +49,7 @@ function Sidebar({ isOpen, setIsOpen }) {
     </li>
 
     <li>
-      {tokenValue.role == "jobseeker" ? (
+      {!isRecruiter ? (
         <Link
           to="/applied-jobs"
           className="block px-3 py-2 rounded-lg text-lg font-medium hover:bg-slate-800 hover:text-violet-400 transition"
@@ -70,7 +70,7 @@ function Sidebar({ isOpen, setIsOpen }) {
     </li>
 
     <li>
-      {tokenValue.role == "jobseeker" ? (
+      {!isRecruiter ? (
         <Link
           to="/saved-jobs"
           className="block px-3 py-2 rounded-lg text-lg font-medium hover:bg-slate-800 hover:text-violet-400 transition"
@@ -90,7 +90,7 @@ function Sidebar({ isOpen, setIsOpen }) {
     </li>
 
     <li>
-      {tokenValue.role == "jobseeker" ? (
+      {!isRecruiter ? (
         <Link
           to="/help"
           className="block px-3 py-2 rounded-lg text-lg font-medium hover:bg-slate-800 hover:text-violet-400 transition"

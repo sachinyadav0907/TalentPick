@@ -25,7 +25,7 @@ function JobCard() {
     "JavaScript",
   ];
 
-  const tokenValue = useAuth();
+  const isRecruiter = useAuth();
 
   return (
     <div className="flex w-full items-center justify-center bg-[#081028] p-4">
@@ -108,7 +108,7 @@ function JobCard() {
         </p>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          {tokenValue.role === "jobseeker" ? (
+          {!isRecruiter ? (
             <button className="group flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/70 py-3 text-lg font-medium text-slate-200 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:bg-slate-800">
               <CiBookmark className="text-2xl transition-transform duration-300 group-hover:scale-110" />
               Save Job
@@ -120,7 +120,7 @@ function JobCard() {
             </button>
           )}
 
-          {tokenValue.role === "jobseeker" ? (
+          {!isRecruiter ? (
             <button className="group flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-violet-600 to-indigo-600 py-3 text-lg font-medium text-white shadow-lg shadow-violet-900/30 transition-all duration-300 hover:-translate-y-1 hover:from-violet-500 hover:to-indigo-500">
               <AiOutlineThunderbolt className="text-2xl transition-transform duration-300 group-hover:rotate-12" />
               Apply Now

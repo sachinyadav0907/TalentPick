@@ -1,5 +1,3 @@
-// Navbar.jsx
-
 import { useState } from "react";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { useNavigate, Link } from "react-router-dom";
@@ -11,8 +9,7 @@ import { IoMdExit } from "react-icons/io";
 function Navbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const tokenValue = useAuth();
-
+  const isRecruiter = useAuth();
   return (
     <>
       <nav className="w-full h-16 flex justify-between items-center sticky top-0 z-40 bg-slate-950 border-b border-white/10 px-3 text-slate-200">
@@ -32,7 +29,7 @@ function Navbar() {
           </li>
 
           <li>
-            {tokenValue.role == "jobseeker" ? (
+            {!isRecruiter ? (
               <Link
                 to="/applied-jobs"
                 className="text-lg font-medium hover:text-violet-400 transition"
@@ -51,7 +48,7 @@ function Navbar() {
           </li>
 
           <li>
-            {tokenValue.role == "jobseeker" ? (
+            {!isRecruiter ? (
               <Link
                 to="/saved-jobs"
                 className="text-lg font-medium hover:text-violet-400 transition"
@@ -69,7 +66,7 @@ function Navbar() {
           </li>
 
           <li>
-            {tokenValue.role == "jobseeker" ? (
+            {!isRecruiter ? (
               <Link
                 to="/profile"
                 className="text-lg font-medium hover:text-violet-400 transition"
@@ -86,12 +83,16 @@ function Navbar() {
             )}
           </li>
 
-          <li>
-            <button className="flex items-center gap-1 text-lg font-medium text-slate-300 hover:text-red-400 transition">
-              <IoMdExit className="text-red-400 text-2xl" />
-              Logout
-            </button>
-          </li>
+          
+
+          
+            {isRecruiter && <li><Link
+                to="/profile"
+                className="text-lg font-medium hover:text-violet-400 transition"
+              >
+                Profile
+              </Link></li>}
+          
         </ul>
 
         <img

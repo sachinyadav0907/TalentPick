@@ -12,8 +12,7 @@ import {
 import { useAuth } from "../Contexts/AuthContext.jsx";
 
 function Profile() {
-  const tokenValue = useAuth();
-  const isRecruiter = tokenValue?.role === "recruiter";
+  const isRecruiter = useAuth();
 
   return (
     <div className="w-full min-h-screen bg-slate-950 flex flex-col">
@@ -37,7 +36,7 @@ function Profile() {
           </div>
 
           <div className="pt-20 sm:pt-24 px-5 sm:px-10 pb-8">
-            ]{" "}
+            {" "}
             {!isRecruiter ? (
               <div className="flex flex-col gap-8">
                 <div className="text-center sm:text-left">

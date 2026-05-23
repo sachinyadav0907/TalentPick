@@ -4,10 +4,13 @@ import { FaRegSquarePlus } from "react-icons/fa6";
 import { GiHandBag } from "react-icons/gi";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { ImOffice } from "react-icons/im";
+import { useAuth } from '../Contexts/AuthContext.jsx';
 
 
 function Hero() {
-  const tokenValue = {role:"jobseeer"};
+
+  const isRecruiter = useAuth();
+
   return (
     <section className="min-h-screen bg-linear-to-br from-[#020617] via-[#050816] to-[#020617] text-white overflow-hidden">
   <div className="max-w-7xl mx-auto px-6 lg:px-16 py-12">
@@ -18,25 +21,25 @@ function Hero() {
         
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/20 bg-violet-500/10 text-violet-300 text-sm mb-6">
           <span className="h-2 w-2 rounded-full bg-violet-400"></span>
-          {tokenValue.role == "jobseeker" ? "Find. Apply. Grow." : "Post. Manage. Hire"}
+          {!isRecruiter ? "Find. Apply. Grow." : "Post. Manage. Hire"}
         </div>
 
         <h1 className="text-5xl sm:text-6xl font-bold leading-tight">
-          {tokenValue.role == "jobseeker" ? "Discover " :"Build Your "}
+          {!isRecruiter ? "Discover " :"Build Your "}
           <span className="bg-linear-to-r from-violet-400 to-blue-500 bg-clip-text text-transparent">
-           {tokenValue.role=="jobseeker" ? "Opportunities" : "Team"}
+           {!isRecruiter ? "Opportunities" : "Team"}
           </span>
           <br />
-          {tokenValue.role=="jobseeker" ? "That Matches " : "With The "}
-          <span className="bg-linear-to-r from-blue-400 to-violet-500 bg-clip-text text-transparent">{tokenValue.role=="jobseeker" ? "Your Skills." : "Right People"}
+          {!isRecruiter ? "That Matches " : "With The "}
+          <span className="bg-linear-to-r from-blue-400 to-violet-500 bg-clip-text text-transparent">{!isRecruiter? "Your Skills." : "Right People"}
           </span>
         </h1>
 
         <p className="mt-6 text-slate-300 text-lg leading-8 max-w-xl">
-          {tokenValue.role == "jobseeker" ? "Connect with top recruiters, apply instantly, and take the next step in your career journey." : "Simplify your hiring process and discover talented professionals ready to join your company."}
+          {!isRecruiter ? "Connect with top recruiters, apply instantly, and take the next step in your career journey." : "Simplify your hiring process and discover talented professionals ready to join your company."}
         </p>
 
-        {tokenValue.role=="jobseeker" && <div className="mt-8 flex flex-col sm:flex-row gap-4">
+        {!isRecruiter && <div className="mt-8 flex flex-col sm:flex-row gap-4">
           
           <input
             type="text"
@@ -52,7 +55,7 @@ function Hero() {
 
         <div className="mt-6 flex flex-wrap gap-4">
           
-          {tokenValue.role=="jobseeker" ? <Link to="/explore-jobs" className="rounded-xl bg-linear-to-r from-violet-600 to-blue-600 px-6 py-3 font-medium transition hover:opacity-90">
+          {!isRecruiter ? <Link to="/explore-jobs" className="rounded-xl bg-linear-to-r from-violet-600 to-blue-600 px-6 py-3 font-medium transition hover:opacity-90">
             Explore Jobs
           </Link> : <Link to="/post-jobs" className="flex justify-center items-center gap-1 rounded-xl bg-linear-to-r from-violet-600 to-blue-600 px-6 py-3 font-medium transition hover:opacity-90">
           <FaRegSquarePlus className='text-lg'/>Post Jobs
