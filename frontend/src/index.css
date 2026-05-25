@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
 @theme{
-  --breakpoint-sm : 50rem;
+  --breakpoint-ownNav : 50rem;
   --breakpoint-own : 25rem;
 }

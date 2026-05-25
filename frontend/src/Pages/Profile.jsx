@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../Components/Navbar.jsx";
 import Footer from "../Components/Footer.jsx";
+import { Link } from "react-router-dom";
 import {
   FaGithub,
   FaLinkedin,
@@ -22,10 +23,10 @@ function Profile() {
       <div className="flex justify-center items-center p-4 sm:p-6 flex-1">
         <div className="w-full max-w-5xl bg-slate-900 rounded-3xl shadow-lg border border-slate-800 overflow-hidden">
           <div className="h-40 sm:h-52 bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 relative">
-            <button className="absolute top-4 right-4 bg-slate-950/80 hover:bg-slate-800 transition px-4 py-2 rounded-xl text-white flex items-center gap-2">
+            <Link to="/edit-profile" className="absolute top-4 right-4 bg-slate-950/80 hover:bg-slate-800 transition px-4 py-2 rounded-xl text-white flex items-center gap-2">
               <FaEdit />
               Edit
-            </button>
+            </Link>
 
             <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 sm:left-10 sm:translate-x-0">
               <img

@@ -16,6 +16,7 @@ import MyApplicants from "./Pages/MyApplicants.jsx"
 import { AuthProvider } from "./Contexts/AuthContext.jsx";
 import "./index.css";
 import PostJobs from "./Pages/PostJobs.jsx";
+import EditProfile from "./Pages/EditProfile.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/contact-us" element={<Contact />} />
       <Route path="/about-us" element={<AboutUs />} />
       <Route path="/tech-used" element={<TechUsed />} />
+      <Route path="/edit-profile" element={<EditProfile />} />
       <Route
         path="/saved-jobs"
         element={
@@ -68,9 +70,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route
         path="/post-jobs"
         element={
-          <ProtectedRoute>
             <PostJobs />
-          </ProtectedRoute>
         }
       />
     </Routes>
