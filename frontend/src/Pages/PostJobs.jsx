@@ -16,7 +16,7 @@ function PostJob() {
 
       <div className="flex-1 flex justify-center items-center px-4 py-8 sm:px-6 lg:px-8">
         <div className="w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden">
-          <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 px-6 sm:px-10 py-8">
+          <div className="bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 px-6 sm:px-10 py-8">
             <h1 className="text-3xl sm:text-4xl font-bold text-white">
               Post a Job
             </h1>
@@ -146,6 +146,7 @@ function PostJob() {
               <button className="w-full sm:w-fit bg-indigo-600 hover:bg-indigo-500 transition px-8 py-3 rounded-xl text-white font-semibold">
                 Publish Job
               </button>
+
 
             </div>
           </div>
