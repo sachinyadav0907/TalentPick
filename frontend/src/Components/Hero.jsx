@@ -9,7 +9,7 @@ import { useAuth } from '../Contexts/AuthContext.jsx';
 
 function Hero() {
 
-  const isRecruiter = useAuth();
+  const {user, isRecruiter} = useAuth();
 
   return (
     <section className="min-h-screen bg-linear-to-br from-[#020617] via-[#050816] to-[#020617] text-white overflow-hidden">

@@ -13,7 +13,7 @@ import {
 import { useAuth } from "../Contexts/AuthContext.jsx";
 
 function EditProfile() {
-  const isRecruiter = useAuth();
+  const {user, isRecruiter} = useAuth();
 
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col">
@@ -21,7 +21,7 @@ function EditProfile() {
 
       <div className="flex-1 flex justify-center items-center px-4 py-8 sm:px-6 lg:px-8">
         <div className="w-full max-w-5xl bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden">
-          <div className="h-36 sm:h-44 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 relative">
+          <div className="h-36 sm:h-44 bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 relative">
             <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 sm:left-10 sm:translate-x-0">
               <div className="relative">
                 <img

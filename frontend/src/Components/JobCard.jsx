@@ -25,7 +25,7 @@ function JobCard() {
     "JavaScript",
   ];
 
-  const isRecruiter = useAuth();
+  const {user, isRecruiter} = useAuth();
 
   return (
     <div className="flex w-full items-center justify-center bg-[#081028] p-4">

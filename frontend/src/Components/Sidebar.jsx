@@ -7,7 +7,7 @@ import { FaRegSquarePlus } from "react-icons/fa6";
 
 function Sidebar({ isOpen, setIsOpen }) {
   const idName = "Sachin Yadav";
-  const isRecruiter = useAuth();
+  const {user, isRecruiter} = useAuth();
 
   return (
     <div

@@ -9,7 +9,7 @@ import { IoMdExit } from "react-icons/io";
 function Navbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const isRecruiter = useAuth();
+  const {user, isRecruiter} = useAuth();
   return (
     <>
       <nav className="w-full h-16 flex justify-between items-center sticky top-0 z-40 bg-slate-950 border-b border-white/10 px-3 text-slate-200">

@@ -42,13 +42,13 @@ function Login() {
 
   const formSubmit = async (data) => {
     try {
-      const useerInfo = await axios.post("http://localhost:5000/auth/login", data,{
+      const userInfo = await axios.post("http://localhost:5000/auth/login", data,{
         withCredentials: true,
         headers:{
           "Content-Type": "application/json"
         }
       });
-      console.log(useerInfo);
+      localStorage.setItem("userInfo", JSON.stringify(userInfo.data.payload));
     } catch (error) {
       console.log(error.message);
     }

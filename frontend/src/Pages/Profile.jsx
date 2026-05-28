@@ -12,9 +12,23 @@ import {
 } from "react-icons/fa";
 import { useAuth } from "../Contexts/AuthContext.jsx";
 import { IoMdExit } from "react-icons/io";
+import axios from "axios";
 
 function Profile() {
-  const isRecruiter = useAuth();
+  const {user, isRecruiter} = useAuth();
+
+  const handleLogout = async()=>{
+    try {
+      await axios.get("http://localhost:5000/auth/logout",
+        {
+          withCredentials:true
+        }
+      );
+      localStorage.clear();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   return (
     <div className="w-full min-h-screen bg-slate-950 flex flex-col">
@@ -23,7 +37,10 @@ function Profile() {
       <div className="flex justify-center items-center p-4 sm:p-6 flex-1">
         <div className="w-full max-w-5xl bg-slate-900 rounded-3xl shadow-lg border border-slate-800 overflow-hidden">
           <div className="h-40 sm:h-52 bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 relative">
-            <Link to="/edit-profile" className="absolute top-4 right-4 bg-slate-950/80 hover:bg-slate-800 transition px-4 py-2 rounded-xl text-white flex items-center gap-2">
+            <Link
+              to="/edit-profile"
+              className="absolute top-4 right-4 bg-slate-950/80 hover:bg-slate-800 transition px-4 py-2 rounded-xl text-white flex items-center gap-2"
+            >
               <FaEdit />
               Edit
             </Link>
@@ -154,10 +171,10 @@ function Profile() {
                     </a>
                   </div>
                 </div>
-                <button className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2">
-  <IoMdExit className="text-xl" />
-  Logout
-</button>
+                <button className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2" onClick={handleLogout}>
+                  <IoMdExit className="text-xl" />
+                  Logout
+                </button>
               </div>
             ) : (
               <div className="flex flex-col gap-8">
@@ -220,15 +237,14 @@ function Profile() {
                     www.technova.com
                   </a>
                 </div>
-                <button className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2">
-  <IoMdExit className="text-xl" />
-  Logout
-</button>
+                <button className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2" onClick={handleLogout}>
+                  <IoMdExit className="text-xl" />
+                  Logout
+                </button>
               </div>
             )}
           </div>
         </div>
-        
       </div>
 
       <Footer />
