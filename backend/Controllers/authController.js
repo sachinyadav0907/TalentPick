@@ -80,3 +80,18 @@ export const logout = (req,res)=>{
 });
 return res.status(200).json({message: "logged out successfully"});
 }
+
+export const verifyUser = async(req, res)=>{
+  try {
+    const userData = await User.findById(req.user.id).select("fullName email");
+    const payload = {
+      id: req.user.id,
+      fullName: userData.fullName,
+      email: userData.email,
+      role: req.user.role
+    }
+      return res.status(200).json({payload, message : "User is authenticated"})
+  } catch (error) {
+    return res.status(500).json({message: error.message});
+  }
+};

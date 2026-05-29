@@ -1,3 +1,5 @@
+import verifyToken from "../Utility/verifyToken.js"
+
 export const protectMiddleware = (req, res, next) => {
   try {
     const token = req.cookies.token;
