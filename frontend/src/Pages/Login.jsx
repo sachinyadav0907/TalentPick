@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar.jsx";
 import Footer from "../Components/Footer.jsx";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FiEyeOff } from "react-icons/fi";
 import { FiEye } from "react-icons/fi";
 import axios from "axios";
+import { useAuth } from "../Contexts/AuthContext.jsx";
 
 const loginSchema = z.object({
   role: z.enum(["jobseeker", "recruiter"], {
@@ -28,7 +29,9 @@ const loginSchema = z.object({
 });
 
 function Login() {
-  const [eyeOpen, setEyeOpen] = useState(true);
+  const navigate = useNavigate();
+  const {setIsLogin, setUser} = useAuth();
+  const [eyeOpen, setEyeOpen] = useState(false);
   const eyeToggle = () => {
     setEyeOpen(!eyeOpen);
   };
@@ -40,17 +43,21 @@ function Login() {
     resolver: zodResolver(loginSchema),
   });
 
+
   const formSubmit = async (data) => {
     try {
-      const userInfo = await axios.post("http://localhost:5000/auth/login", data,{
+      const response = await axios.post("http://localhost:5000/auth/login", data,{
         withCredentials: true,
         headers:{
           "Content-Type": "application/json"
         }
       });
-      localStorage.setItem("userInfo", JSON.stringify(userInfo.data.payload));
+      localStorage.setItem("userInfo", JSON.stringify(response.data.payload));
+      setIsLogin(true);
+      setUser(response.data.payload)
+      navigate("/home");
     } catch (error) {
-      console.log(error.message);
+      console.log(error.response?.data?.message || "something went wrong");
     }
   };
 
@@ -163,7 +170,7 @@ function Login() {
 
             <button
               type="submit"
-              className="rounded-xl bg-linear-to-r from-violet-600 to-blue-600 py-3 font-medium text-white transition duration-300 hover:opacity-90"
+              className="rounded-xl bg-linear-to-r from-violet-600 to-blue-600 py-3 font-medium text-white transition duration-300 hover:opacity-90 focus:scale-95 active:scale-95"
             >
               Login
             </button>

@@ -1,9 +1,11 @@
+import { useAuth } from "../Contexts/AuthContext";
 import Unauthorized from "./Unauthorized";
 
 export default function ProtectedRoute({ children }) {
-  const token = localStorage.getItem("token");
 
-  if (!token) {
+  const {isLogin} = useAuth();
+
+  if (!isLogin) {
     return <Unauthorized/>
   }
 

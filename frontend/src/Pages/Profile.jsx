@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../Components/Navbar.jsx";
 import Footer from "../Components/Footer.jsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaGithub,
   FaLinkedin,
@@ -15,7 +15,8 @@ import { IoMdExit } from "react-icons/io";
 import axios from "axios";
 
 function Profile() {
-  const {user, isRecruiter} = useAuth();
+  const {setIsLogin , user, isRecruiter} = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = async()=>{
     try {
@@ -25,6 +26,8 @@ function Profile() {
         }
       );
       localStorage.clear();
+      navigate("/login");
+      setIsLogin(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -171,7 +174,7 @@ function Profile() {
                     </a>
                   </div>
                 </div>
-                <button className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2" onClick={handleLogout}>
+                <button className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2 active:scale-95 focus:scale-95" onClick={handleLogout}>
                   <IoMdExit className="text-xl" />
                   Logout
                 </button>
@@ -237,7 +240,7 @@ function Profile() {
                     www.technova.com
                   </a>
                 </div>
-                <button className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2" onClick={handleLogout}>
+                <button className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2 active:scale-95 focus:scale-95" onClick={handleLogout}>
                   <IoMdExit className="text-xl" />
                   Logout
                 </button>
