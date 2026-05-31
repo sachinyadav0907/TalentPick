@@ -9,6 +9,7 @@ import { FiEyeOff } from "react-icons/fi";
 import { FiEye } from "react-icons/fi";
 import axios from "axios";
 import { useAuth } from "../Contexts/AuthContext.jsx";
+import toast from "react-hot-toast";
 
 const loginSchema = z.object({
   role: z.enum(["jobseeker", "recruiter"], {
@@ -30,7 +31,7 @@ const loginSchema = z.object({
 
 function Login() {
   const navigate = useNavigate();
-  const {setIsLogin, setUser} = useAuth();
+  const { setIsLogin, setUser } = useAuth();
   const [eyeOpen, setEyeOpen] = useState(false);
   const eyeToggle = () => {
     setEyeOpen(!eyeOpen);
@@ -43,22 +44,32 @@ function Login() {
     resolver: zodResolver(loginSchema),
   });
 
+  const loginHandler = async (data) => {
+    try{
+    const loginPromise = axios.post("http://localhost:5000/auth/login", data, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  const formSubmit = async (data) => {
-    try {
-      const response = await axios.post("http://localhost:5000/auth/login", data,{
-        withCredentials: true,
-        headers:{
-          "Content-Type": "application/json"
-        }
-      });
-      localStorage.setItem("userInfo", JSON.stringify(response.data.payload));
-      setIsLogin(true);
-      setUser(response.data.payload)
-      navigate("/home");
+    const response = await toast.promise(loginPromise,{
+      loading : "Logging in .....",
+      success: (response)=> response.data.message,
+      error : (err) => err.response?.data?.message || "login Failed" 
+    })
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify(response.data.payload),
+        );
+        toast.success("yeah working")
+        setIsLogin(true);
+        setUser(response.data.payload);
+        navigate("/home");
+      
     } catch (error) {
-      console.log(error.response?.data?.message || "something went wrong");
-    }
+        console.log(error.response?.data?.message || "something went wrong");
+      }
   };
 
   return (
@@ -77,7 +88,7 @@ function Login() {
 
           <form
             className="flex flex-col gap-5"
-            onSubmit={handleSubmit(formSubmit)}
+            onSubmit={handleSubmit(loginHandler)}
           >
             <div>
               <label

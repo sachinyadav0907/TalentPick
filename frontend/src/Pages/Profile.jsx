@@ -13,6 +13,8 @@ import {
 import { useAuth } from "../Contexts/AuthContext.jsx";
 import { IoMdExit } from "react-icons/io";
 import axios from "axios";
+import toast from "react-hot-toast";
+import { success } from "zod";
 
 function Profile() {
   const {setIsLogin , user, isRecruiter} = useAuth();
@@ -20,14 +22,19 @@ function Profile() {
 
   const handleLogout = async()=>{
     try {
-      await axios.get("http://localhost:5000/auth/logout",
+      const logoutPromise = axios.get("http://localhost:5000/auth/logout",
         {
           withCredentials:true
         }
       );
+      await toast.promise(logoutPromise, {
+        loading: "Logging Out....",
+        success : (res)=> res.data.message,
+        error : (err) => err.res?.data?.message
+      })
       localStorage.clear();
-      navigate("/login");
       setIsLogin(false);
+      navigate("/login");
     } catch (error) {
       console.log(error.message);
     }

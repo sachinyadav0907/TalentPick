@@ -18,9 +18,22 @@ import "./index.css";
 import PostJobs from "./Pages/PostJobs.jsx";
 import EditProfile from "./Pages/EditProfile.jsx";
 import GuestRoute from "./Components/GuestRoute.jsx";
+import { Toaster } from "react-hot-toast";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
+    <Toaster
+    position="top-right"
+      toastOptions={{
+        style: {
+          background: "#34295c",
+          color: "#fff",
+          border: "1px solid #27272a",
+          zIndex: "1000"
+        },
+        duration: 3000,
+      }}
+    />
     <AuthProvider>
       <Routes>
         <Route path="/" element={<Home />} />

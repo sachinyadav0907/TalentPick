@@ -11,7 +11,7 @@ export const register = async (req, res) => {
     const { fullName, email, password, role } = req.body;
     const alreadyUser = await User.findOne({ email });
     if (alreadyUser) {
-      return res.status(409).json({ message: "Username already exist" });
+      return res.status(409).json({message: "Username already exist" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -36,7 +36,7 @@ export const register = async (req, res) => {
       sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.status(201).json({payload, Message: "Regitered successfully" });
+    res.status(201).json({payload, message: "Regitered successfully" });
   } catch (error) {
     res.status(500).json({ message: error });
   }
@@ -66,7 +66,7 @@ export const login = async (req, res) => {
       sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.status(200).json({ payload, Message: "Logged in successfully" });
+    res.status(200).json({ payload, message: "Logged in successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

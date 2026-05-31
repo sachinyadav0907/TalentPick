@@ -9,6 +9,7 @@ import { FiEyeOff } from "react-icons/fi";
 import { FiEye } from "react-icons/fi";
 import axios from "axios";
 import { useAuth } from "../Contexts/AuthContext.jsx";
+import toast from "react-hot-toast";
 
 const registerSchema = z
   .object({
@@ -55,15 +56,20 @@ function Register() {
 
   const handleRegister = async (data) => {
     try {
-      const response = await axios.post("http://localhost:5000/auth/register",data, {
+      const registerPromise = axios.post("http://localhost:5000/auth/register",data, {
         withCredentials:true
       });
+      const response = await toast.promise(registerPromise, {
+        loading: "Registering User",
+        success: (res)=> res.data.message,
+        error : (err)=> err.res?.data?.message
+      })
       localStorage.setItem("userInfo", JSON.stringify(response.data.payload));
       setIsLogin(true);
       setUser(response.data.payload);
-      Navigate("/")
+      Navigate("/");
     } catch (error) {
-      console.log(error.message);
+      console.log(error.response?.data?.message || "something went wrong");
     }
   };
   return (
