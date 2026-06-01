@@ -46,7 +46,7 @@ function Login() {
 
   const loginHandler = async (data) => {
     try{
-    const loginPromise = axios.post("http://localhost:5000/auth/login", data, {
+    const loginPromise = axios.post("http://localhost:5000/api/auth/login", data, {
       withCredentials: true,
       headers: {
         "Content-Type": "application/json",

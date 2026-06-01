@@ -22,7 +22,7 @@ function Profile() {
 
   const handleLogout = async()=>{
     try {
-      const logoutPromise = axios.get("http://localhost:5000/auth/logout",
+      const logoutPromise = axios.get("http://localhost:5000/api/auth/logout",
         {
           withCredentials:true
         }

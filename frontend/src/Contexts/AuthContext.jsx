@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const loginCheck = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/auth/verify", {
+        const response = await axios.get("http://localhost:5000/api/auth/verify", {
           withCredentials: true,
         });
         const userInfo = JSON.stringify(response.data.payload);

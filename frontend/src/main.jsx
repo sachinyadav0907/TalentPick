@@ -23,13 +23,13 @@ import { Toaster } from "react-hot-toast";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Toaster
-    position="top-right"
+      position="top-right"
       toastOptions={{
         style: {
           background: "#34295c",
           color: "#fff",
           border: "1px solid #27272a",
-          zIndex: "1000"
+          zIndex: "1000",
         },
         duration: 3000,
       }}
@@ -82,7 +82,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             </ProtectedRoute>
           }
         />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/my-jobs"
           element={

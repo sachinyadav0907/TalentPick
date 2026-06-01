@@ -56,7 +56,7 @@ function Register() {
 
   const handleRegister = async (data) => {
     try {
-      const registerPromise = axios.post("http://localhost:5000/auth/register",data, {
+      const registerPromise = axios.post("http://localhost:5000/api/auth/register",data, {
         withCredentials:true
       });
       const response = await toast.promise(registerPromise, {

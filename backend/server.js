@@ -5,6 +5,7 @@ import cookiesParser from "cookie-parser";
 import cors from "cors"
 import connectDB from "./Config/db.js";
 import jwt from "jsonwebtoken";
+import globalLimiter from "./Middleware/globalRateLimiter.js";
 
 const app = express();
 dotenv.config();
@@ -17,7 +18,8 @@ app.use(cors({
   credentials:true
 }))
 
-app.use("/auth", authRoutes)
+app.use("/api/auth", authRoutes)
+app.use("/api" , globalLimiter)
 
 app.listen(process.env.PORT,()=>{
   console.log(`Server is runnning on http://localhost:${process.env.PORT}/`);
