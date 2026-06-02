@@ -62,7 +62,6 @@ function Login() {
           "userInfo",
           JSON.stringify(response.data.payload),
         );
-        toast.success("yeah working")
         setIsLogin(true);
         setUser(response.data.payload);
         navigate("/home");
