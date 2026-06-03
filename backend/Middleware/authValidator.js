@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, validationResult } from "express-validator";
 
 export const registerValidator = [
     body("role")
@@ -43,6 +43,16 @@ export const registerValidator = [
     .withMessage(
       "Password must contain uppercase, lowercase, number and symbol"
     ),
+    (req, res, next)=>{
+      const errors = validationResult(req);
+
+      if(!errors.isEmpty){
+        return res.status(400).json({
+         message:  errors.array()
+        })
+      };
+      next();
+    }
 ];
 
 export const loginValidator = [
@@ -62,4 +72,15 @@ export const loginValidator = [
     .bail()
     .isLength({ min: 6, max: 18 })
     .withMessage("Password length must be between 6 and 18"),
+
+    (req, res, next)=>{
+      const errors = validationResult(req);
+
+      if(!errors.isEmpty){
+        return res.status(400).json({
+         message:  errors.array()
+        })
+      };
+      next();
+    }
 ];

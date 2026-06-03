@@ -5,9 +5,6 @@ import { generateToken } from "../Utility/generateToken.js";
 
 export const register = async (req, res) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty())
-      return res.status(400).json({ message: errors.array() });
     const { fullName, email, password, role } = req.body;
     const alreadyUser = await User.findOne({ email });
     if (alreadyUser) {
@@ -44,9 +41,6 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty())
-      return res.status(400).json({ message: errors.array() });
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "User not found" });
