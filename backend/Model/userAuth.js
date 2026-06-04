@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema(
     profile: {
       profilePhoto: {
         type: { secure_url: String, public_id: String },
-        default: undefined,
+        default: null,
       },
 
       about: {
@@ -75,7 +75,7 @@ const userSchema = new mongoose.Schema(
           secure_url: String,
           public_id: String,
         },
-        default: undefined,
+        default: null,
       },
 
       resumeOriginalName: {

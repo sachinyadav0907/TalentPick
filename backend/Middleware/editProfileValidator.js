@@ -1,6 +1,6 @@
 import { body, validationResult } from "express-validator";
 
-const editProfileValidator = [
+export const editProfileValidator = [
   body("fullName")
     .trim()
     .notEmpty()
