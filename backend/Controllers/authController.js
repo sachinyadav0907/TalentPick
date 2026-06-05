@@ -8,7 +8,7 @@ export const register = async (req, res) => {
     const { fullName, email, password, role } = req.body;
     const alreadyUser = await User.findOne({ email });
     if (alreadyUser) {
-      return res.status(409).json({message: "Username already exist" });
+      return res.status(409).json({success:false, message: "Username already exist" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -33,9 +33,9 @@ export const register = async (req, res) => {
       sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.status(201).json({payload, message: "Regitered successfully" });
+    res.status(201).json({success: true, payload, message: "Regitered successfully" });
   } catch (error) {
-    res.status(500).json({ message: error });
+    res.status(500).json({success:false ,message: "Interal server error"});
   }
 };
 
@@ -43,7 +43,7 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!user) return res.status(404).json({ success:true, message: "User not found" });
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
       return res.status(401).json({ message: "Username or password is wrong" });
@@ -60,9 +60,9 @@ export const login = async (req, res) => {
       sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.status(200).json({ payload, message: "Logged in successfully" });
+    res.status(200).json({success:true,  payload, message: "Logged in successfully" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({success:false ,message: "Interal server error"});
   }
 };
 
@@ -72,7 +72,7 @@ export const logout = (req,res)=>{
   secure: false,
   sameSite: "lax",
 });
-return res.status(200).json({message: "logged out successfully"});
+return res.status(200).json({success:true, message: "logged out successfully"});
 }
 
 export const verifyUser = async(req, res)=>{
@@ -84,8 +84,8 @@ export const verifyUser = async(req, res)=>{
       email: userData.email,
       role: req.user.role
     }
-      return res.status(200).json({payload, message : "User is authenticated"})
+      return res.status(200).json({success:true, payload, message : "User is authenticated"})
   } catch (error) {
-    return res.status(500).json({message: error.message});
+    return res.status(500).json({success:false ,message: "Interal server error"});
   }
 };
