@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
-import { CgProfile } from "react-icons/cg";
 import { useAuth } from "../Contexts/AuthContext";
 import { FaRegSquarePlus } from "react-icons/fa6";
 
 function Sidebar({ isOpen, setIsOpen }) {
-  const idName = "Sachin Yadav";
-  const {user, isRecruiter} = useAuth();
+  const {user, isRecruiter,profilePhoto} = useAuth();
 
   return (
     <div
-  className={`fixed top-0 left-0 h-screen w-64 bg-slate-950 border-r border-white/10 text-slate-200 shadow-lg z-50 transform transition-transform duration-300 sm:hidden ${
+  className={`fixed top-0 left-0 h-screen w-64 bg-slate-950 border-r border-white/10 text-slate-200 shadow-lg z-1000 transform transition-transform duration-300 ownNav:hidden ${
     isOpen ? "translate-x-0" : "-translate-x-full"
   }`}
 >
@@ -21,10 +19,10 @@ function Sidebar({ isOpen, setIsOpen }) {
       className="flex items-center gap-3"
       onClick={() => setIsOpen(false)}
     >
-      <CgProfile className="text-4xl text-slate-400" />
+      <img src={profilePhoto} alt="ProfilePicture" className="w-8" />
 
       <h1 className="text-xl font-semibold text-violet-400">
-        {idName}
+        {user.fullName}
       </h1>
     </Link>
 

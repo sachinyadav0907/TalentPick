@@ -15,7 +15,8 @@ function Navbar() {
       <nav className="w-full h-16 flex justify-between items-center sticky top-0 z-40 bg-slate-950 border-b border-white/10 px-3 text-slate-200">
         <AiOutlineMenuUnfold
           className="text-4xl opacity-70 cursor-pointer ownNav:hidden hover:text-violet-400 transition"
-          onClick={() => setIsOpen(true)}
+          onClick={() => {setIsOpen(true)}
+          }
         />
 
         <ul className="hidden ownNav:flex gap-8 opacity-90 items-center">
