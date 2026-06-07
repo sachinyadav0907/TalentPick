@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
-import { useAuth } from "../Contexts/AuthContext";
+import { useAuth } from "./Contexts/AuthContext";
 import { FaRegSquarePlus } from "react-icons/fa6";
 
 function Sidebar({ isOpen, setIsOpen }) {
@@ -19,7 +19,7 @@ function Sidebar({ isOpen, setIsOpen }) {
       className="flex items-center gap-3"
       onClick={() => setIsOpen(false)}
     >
-      <img src={profilePhoto} alt="ProfilePicture" className="w-8" />
+      <img src={profilePhoto} alt="ProfilePicture" className="w-10 rounded-full" />
 
       <h1 className="text-xl font-semibold text-violet-400">
         {user.fullName}

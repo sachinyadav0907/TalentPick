@@ -28,31 +28,25 @@ const userSchema = new mongoose.Schema(
     profile: {
       profilePhoto: {
         type: { secure_url: String, public_id: String },
-        default: null,
+        default: {secure_url: "defaultPP.png", public_id: null},
       },
 
-      about: {
+      jobseekerAbout: {
         type: String,
         default: "",
       },
 
       // Jobseeker Fields
 
-      phoneNumber: {
+      jobseekerPhoneNumber: {
         type: String,
         default: "",
       },
 
-      location: {
+      jobseekerLocation: {
         type: String,
         default: "",
       },
-
-      jobPreference: [
-        {
-          type: String,
-        },
-      ],
 
       skills: [
         {
@@ -60,12 +54,12 @@ const userSchema = new mongoose.Schema(
         },
       ],
 
-      experience: {
+      jobseekerExperience: {
         type: Number,
         default: 0,
       },
 
-      education: {
+      jobseekerEducation: {
         type: String,
         default: "",
       },
@@ -83,7 +77,7 @@ const userSchema = new mongoose.Schema(
         default: "",
       },
 
-      links: {
+      jobseekerLinks: {
         linkedin: {
           type: String,
           default: "",
@@ -121,7 +115,10 @@ const userSchema = new mongoose.Schema(
         type: String,
         default: "",
       },
-
+      companyPhoneNumber: {
+        type: String,
+        default: "",
+      },
       companyPreferredJob: [
         {
           type: String,

@@ -7,23 +7,20 @@ export const fetchProfile = async (req, res) => {
       jobseeker: `
     fullName email role
     profile.profilePhoto
-    profile.about
-    profile.phoneNumber
-    profile.location
+    profile.jobseekerAbout
+    profile.jobseekerPhoneNumber
+    profile.jobseekerLocation
     profile.skills
-    profile.experience
-    profile.education
+    profile.jobseekerExperience
+    profile.jobseekerEducation
     profile.resume
-    profile.jobPreference
-    profile.links
+    profile.jobseekerLinks
   `,
       recruiter: `
     fullName email role
     profile.profilePhoto
-    profile.about
-    profile.phoneNumber
+    profile.companyPhoneNumber
     profile.companyName
-    profile.location
     profile.companyWebsite
     profile.companyDescription
     profile.companyLocation
@@ -31,19 +28,17 @@ export const fetchProfile = async (req, res) => {
   `,
     };
 
-    const user = await User.findById(userId).select(
+    const response = await User.findById(req.user.id).select(
       profileFieldsByRole[req.user.role],
     );
     if (!response) {
       return res.status(404).json({ success: true, message: "User not found" });
     }
-    return res
-      .status(200)
-      .json({
-        success: true,
-        response,
-        message: "Profile data is fetched successfully",
-      });
+    return res.status(200).json({
+      success: true,
+      payload: response,
+      message: "Profile data is fetched successfully",
+    });
   } catch (error) {
     console.log(error);
     return res
@@ -52,18 +47,31 @@ export const fetchProfile = async (req, res) => {
   }
 };
 
-export const EditProfile = async (req, res) => {
+export const editProfile = async (req, res) => {
   try {
-    const updates = req.body;
+
+    console.log("REQ FILES", req.files);
+
+    const { fullName } = req.body;
+
+    const profile = req.profileData;
+
+    const updates = {
+      fullName,
+      profile
+    };
     const profilePhoto = req.files?.profilePhoto?.[0];
     const resume = req.files?.resume?.[0];
+    console.log("PHOTO", profilePhoto);
     if (profilePhoto) {
+      console.log("BUFFER EXISTS", !!profilePhoto.buffer);
       const profileResult = await cloudinaryUpload(
         profilePhoto.buffer,
         req.user.id,
         "jobportal/profile-photo",
       );
-      updates.profilePhoto = {
+      console.log("RESULT", profileResult);
+      updates.profile.profilePhoto = {
         secure_url: profileResult.secure_url,
         public_id: profileResult.public_id,
       };
@@ -75,25 +83,29 @@ export const EditProfile = async (req, res) => {
         "jobportal/resume",
         "raw",
       );
-      updates.resume = {
+      updates.profile.resume = {
         secure_url: resumeResult.secure_url,
         public_id: resumeResult.public_id,
       };
     }
 
-    const user = User.findById(req.user.id);
+    const user = await User.findById(req.user.id);
     if (!user) {
       return res
         .status(404)
         .json({ success: false, message: "User not found" });
     }
-    const Response = User.findByIdAndUpdate(
+    const response = await User.findByIdAndUpdate(
       req.user.id,
       { $set: updates },
       { new: true },
     );
-    console.log(Response);
-    res.status(201).json({ success: true, message: "uploaded succesfully" });
+    console.log(response);
+    res.status(201).json({
+      success: true,
+      payload: response,
+      message: "uploaded succesfully",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: error.message });

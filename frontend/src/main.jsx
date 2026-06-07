@@ -27,7 +27,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       toastOptions={{
         style: {
           background: "#34295c",
-          color: "#fff",
+          color: "white",
           border: "1px solid #27272a",
           zIndex: "1000",
         },

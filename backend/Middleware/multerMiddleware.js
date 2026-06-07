@@ -9,9 +9,9 @@ export const upload = multer({
     if (file.fieldname === "profilePhoto") {
       const allowedType = ["image/jpeg", "image/png", "image/webp"];
       if (allowedType.includes(file.mimetype)) {
-        cb(null, true);
+        return cb(null, true);
       } else {
-        cb(
+        return cb(
           new Error("Only JPG, PNG, and WEBP are allowed for profile pictures"),
         );
       }
@@ -19,12 +19,12 @@ export const upload = multer({
     if (file.fieldname === "resume") {
       const allowedType = ["application/pdf"];
       if (allowedType.includes(file.mimetype)) {
-        cb(null, true);
+        return cb(null, true);
       } else {
-        cb(new Error("Only pdf is allowed for resume"));
+        return cb(new Error("Only pdf is allowed for resume"));
       }
     }
-    cb(new Error("Unexpexted file field"));
+    return cb(new Error("Unexpexted file field"));
   },
 
   limits: {

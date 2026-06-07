@@ -77,12 +77,13 @@ return res.status(200).json({success:true, message: "logged out successfully"});
 
 export const verifyUser = async(req, res)=>{
   try {
-    const userData = await User.findById(req.user.id).select("fullName email");
+    const userData = await User.findById(req.user.id).select("fullName email profile.profilePhoto.secure_url");
     const payload = {
       id: req.user.id,
       fullName: userData.fullName,
       email: userData.email,
-      role: req.user.role
+      role: req.user.role,
+      profilePhoto: userData.profile.profilePhoto.secure_url
     }
       return res.status(200).json({success:true, payload, message : "User is authenticated"})
   } catch (error) {

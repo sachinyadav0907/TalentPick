@@ -10,35 +10,51 @@ import {
   FaEdit,
   FaGlobe,
 } from "react-icons/fa";
-import { useAuth } from "../Contexts/AuthContext.jsx";
+import { useAuth } from "../Components/Contexts/AuthContext.jsx";
 import { IoMdExit } from "react-icons/io";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { success } from "zod";
+import { useEffect } from "react";
 
 function Profile() {
-  const {setIsLogin , user, isRecruiter} = useAuth();
+  const { setIsLogin, user, isRecruiter, setProfileData, profileData, setProfilePhoto, profilePhoto } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = async()=>{
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/profile/data",
+          { withCredentials: true },
+        );
+        setProfileData(response.data.payload);
+        setProfilePhoto(response.data.payload.profile.profilePhoto.secure_url)
+        console.log(response.data.payload);
+      } catch (error) {
+        toast.error(error?.response?.message || "Something went wrong")
+      }
+    };
+    fetchProfileData();
+  }, []);
+
+  const handleLogout = async () => {
     try {
-      const logoutPromise = axios.get("http://localhost:5000/api/auth/logout",
-        {
-          withCredentials:true
-        }
-      );
+      const logoutPromise = axios.get("http://localhost:5000/api/auth/logout", {
+        withCredentials: true,
+      });
       await toast.promise(logoutPromise, {
         loading: "Logging Out....",
-        success : (res)=> res.data.message,
-        error : (err) => err.res?.data?.message
-      })
+        success: (res) => res.data.message,
+        error: (err) => err.res?.data?.message,
+      });
       localStorage.clear();
       setIsLogin(false);
       navigate("/login");
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
 
   return (
     <div className="w-full min-h-screen bg-slate-950 flex flex-col">
@@ -57,7 +73,7 @@ function Profile() {
 
             <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 sm:left-10 sm:translate-x-0">
               <img
-                src="/ExamplePP.webp"
+                src={profilePhoto}
                 alt="Profile"
                 className="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-slate-900 object-cover"
               />
@@ -70,16 +86,12 @@ function Profile() {
               <div className="flex flex-col gap-8">
                 <div className="text-center sm:text-left">
                   <h1 className="text-3xl sm:text-5xl font-bold text-white">
-                    Sachin Yadav
+                    {profileData?.fullName}
                   </h1>
-
-                  <p className="text-indigo-400 mt-2 text-lg sm:text-xl">
-                    MERN Stack Developer
-                  </p>
 
                   <div className="flex justify-center sm:justify-start items-center gap-2 text-slate-400 mt-3">
                     <FaMapMarkerAlt />
-                    <span>Mumbai, India</span>
+                    <span>{profileData?.profile?.jobseekerLocation}</span>
                   </div>
                 </div>
 
@@ -89,9 +101,7 @@ function Profile() {
                   </h2>
 
                   <p className="text-slate-300 leading-7">
-                    Passionate MERN stack developer focused on building modern
-                    full-stack applications. Interested in DevOps, cloud, and
-                    scalable backend systems.
+                   {profileData?.profile?.jobseekerAbout}
                   </p>
                 </div>
 
@@ -101,14 +111,7 @@ function Profile() {
                   </h2>
 
                   <div className="flex flex-wrap gap-3">
-                    {[
-                      "React",
-                      "Node.js",
-                      "MongoDB",
-                      "Express",
-                      "Docker",
-                      "Tailwind",
-                    ].map((skill, index) => (
+                    {profileData?.profile?.skills?.map((skill, index) => (
                       <span
                         key={index}
                         className="bg-slate-800 text-slate-200 px-4 py-2 rounded-xl text-sm"
@@ -157,7 +160,7 @@ function Profile() {
 
                   <div className="flex flex-wrap gap-4">
                     <a
-                      href="#"
+                      href={profileData?.profile?.jobseekerLinks?.github}
                       className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 transition px-4 py-3 rounded-xl text-slate-200"
                     >
                       <FaGithub />
@@ -165,7 +168,7 @@ function Profile() {
                     </a>
 
                     <a
-                      href="#"
+                      href={profileData?.profile?.jobseekerLinks?.linkedin}
                       className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 transition px-4 py-3 rounded-xl text-slate-200"
                     >
                       <FaLinkedin />
@@ -173,7 +176,7 @@ function Profile() {
                     </a>
 
                     <a
-                      href="#"
+                      href={profileData?.profile?.jobseekerLinks?.portfolio}
                       className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 transition px-4 py-3 rounded-xl text-slate-200"
                     >
                       <FaGlobe />
@@ -181,7 +184,10 @@ function Profile() {
                     </a>
                   </div>
                 </div>
-                <button className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2 active:scale-95 focus:scale-95" onClick={handleLogout}>
+                <button
+                  className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2 active:scale-95 focus:scale-95"
+                  onClick={handleLogout}
+                >
                   <IoMdExit className="text-xl" />
                   Logout
                 </button>
@@ -190,7 +196,7 @@ function Profile() {
               <div className="flex flex-col gap-8">
                 <div className="text-center sm:text-left">
                   <h1 className="text-3xl sm:text-5xl font-bold text-white">
-                    TechNova Solutions
+                    {profileData?.profile?.companyName}
                   </h1>
 
                   <p className="text-indigo-400 mt-2 text-lg sm:text-xl">
@@ -199,7 +205,7 @@ function Profile() {
 
                   <div className="flex justify-center sm:justify-start items-center gap-2 text-slate-400 mt-3">
                     <FaMapMarkerAlt />
-                    <span>Pune, India</span>
+                    <span>{profileData?.profile?.companyLocation}</span>
                   </div>
                 </div>
                 <div>
@@ -208,8 +214,7 @@ function Profile() {
                   </h2>
 
                   <p className="text-slate-300 leading-7">
-                    TechNova Solutions builds modern web applications and cloud
-                    systems for startups and enterprises globally.
+                    {profileData?.profile?.companyDescription}
                   </p>
                 </div>
 
@@ -219,11 +224,7 @@ function Profile() {
                   </h2>
 
                   <div className="flex flex-wrap gap-3">
-                    {[
-                      "Frontend Developer",
-                      "Backend Developer",
-                      "DevOps Engineer",
-                    ].map((role, index) => (
+                    {profileData?.profile?.companyPreferredJob?.map((role, index) => (
                       <span
                         key={index}
                         className="bg-slate-800 text-slate-200 px-4 py-2 rounded-xl text-sm"
@@ -240,14 +241,17 @@ function Profile() {
                   </h2>
 
                   <a
-                    href="#"
+                    href={profileData?.profile?.companyWebsite}
                     className="flex items-center gap-2 w-fit bg-slate-800 hover:bg-slate-700 transition px-4 py-3 rounded-xl text-slate-200"
                   >
                     <FaGlobe />
-                    www.technova.com
+                    {profileData?.profile?.companyWebsite}
                   </a>
                 </div>
-                <button className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2 active:scale-95 focus:scale-95" onClick={handleLogout}>
+                <button
+                  className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2 active:scale-95 focus:scale-95"
+                  onClick={handleLogout}
+                >
                   <IoMdExit className="text-xl" />
                   Logout
                 </button>
@@ -263,3 +267,4 @@ function Profile() {
 }
 
 export default Profile;
+
