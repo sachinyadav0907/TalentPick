@@ -22,7 +22,6 @@ export const AuthProvider = ({ children }) => {
         const response = await axios.get("http://localhost:5000/api/auth/verify", {
           withCredentials: true,
         });
-        console.log(response);
         const userInfo = JSON.stringify(response.data.payload);
         localStorage.setItem("userInfo", userInfo);
         setIsLogin(true);

@@ -50,8 +50,6 @@ export const fetchProfile = async (req, res) => {
 export const editProfile = async (req, res) => {
   try {
 
-    console.log("REQ FILES", req.files);
-
     const { fullName } = req.body;
 
     const profile = req.profileData;
@@ -62,15 +60,12 @@ export const editProfile = async (req, res) => {
     };
     const profilePhoto = req.files?.profilePhoto?.[0];
     const resume = req.files?.resume?.[0];
-    console.log("PHOTO", profilePhoto);
     if (profilePhoto) {
-      console.log("BUFFER EXISTS", !!profilePhoto.buffer);
       const profileResult = await cloudinaryUpload(
         profilePhoto.buffer,
         req.user.id,
         "jobportal/profile-photo",
       );
-      console.log("RESULT", profileResult);
       updates.profile.profilePhoto = {
         secure_url: profileResult.secure_url,
         public_id: profileResult.public_id,
@@ -100,7 +95,6 @@ export const editProfile = async (req, res) => {
       { $set: updates },
       { new: true },
     );
-    console.log(response);
     res.status(201).json({
       success: true,
       payload: response,

@@ -94,7 +94,6 @@ function EditProfile() {
         setProfileData(response.data.payload);
         reset(response.data.payload);
         setProfilePhoto(response.data.payload.profile.profilePhoto.secure_url);
-        console.log(response.data.payload);
       } catch (error) {
         toast.error(error?.response?.message || "Something went wrong");
       }
@@ -116,7 +115,6 @@ function EditProfile() {
 
   const handleEdit = async (data) => {
     try {
-      console.log("running");
       const formData = new FormData();
 
       const skillsData = data.skillData
@@ -182,9 +180,7 @@ function EditProfile() {
       <form
         className="flex-1 flex justify-center items-center px-4 py-8 sm:px-6 lg:px-8"
         encType="multipart/form-data"
-        onSubmit={handleSubmit(handleEdit, (errors) => {
-          console.log("Validation failed:", errors);
-        })}
+        onSubmit={handleSubmit(handleEdit)}
       >
         <div className="w-full max-w-5xl bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden">
           <div className="h-36 sm:h-44 bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 relative">
