@@ -1,120 +1,106 @@
 import React from "react";
 import Navbar from "../Components/Navbar.jsx";
-import Footer from '../Components/Footer.jsx';
+import Footer from "../Components/Footer.jsx";
 
 function Help() {
+  const supportCards = [
+    {
+      title: "Account Issues",
+      description:
+        "Facing problems with login, registration, or password reset? Make sure your email and password are correct or contact support.",
+    },
+    {
+      title: "Job Applications",
+      description:
+        "Track your job applications directly from your dashboard. Recruiters can also manage applicants efficiently.",
+    },
+    {
+      title: "Recruiter Support",
+      description:
+        "Recruiters can post jobs, manage listings, and shortlist candidates from the recruiter dashboard.",
+    },
+    {
+      title: "Contact Us",
+      description: "Email: support@jobportal.com\nPhone: +91 9876543210",
+    },
+  ];
+
+  const faqs = [
+    {
+      question: "How do I apply for jobs?",
+      answer:
+        "Create an account, login as a job seeker, and apply directly from job listings.",
+    },
+    {
+      question: "How can recruiters post jobs?",
+      answer:
+        "Register as a recruiter and access the recruiter dashboard to create and manage job listings.",
+    },
+    {
+      question: "Can I reset my password?",
+      answer:
+        "Yes, use the 'Forgot Password' option available on the login page.",
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-slate-950 text-slate-200">
       <Navbar />
 
-      <div className="max-w-5xl mx-auto px-4 py-10">
-
-        <div className="bg-white rounded-3xl shadow-lg p-8">
-
-          <div className="text-center mb-10">
-            <h1 className="text-4xl font-bold text-gray-800">
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <div className="bg-slate-900 border border-white/10 rounded-3xl shadow-xl p-8 md:p-10">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold text-slate-100">
               Help & Support
             </h1>
 
-            <p className="text-gray-500 mt-3">
-              Need assistance? We're here to help you.
+            <p className="text-slate-400 mt-4 text-lg">
+              Need assistance? Find answers to common questions and support
+              resources.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
+            {supportCards.map((card, index) => (
+              <div
+                key={index}
+                className="bg-slate-800/70 border border-white/10 rounded-2xl p-6 hover:border-violet-500/40 hover:-translate-y-1 transition-all duration-300"
+              >
+                <h2 className="text-2xl font-semibold text-slate-100 mb-3">
+                  {card.title}
+                </h2>
 
-            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition duration-300">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-                Account Issues
-              </h2>
-
-              <p className="text-gray-600 leading-relaxed">
-                Facing problems with login, registration, or password reset?
-                Make sure your email and password are correct or contact support.
-              </p>
-            </div>
-
-            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition duration-300">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-                Job Applications
-              </h2>
-
-              <p className="text-gray-600 leading-relaxed">
-                You can track your applications from the dashboard after logging in.
-                Recruiters can also manage applicants easily.
-              </p>
-            </div>
-
-            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition duration-300">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-                Recruiter Support
-              </h2>
-
-              <p className="text-gray-600 leading-relaxed">
-                Recruiters can post jobs, manage listings, and shortlist candidates
-                directly from the recruiter dashboard.
-              </p>
-            </div>
-
-            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition duration-300">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-                Contact Us
-              </h2>
-
-              <p className="text-gray-600 leading-relaxed">
-                Email: support@jobportal.com
-              </p>
-
-              <p className="text-gray-600">
-                Phone: +91 9876543210
-              </p>
-            </div>
-
+                <p className="text-slate-400 whitespace-pre-line leading-relaxed">
+                  {card.description}
+                </p>
+              </div>
+            ))}
           </div>
 
-          <div className="mt-10 bg-emerald-50 border border-emerald-200 rounded-2xl p-6">
-            <h2 className="text-2xl font-semibold text-emerald-700 mb-3">
+          <div className="mt-12 bg-slate-800/40 border border-violet-500/20 rounded-2xl p-6 md:p-8">
+            <h2 className="text-3xl font-bold text-violet-400 mb-8">
               Frequently Asked Questions
             </h2>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
+              {faqs.map((faq, index) => (
+                <div
+                  key={index}
+                  className="border-b border-white/10 pb-4 last:border-none"
+                >
+                  <h3 className="text-lg font-semibold text-slate-100">
+                    {faq.question}
+                  </h3>
 
-              <div>
-                <h3 className="font-semibold text-gray-800">
-                  How do I apply for jobs?
-                </h3>
-
-                <p className="text-gray-600">
-                  Create an account, login as a job seeker, and apply directly from job listings.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-gray-800">
-                  How can recruiters post jobs?
-                </h3>
-
-                <p className="text-gray-600">
-                  Register as a recruiter and access the recruiter dashboard to post jobs.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-gray-800">
-                  Can I reset my password?
-                </h3>
-
-                <p className="text-gray-600">
-                  Yes, use the “Forgot Password” option on the login page.
-                </p>
-              </div>
-
+                  <p className="text-slate-400 mt-2">{faq.answer}</p>
+                </div>
+              ))}
             </div>
           </div>
-
         </div>
       </div>
-      <Footer/>
+
+      <Footer />
     </div>
   );
 }
