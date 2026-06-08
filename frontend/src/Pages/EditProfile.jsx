@@ -10,7 +10,7 @@ import {
   FaPhoneAlt,
   FaPlus,
 } from "react-icons/fa";
-import { useAuth } from "../Components/Contexts/AuthContext.jsx";
+import { useAuth } from "../Contexts/AuthContext.jsx";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import axios from "axios";

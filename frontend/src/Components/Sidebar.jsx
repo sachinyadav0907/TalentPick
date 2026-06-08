@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
-import { useAuth } from "./Contexts/AuthContext";
+import { useAuth } from "../Contexts/AuthContext.jsx";
 import { FaRegSquarePlus } from "react-icons/fa6";
 
 function Sidebar({ isOpen, setIsOpen }) {

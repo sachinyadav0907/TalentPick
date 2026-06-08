@@ -10,7 +10,7 @@ import {
   FaEdit,
   FaGlobe,
 } from "react-icons/fa";
-import { useAuth } from "../Components/Contexts/AuthContext.jsx";
+import { useAuth } from "../Contexts/AuthContext.jsx";
 import { IoMdExit } from "react-icons/io";
 import axios from "axios";
 import toast from "react-hot-toast";

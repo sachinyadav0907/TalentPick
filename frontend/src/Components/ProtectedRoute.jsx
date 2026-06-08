@@ -1,4 +1,4 @@
-import { useAuth } from "../Contexts/AuthContext";
+import { useAuth } from "../Contexts/AuthContext.jsx";
 import Unauthorized from "./Unauthorized";
 
 export default function ProtectedRoute({ children }) {
