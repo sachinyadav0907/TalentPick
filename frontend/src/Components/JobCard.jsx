@@ -4,6 +4,7 @@ import { SiTicktick } from "react-icons/si";
 import { IoStarOutline } from "react-icons/io5";
 import { CiLocationOn, CiBookmark } from "react-icons/ci";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
+import { BsBriefcase } from "react-icons/bs";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
@@ -83,9 +84,10 @@ function JobCard() {
         </div>
 
         <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+
           <div className={detailTags}>
-            <CiLocationOn className="text-lg text-violet-400" />
-            <span>Remote Worldwide</span>
+            <BiRupee className="text-lg text-violet-400" />
+            <span>₹8L - ₹15L / year</span>
           </div>
 
           <div className={detailTags}>
@@ -94,8 +96,13 @@ function JobCard() {
           </div>
 
           <div className={detailTags}>
-            <BiRupee className="text-lg text-violet-400" />
-            <span>₹8L - ₹15L / year</span>
+            <CiLocationOn className="text-lg text-violet-400" />
+            <span>Remote Worldwide</span>
+          </div>
+
+          <div className={detailTags}>
+            <BsBriefcase className="text-lg text-violet-400" />
+            <span>Full Time</span>
           </div>
 
           <div className={detailTags}>
@@ -114,9 +121,7 @@ function JobCard() {
           </div>
         </div>
 
-        <p className="mt-3 text-right text-sm text-gray-400">
-          120+ Applicants
-        </p>
+        <p className="mt-3 text-right text-sm text-gray-400">120+ Applicants</p>
 
         <div className="my-5 border-t border-gray-700" />
 
