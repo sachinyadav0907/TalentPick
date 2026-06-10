@@ -19,6 +19,8 @@ import PostJobs from "./Pages/PostJobs.jsx";
 import EditProfile from "./Pages/EditProfile.jsx";
 import GuestRoute from "./Components/GuestRoute.jsx";
 import { Toaster } from "react-hot-toast";
+import ExploreJobs from "./Pages/ExploreJobs.jsx";
+import {JobsProvider} from "./Contexts/JobsContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -34,87 +36,97 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         duration: 3000,
       }}
     />
-    <AuthProvider>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/help" element={<Help />} />
-        <Route path="/contact-us" element={<Contact />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/tech-used" element={<TechUsed />} />
-        <Route
-          path="/login"
-          element={
-            <GuestRoute>
-              <Login />
-            </GuestRoute>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <GuestRoute>
-              <Register />
-            </GuestRoute>
-          }
-        />
-        <Route
-          path="/edit-profile"
-          element={
-            <ProtectedRoute>
-              <EditProfile />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/saved-jobs"
-          element={
-            <ProtectedRoute>
-              <SavedJobs />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/applied-jobs"
-          element={
-            <ProtectedRoute>
-              <AppliedJobs />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/my-jobs"
-          element={
-            <ProtectedRoute>
-              <MyJobs />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/my-applicants"
-          element={
-            <ProtectedRoute>
-              <MyApplicants />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/post-jobs"
-          element={
-            <ProtectedRoute>
-              <PostJobs />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </AuthProvider>
+    <JobsProvider>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/contact-us" element={<Contact />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/tech-used" element={<TechUsed />} />
+          <Route
+            path="/login"
+            element={
+              <GuestRoute>
+                <Login />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <GuestRoute>
+                <Register />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/edit-profile"
+            element={
+              <ProtectedRoute>
+                <EditProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/post-jobs"
+            element={
+              <ProtectedRoute>
+                <ExploreJobs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/saved-jobs"
+            element={
+              <ProtectedRoute>
+                <SavedJobs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/applied-jobs"
+            element={
+              <ProtectedRoute>
+                <AppliedJobs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/my-jobs"
+            element={
+              <ProtectedRoute>
+                <MyJobs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/my-applicants"
+            element={
+              <ProtectedRoute>
+                <MyApplicants />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/explore-jobs"
+            element={
+              <ProtectedRoute>
+                <PostJobs />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </AuthProvider>
+    </JobsProvider>
   </BrowserRouter>,
 );

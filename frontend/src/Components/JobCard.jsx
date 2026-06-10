@@ -15,7 +15,7 @@ import { BsPeople } from "react-icons/bs";
 import { LuCalendarClock } from "react-icons/lu";
 import { useAuth } from "../Contexts/AuthContext.jsx";
 
-function JobCard() {
+function JobCard({job}) {
   const { isRecruiter } = useAuth();
 
   const companyTags =
@@ -24,22 +24,13 @@ function JobCard() {
   const detailTags =
     "flex items-center gap-2 rounded-lg bg-gray-900/70 border border-gray-700 px-3 py-3 text-sm text-gray-200";
 
-  const skills = [
-    "React",
-    "Tailwind CSS",
-    "Node.js",
-    "MongoDB",
-    "Express",
-    "JavaScript",
-  ];
-
   return (
     <div className="flex w-full justify-center bg-[#081028] p-4">
       <article className="w-full max-w-5xl rounded-2xl bg-gray-800 p-4 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex flex-col gap-4 sm:flex-row">
             <img
-              src="/MicrosoftLogo.jpg"
+              src={job.recruiter?.profile?.profilePhoto?.secure_url}
               alt="Microsoft Logo"
               className="h-16 w-16 rounded-xl border border-gray-700 object-cover"
             />
@@ -49,7 +40,7 @@ function JobCard() {
                 to="#"
                 className="text-xl font-semibold text-white transition hover:text-blue-400 sm:text-2xl"
               >
-                Microsoft
+                {job.recruiter?.profile?.companyName}
               </Link>
 
               <div className="mt-2 flex flex-wrap gap-2">
@@ -73,13 +64,13 @@ function JobCard() {
 
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <h1 className="text-2xl font-bold text-white sm:text-3xl">
-            Frontend Developer
+            {job.title}
           </h1>
 
           <div className="flex items-center gap-2 text-sm text-gray-300">
             <LuCalendarClock />
             <span>Deadline:</span>
-            <time dateTime="2026-06-08">June 8, 2026</time>
+            <time dateTime="2026-06-08">{job.applicationDeadline}</time>
           </div>
         </div>
 
@@ -87,37 +78,37 @@ function JobCard() {
 
           <div className={detailTags}>
             <BiRupee className="text-lg text-violet-400" />
-            <span>₹8L - ₹15L / year</span>
+            <span>₹{job.salary.min}L - ₹{job.salary.max}L / year</span>
           </div>
 
           <div className={detailTags}>
             <HiOutlineBuildingOffice2 className="text-lg text-violet-400" />
-            <span>Mumbai, Parel</span>
+            <span>{job.location}</span>
           </div>
 
           <div className={detailTags}>
             <CiLocationOn className="text-lg text-violet-400" />
-            <span>Remote Worldwide</span>
+            <span>{job.workplaceType}</span>
           </div>
 
           <div className={detailTags}>
             <BsBriefcase className="text-lg text-violet-400" />
-            <span>Full Time</span>
+            <span>{job.jobType}</span>
           </div>
 
           <div className={detailTags}>
             <MdWorkOutline className="text-lg text-violet-400" />
-            <span>2 - 4 Years Experience</span>
+            <span>{job.experience.min} - {job.experience.max} Years Experience</span>
           </div>
 
           <div className={detailTags}>
             <PiGraduationCap className="text-lg text-violet-400" />
-            <span>Bachelor's Degree</span>
+            <span>{job.education}</span>
           </div>
 
           <div className={detailTags}>
             <BsPeople className="text-lg text-violet-400" />
-            <span>5 Openings</span>
+            <span>{job.openings} Openings</span>
           </div>
         </div>
 
@@ -131,7 +122,7 @@ function JobCard() {
           </h2>
 
           <div className="flex flex-wrap gap-2">
-            {skills.map((skill, index) => (
+            {job.skills?.map((skill, index) => (
               <span
                 key={index}
                 className="rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1 text-sm text-violet-300"
@@ -148,11 +139,7 @@ function JobCard() {
           </h2>
 
           <p className="text-sm leading-7 text-gray-300 sm:text-base">
-            We are looking for a passionate Frontend Developer with strong
-            expertise in React and Tailwind CSS. You will collaborate with
-            designers, backend engineers, and product teams to build scalable,
-            responsive, and high-performance web applications that serve
-            millions of users worldwide.
+            {job.description}
           </p>
         </div>
 
