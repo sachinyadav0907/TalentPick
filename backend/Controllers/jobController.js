@@ -18,3 +18,30 @@ export const createJob = async(req, res)=>{
   }
 
 }
+
+export const fetchJobs = async (req, res) => {
+  try {
+    const query =
+      req.user.role === "recruiter"
+        ? { recruiter: req.user.id }
+        : {};
+
+    const jobs = await Job.find(query).populate({
+      path: "recruiter",
+      select: "profile.profilePhoto.secure_url profile.companyName",
+    });
+
+    return res.status(200).json({
+      success: true,
+      payload: jobs,
+      message: "Jobs fetched successfully",
+    });
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
