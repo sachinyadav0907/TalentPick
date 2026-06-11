@@ -70,7 +70,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             }
           />
           <Route
-            path="/post-jobs"
+            path="/explore-jobs"
             element={
               <ProtectedRoute>
                 <ExploreJobs />
@@ -118,7 +118,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             }
           />
           <Route
-            path="/explore-jobs"
+            path="/post-jobs"
             element={
               <ProtectedRoute>
                 <PostJobs />

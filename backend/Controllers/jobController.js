@@ -1,43 +1,64 @@
-import Job from "../Model/jobModel.js"
+import Job from "../Model/jobModel.js";
 
-export const createJob = async(req, res)=>{
+export const createJob = async (req, res) => {
   try {
-    if(req.user.role!=="recruiter"){
-      return res.status(403).json({message:"Unauthorized user"})
+    if (req.user.role !== "recruiter") {
+      return res.status(403).json({ message: "Unauthorized user" });
     }
-      const frontendData = req.body;
-  const jobData = {
-    ...frontendData,
-    recruiter: req.user.id
-  };
-  const response = await Job.create(jobData);
-  return res.status(201).json({success:true, payload:response, message: "Job created successfully"})
+    const frontendData = req.body;
+    const jobData = {
+      ...frontendData,
+      recruiter: req.user.id,
+    };
+    const response = await Job.create(jobData);
+    return res.status(201).json({
+      success: true,
+      payload: response,
+      message: "Job created successfully",
+    });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({success:false, message:error.message})
+    return res.status(500).json({ success: false, message: error.message });
   }
-
-}
+};
 
 export const fetchJobs = async (req, res) => {
   try {
-    const query =
-      req.user.role === "recruiter"
-        ? { recruiter: req.user.id }
-        : {};
+    const { page, limit } = req.query;
 
-    const jobs = await Job.find(query).populate({
-      path: "recruiter",
-      select: "profile.profilePhoto.secure_url profile.companyName",
-    });
+    const safePage = Math.max(1, Number(page) || 1);
+
+    const safeLimit = Math.min(50, Math.max(1, Number(limit) || 10));
+
+    const skip = (safePage - 1) * safeLimit;
+
+    const query =
+      req.user.role === "recruiter" ? { recruiter: req.user.id } : {};
+
+    const totalJobs = await Job.countDocuments(query);
+
+    const jobs = await Job.find(query)
+      .populate({
+        path: "recruiter",
+        select: "profile.profilePhoto.secure_url",
+      })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(safeLimit)
+      .lean();
+
+    const hasMore = skip + jobs.length < totalJobs;
 
     return res.status(200).json({
       success: true,
       payload: jobs,
+      page: safePage,
+      totalJobs,
+      hasMore,
       message: "Jobs fetched successfully",
     });
   } catch (error) {
-    console.error("Error fetching jobs:", error);
+    console.error(error);
 
     return res.status(500).json({
       success: false,

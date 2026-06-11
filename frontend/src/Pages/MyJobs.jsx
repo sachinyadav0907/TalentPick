@@ -1,20 +1,72 @@
-import React from 'react'
-import Footer from '../Components/Footer.jsx';
-import Navbar from '../Components/Navbar';
-import JobCard from '../Components/JobCard.jsx';
-import { useJobs } from '../Contexts/JobsContext.jsx';
+import React from "react";
+import Navbar from "../Components/Navbar";
+import Footer from "../Components/Footer";
+import { useJobs } from "../Contexts/JobsContext";
+import JobCard from "../Components/JobCard";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useRef } from "react";
 
-function MyJobs() {
-  const {jobs} = useJobs();
+function ExploreJobs() {
+  const [jobs, setJobs] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const {fetchJobs} = useJobs();
+
+  const loaderRef = useRef(null);
+
+  useEffect(() => {
+    const loadJobs = async () => {
+      if (!hasMore) return;
+
+      setLoading(true);
+
+      try {
+        const response = await fetchJobs(page, 10);
+
+        const jobsData = response.data.payload;
+        setHasMore(response.data.hasMore);
+        console.log(response);
+
+        setJobs((prev) => [...prev, ...jobsData]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadJobs();
+  }, [page]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loading && hasMore) {
+          setPage((prev) => prev + 1);
+        }
+      },
+      {
+        rootMargin: "200px",
+      },
+    );
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [loading, hasMore]);
+
   return (
     <div>
-      <Navbar/>
-      {jobs.map((job,index)=> {
-        return <JobCard key={index} job={job} />
+      <Navbar />
+      {jobs.map((job, index) => {
+        return <JobCard key={index} job={job} />;
       })}
-     <Footer/>
+      <div ref={loaderRef}>Loading...</div>
+      <Footer />
     </div>
-  )
+  );
 }
 
-export default MyJobs
+export default ExploreJobs;
