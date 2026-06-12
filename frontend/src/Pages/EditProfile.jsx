@@ -92,7 +92,6 @@ function EditProfile() {
             response.data.payload.profile.companyPreferredJob?.join(", ") || "",
         });
         setProfileData(response.data.payload);
-        reset(response.data.payload);
         setProfilePhoto(response.data.payload.profile.profilePhoto.secure_url);
       } catch (error) {
         toast.error(error?.response?.message || "Something went wrong");

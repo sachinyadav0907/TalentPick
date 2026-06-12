@@ -49,14 +49,23 @@ export const fetchProfile = async (req, res) => {
 
 export const editProfile = async (req, res) => {
   try {
-
     const { fullName } = req.body;
 
-    const profile = req.profileData;
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    const mergedProfile = {
+      ...user.profile.toObject(),
+      ...req.profileData
+    }
 
     const updates = {
       fullName,
-      profile
+      profile: mergedProfile,
     };
     const profilePhoto = req.files?.profilePhoto?.[0];
     const resume = req.files?.resume?.[0];
@@ -82,13 +91,6 @@ export const editProfile = async (req, res) => {
         secure_url: resumeResult.secure_url,
         public_id: resumeResult.public_id,
       };
-    }
-
-    const user = await User.findById(req.user.id);
-    if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
     }
     const response = await User.findByIdAndUpdate(
       req.user.id,
