@@ -37,15 +37,14 @@ export const fetchJobs = async (req, res) => {
 
     const totalJobs = await Job.countDocuments(query);
 
-    const jobs = await Job.find(query)
-      .populate({
-        path: "recruiter",
-        select: "profile.profilePhoto.secure_url",
-      })
+    const mongodbQuery = Job.find(query)
+      .populate("recruiter")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(safeLimit)
       .lean();
+
+      const jobs = await mongodbQuery;
 
     const hasMore = skip + jobs.length < totalJobs;
 

@@ -22,7 +22,7 @@ function Sidebar({ isOpen, setIsOpen }) {
       <img src={profilePhoto} alt="ProfilePicture" className="w-10 rounded-full" />
 
       <h1 className="text-xl font-semibold text-violet-400">
-        {user.fullName}
+        {user?.fullName}
       </h1>
     </Link>
 
