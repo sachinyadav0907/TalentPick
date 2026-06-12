@@ -14,13 +14,18 @@ import toast from "react-hot-toast";
 const registerSchema = z
   .object({
     role: z.enum(["jobseeker", "recruiter"], {
-      required_error: "role is required",
+      required_error: "Role is required",
     }),
+
     fullName: z
       .string()
       .min(2, "Name must be at least 2 characters")
-      .max(32, "Name must not exceed 32 character"),
+      .max(32, "Name must not exceed 32 characters"),
+
+    companyName: z.string().optional(),
+
     email: z.string().email("Invalid Email"),
+
     password: z
       .string()
       .min(8, "Password must be at least 8 characters")
@@ -32,16 +37,28 @@ const registerSchema = z
         /[!@#$%^&*(),.?":{}|<>]/,
         "Must contain at least one special character",
       ),
+
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "password do not match",
+    message: "Passwords do not match",
     path: ["confirmPassword"],
+  })
+  .superRefine((data, ctx) => {
+    if (data.role === "recruiter") {
+      if (!data.companyName || data.companyName.trim().length < 2) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["companyName"],
+          message: "Company Name is required for recruiters",
+        });
+      }
+    }
   });
 
 function Register() {
   const Navigate = useNavigate();
-  const {setIsLogin, setUser} = useAuth();
+  const { setIsLogin, setUser } = useAuth();
   const [eyeOpen, setEyeOpen] = useState(false);
   const eyeToggle = () => {
     setEyeOpen(!eyeOpen);
@@ -50,20 +67,26 @@ function Register() {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({
     resolver: zodResolver(registerSchema),
   });
+  const selectRole = watch("role");
 
   const handleRegister = async (data) => {
     try {
-      const registerPromise = axios.post("http://localhost:5000/api/auth/register",data, {
-        withCredentials:true
-      });
+      const registerPromise = axios.post(
+        "http://localhost:5000/api/auth/register",
+        data,
+        {
+          withCredentials: true,
+        },
+      );
       const response = await toast.promise(registerPromise, {
         loading: "Registering User",
-        success: (res)=> res.data.message,
-        error : (err)=> err.res?.data?.message
-      })
+        success: (res) => res.data.message,
+        error: (err) => err.res?.data?.message,
+      });
       localStorage.setItem("userInfo", JSON.stringify(response.data.payload));
       setIsLogin(true);
       setUser(response.data.payload);
@@ -137,6 +160,31 @@ function Register() {
                 </p>
               )}
             </div>
+
+            {selectRole === "recruiter" && (
+              <div>
+                <label
+                  htmlFor="companyName"
+                  className="mb-2 block font-medium text-slate-200"
+                >
+                  Company Name
+                </label>
+
+                <input
+                  type="text"
+                  id="companyName"
+                  placeholder="Enter your Company name"
+                  required
+                  className="w-full rounded-xl border border-white/10 bg-[#0B1120] px-3 py-3 text-slate-100 outline-none placeholder:text-slate-400 focus:border-violet-500"
+                  {...register("companyName")}
+                />
+                {errors.companyName && (
+                  <p className="text-red-400 mx-2 my-1">
+                    {errors.companyName.message}
+                  </p>
+                )}
+              </div>
+            )}
 
             <div>
               <label

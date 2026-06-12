@@ -5,7 +5,7 @@ import { generateToken } from "../Utility/generateToken.js";
 
 export const register = async (req, res) => {
   try {
-    const { fullName, email, password, role } = req.body;
+    const { fullName, email, password, role, companyName } = req.body;
     const alreadyUser = await User.findOne({ email });
     if (alreadyUser) {
       return res.status(409).json({success:false, message: "Username already exist" });
@@ -17,6 +17,9 @@ export const register = async (req, res) => {
       email,
       password: hashedPassword,
       role,
+      profile:{
+        companyName
+      }
     });
 
     const payload = {
