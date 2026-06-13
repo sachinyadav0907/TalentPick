@@ -44,7 +44,7 @@ export const fetchJobs = async (req, res) => {
       .limit(safeLimit)
       .lean();
 
-      const jobs = await mongodbQuery;
+    const jobs = await mongodbQuery;
 
     const hasMore = skip + jobs.length < totalJobs;
 
@@ -63,5 +63,32 @@ export const fetchJobs = async (req, res) => {
       success: false,
       message: "Internal server error",
     });
+  }
+};
+
+export const DeleteJob = async (req, res) => {
+  try {
+    if (req.user.role !== "recruiter")
+      return res.status(403).json({ success: false, message: "Forbidden" });
+    const jobId = req.params.id;
+    const job = await Job.findById(jobId);
+    if (!job)
+      return res.status(404).json({
+        success: false,
+        message: "Job not found",
+      });
+    if (job.recruiter.toString() !== req.user.id.toString())
+      return res
+        .status(403)
+        .json({ success: false, message: "You can only delete your own jobs" });
+    await job.deleteOne();
+    return res
+      .status(200)
+      .json({ success: true, message: "Job is deleted successfully" });
+  } catch (error) {
+    console.log("Delete Job error", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 };
