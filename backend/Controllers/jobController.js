@@ -39,7 +39,7 @@ export const fetchJobs = async (req, res) => {
 
     const mongodbQuery = Job.find(query)
       .populate("recruiter")
-      .sort({ createdAt: -1 })
+      .sort({createdAt:-1, _id: -1 })
       .skip(skip)
       .limit(safeLimit)
       .lean();
