@@ -14,8 +14,9 @@ import { BiRupee } from "react-icons/bi";
 import { BsPeople } from "react-icons/bs";
 import { LuCalendarClock } from "react-icons/lu";
 import { useAuth } from "../Contexts/AuthContext.jsx";
+import axios from "axios";
 
-function JobCard({job}) {
+function JobCard({ job, onDeleteClick }) {
   const { isRecruiter } = useAuth();
 
   const companyTags =
@@ -75,10 +76,11 @@ function JobCard({job}) {
         </div>
 
         <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-
           <div className={detailTags}>
             <BiRupee className="text-lg text-violet-400" />
-            <span>₹{job.salary.min}L - ₹{job.salary.max}L / year</span>
+            <span>
+              ₹{job.salary.min}L - ₹{job.salary.max}L / year
+            </span>
           </div>
 
           <div className={detailTags}>
@@ -98,7 +100,9 @@ function JobCard({job}) {
 
           <div className={detailTags}>
             <MdWorkOutline className="text-lg text-violet-400" />
-            <span>{job.experience.min} - {job.experience.max} Years Experience</span>
+            <span>
+              {job.experience.min} - {job.experience.max} Years Experience
+            </span>
           </div>
 
           <div className={detailTags}>
@@ -150,7 +154,10 @@ function JobCard({job}) {
               Save Job
             </button>
           ) : (
-            <button className="group flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 py-3 text-lg font-medium text-red-300 transition-all duration-300 hover:-translate-y-1 hover:border-red-500/40 hover:bg-red-500/20">
+            <button
+              onClick={() => onDeleteClick(job._id)}
+              className="group flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 py-3 text-lg font-medium text-red-300 transition-all duration-300 hover:-translate-y-1 hover:border-red-500/40 hover:bg-red-500/20"
+            >
               <RiDeleteBin6Line className="text-2xl transition-transform duration-300 group-hover:scale-110" />
               Remove Job
             </button>

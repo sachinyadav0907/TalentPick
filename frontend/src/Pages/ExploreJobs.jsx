@@ -62,9 +62,14 @@ function ExploreJobs() {
     <div>
       <Navbar />
       {jobs.map((job, index) => {
-        return <JobCard key={index} job={job} />;
+        return <JobCard key={job._id} job={job} />;
       })}
-      <div ref={loaderRef}>Loading...</div>
+      <div
+        ref={loaderRef}
+        className="text-center py-5 text-white"
+      >
+        {loading && "Loading..."}
+      </div>
       <Footer />
     </div>
   );
