@@ -8,8 +8,9 @@ import {
   FaUsers,
   FaClock,
   FaCalendarAlt,
+  FaUserGraduate,
 } from "react-icons/fa";
-import {z} from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -24,11 +25,12 @@ const jobSchema = z.object({
     .min(2, "Title is required")
     .max(30, "Title must not exceed 30 characters"),
 
-  skills: z
-    .string()
-    .transform((val) =>
-      val.split(",").map((s) => s.trim()).filter(Boolean)
-    ),
+  skills: z.string().transform((val) =>
+    val
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean),
+  ),
 
   experience: z
     .object({
@@ -45,33 +47,30 @@ const jobSchema = z.object({
       {
         message: "Max experience should be greater than min",
         path: ["max"],
-      }
+      },
     ),
+
+  education: z.string().optional(),
 
   salary: z
     .object({
       min: z.coerce.number().min(0, "Invalid salary"),
       max: z.coerce.number().min(0, "Invalid salary"),
     })
-    .refine(
-      (data) => data.min <= data.max,
-      {
-        message: "Max salary should be greater than min",
-        path: ["max"],
-      }
-    ),
+    .refine((data) => data.min <= data.max, {
+      message: "Max salary should be greater than min",
+      path: ["max"],
+    }),
 
-  opening: z.coerce.number().min(1, "At least 1 opening required"),
+  openings: z.coerce.number().min(1, "At least 1 opening required"),
 
-  jobType: z.enum(
-    ["Full Time", "Part Time", "Internship", "Contract"],
-    { required_error: "Job type is required" }
-  ),
+  jobType: z.enum(["Full Time", "Part Time", "Internship", "Contract"], {
+    required_error: "Job type is required",
+  }),
 
-  workplaceType: z.enum(
-    ["Remote", "Hybrid", "Onsite"],
-    { required_error: "Workplace is required" }
-  ),
+  workplaceType: z.enum(["Remote", "Hybrid", "Onsite"], {
+    required_error: "Workplace is required",
+  }),
 
   location: z.string().min(2, "Location is required"),
 
@@ -80,43 +79,50 @@ const jobSchema = z.object({
     .min(10, "Description must be at least 10 characters")
     .max(500, "Description must not exceed 500 characters"),
 
-  applicationDeadline: z
-    .coerce
-    .date()
-    .refine((date) => date >= new Date(), {
-      message: "Deadline cannot be in the past",
-    }),
+  applicationDeadline: z.coerce.date().refine((date) => date >= new Date(), {
+    message: "Deadline cannot be in the past",
+  }),
 });
 
-function PostJob() {
-
+const PostJob = () => {
   const navigate = useNavigate();
-  const {register, handleSubmit, formState:{errors}}= useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(jobSchema),
-  })
+  });
 
-  const handleJob = async(data)=>{
+  const handleJob = async (data) => {
     console.log(data);
     try {
-      const jobPromise = axios.post("http://localhost:5000/api/job/create",data,{
-        withCredentials:true
-      } )
+      const jobPromise = axios.post(
+        "http://localhost:5000/api/job/create",
+        data,
+        {
+          withCredentials: true,
+        },
+      );
 
       const createJob = await toast.promise(jobPromise, {
         loading: "Posting...",
         success: (res) => res.data.message,
         error: (err) => err?.response?.data?.message || "Internal server error",
       });
-      navigate("/my-jobs")
+      navigate("/my-jobs");
     } catch (error) {
       console.log(error?.response?.message);
     }
-  }
+  };
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col">
       <Navbar />
 
-      <form className="flex-1 flex justify-center items-center px-4 py-8 sm:px-6 lg:px-8" onSubmit={handleSubmit(handleJob)}>
+      <form
+        className="flex-1 flex justify-center items-center px-4 py-8 sm:px-6 lg:px-8"
+        onSubmit={handleSubmit(handleJob)}
+      >
         <div className="w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden">
           <div className="bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 px-6 sm:px-10 py-8">
             <h1 className="text-3xl sm:text-4xl font-bold text-white">
@@ -142,8 +148,8 @@ function PostJob() {
                     className="w-full bg-slate-800 border border-slate-700 rounded-xl pl-11 pr-4 py-3 text-white outline-none focus:border-indigo-500"
                     {...register("title")}
                   />
-                    
-                </div><ErrorMessage message={errors.title?.message} />
+                </div>
+                <ErrorMessage message={errors.title?.message} />
               </div>
 
               <div className="md:col-span-2">
@@ -157,11 +163,29 @@ function PostJob() {
                   className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-indigo-500"
                   {...register("skills")}
                 />
-                 <ErrorMessage message={errors.skills?.message} />
+                <ErrorMessage message={errors.skills?.message} />
 
                 <p className="text-xs text-slate-400 mt-2">
                   Use , to separate skills.
                 </p>
+              </div>
+
+              <div>
+                <label className="block text-slate-300 mb-2">
+                  Education Requirement
+                </label>
+
+                <div className="relative">
+                  <FaUserGraduate  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+
+                  <input
+                    type="text"
+                    placeholder="Bachelor In IT"
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl pl-11 pr-4 py-3 text-white outline-none focus:border-indigo-500"
+                    {...register("education")}
+                  />
+                   
+                </div><ErrorMessage message={errors.education?.message} />
               </div>
 
               <div>
@@ -193,7 +217,12 @@ function PostJob() {
                       {...register("experience.max")}
                     />
                   </div>
-                  <ErrorMessage message={errors.experience?.max?.message || errors.experience?.message} />
+                  <ErrorMessage
+                    message={
+                      errors.experience?.max?.message ||
+                      errors.experience?.message
+                    }
+                  />
                 </div>
 
                 <p className="text-xs text-slate-400 mt-2">
@@ -212,10 +241,10 @@ function PostJob() {
                     type="number"
                     placeholder="5"
                     className="w-full bg-slate-800 border border-slate-700 rounded-xl pl-11 pr-4 py-3 text-white outline-none focus:border-indigo-500"
-                    {...register("opening")}
+                    {...register("openings")}
                   />
-                  
-                </div><ErrorMessage message={errors.opening?.message} />
+                </div>
+                <ErrorMessage message={errors.openings?.message} />
               </div>
 
               <div>
@@ -247,10 +276,14 @@ function PostJob() {
                       {...register("salary.max")}
                     />
                   </div>
-                  <ErrorMessage message={errors.salary?.max?.message || errors.salary?.message} />
+                  <ErrorMessage
+                    message={
+                      errors.salary?.max?.message || errors.salary?.message
+                    }
+                  />
                 </div>
                 <p className="text-xs text-slate-400 mt-2">
-                 Enter salary in Lakhs Per Annum
+                  Enter salary in Lakhs Per Annum
                 </p>
               </div>
 
@@ -268,14 +301,17 @@ function PostJob() {
                     className="w-full bg-slate-800 border border-slate-700 rounded-xl pl-11 pr-4 py-3 text-white outline-none focus:border-indigo-500"
                     {...register("location")}
                   />
-                   
-                </div><ErrorMessage message={errors.location?.message} />
+                </div>
+                <ErrorMessage message={errors.location?.message} />
               </div>
 
               <div>
                 <label className="block text-slate-300 mb-2">Job Type</label>
 
-                <select className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-indigo-500" {...register("jobType")}>
+                <select
+                  className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-indigo-500"
+                  {...register("jobType")}
+                >
                   <option>Full Time</option>
                   <option>Part Time</option>
                   <option>Internship</option>
@@ -289,7 +325,10 @@ function PostJob() {
                   Workspace Type
                 </label>
 
-                <select className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-indigo-500" {...register("workplaceType")}>
+                <select
+                  className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-indigo-500"
+                  {...register("workplaceType")}
+                >
                   <option>Remote</option>
                   <option>Hybrid</option>
                   <option>Onsite</option>
@@ -311,9 +350,8 @@ function PostJob() {
                     className="w-full bg-slate-800 border border-slate-700 rounded-xl pl-11 pr-4 py-3 text-white outline-none focus:border-indigo-500"
                     {...register("applicationDeadline")}
                   />
-                  
-                </div><ErrorMessage message={errors.applicationDeadline?.message} />
-
+                </div>
+                <ErrorMessage message={errors.applicationDeadline?.message} />
 
                 <p className="text-xs text-slate-400 mt-2">
                   Select the last date to apply
@@ -336,7 +374,10 @@ function PostJob() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
-              <button type="submit" className="w-full sm:w-fit bg-indigo-600 hover:bg-indigo-500 transition px-8 py-3 rounded-xl text-white font-semibold">
+              <button
+                type="submit"
+                className="w-full sm:w-fit bg-indigo-600 hover:bg-indigo-500 transition px-8 py-3 rounded-xl text-white font-semibold"
+              >
                 Publish Job
               </button>
             </div>
@@ -347,6 +388,6 @@ function PostJob() {
       <Footer />
     </div>
   );
-}
+};
 
 export default PostJob;
