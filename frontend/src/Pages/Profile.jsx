@@ -18,7 +18,15 @@ import { success } from "zod";
 import { useEffect } from "react";
 
 function Profile() {
-  const { setIsLogin, user, isRecruiter, setProfileData, profileData, setProfilePhoto, profilePhoto } = useAuth();
+  const {
+    setIsLogin,
+    user,
+    isRecruiter,
+    setProfileData,
+    profileData,
+    setProfilePhoto,
+    profilePhoto,
+  } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,10 +37,10 @@ function Profile() {
           { withCredentials: true },
         );
         setProfileData(response.data.payload);
-        setProfilePhoto(response.data.payload.profile.profilePhoto.secure_url)
+        setProfilePhoto(response.data.payload.profile.profilePhoto.secure_url);
         console.log(response.data.payload);
       } catch (error) {
-        toast.error(error?.response?.message || "Something went wrong")
+        toast.error(error?.response?.message || "Something went wrong");
       }
     };
     fetchProfileData();
@@ -81,7 +89,6 @@ function Profile() {
           </div>
 
           <div className="pt-20 sm:pt-24 px-5 sm:px-10 pb-8">
-            {" "}
             {!isRecruiter ? (
               <div className="flex flex-col gap-8">
                 <div className="text-center sm:text-left">
@@ -101,7 +108,7 @@ function Profile() {
                   </h2>
 
                   <p className="text-slate-300 leading-7">
-                   {profileData?.profile?.jobseekerAbout}
+                    {profileData?.profile?.jobseekerAbout}
                   </p>
                 </div>
 
@@ -184,6 +191,10 @@ function Profile() {
                     </a>
                   </div>
                 </div>
+                <div className="flex flex-wrap justify-center gap-8 text-xl text-gray-400">
+                  <p>Email : {profileData?.email}</p>
+                  <p>Contact No: {profileData?.profile?.jobseekerPhoneNumber}</p>
+                </div>
                 <button
                   className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2 active:scale-95 focus:scale-95"
                   onClick={handleLogout}
@@ -224,14 +235,16 @@ function Profile() {
                   </h2>
 
                   <div className="flex flex-wrap gap-3">
-                    {profileData?.profile?.companyPreferredJob?.map((role, index) => (
-                      <span
-                        key={index}
-                        className="bg-slate-800 text-slate-200 px-4 py-2 rounded-xl text-sm"
-                      >
-                        {role}
-                      </span>
-                    ))}
+                    {profileData?.profile?.companyPreferredJob?.map(
+                      (role, index) => (
+                        <span
+                          key={index}
+                          className="bg-slate-800 text-slate-200 px-4 py-2 rounded-xl text-sm"
+                        >
+                          {role}
+                        </span>
+                      ),
+                    )}
                   </div>
                 </div>
 
@@ -247,6 +260,10 @@ function Profile() {
                     <FaGlobe />
                     {profileData?.profile?.companyWebsite}
                   </a>
+                </div>
+                <div className="flex flex-wrap justify-center gap-8 text-xl text-gray-400">
+                  <p>Email : {profileData?.email}</p>
+                  <p>Contact No: {profileData?.profile?.companyPhoneNumber}</p>
                 </div>
                 <button
                   className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2 active:scale-95 focus:scale-95"
@@ -267,4 +284,3 @@ function Profile() {
 }
 
 export default Profile;
-

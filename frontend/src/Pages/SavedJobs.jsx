@@ -5,9 +5,9 @@ import JobCard from '../Components/JobCard.jsx';
 
 function SavedJobs() {
   return (
-    <div>
+    <div className='flex flex-col min-h-screen'>
       <Navbar/>
-      <JobCard/>
+      <p className='grow'>saved jobs</p>
       <Footer/>
     </div>
   )

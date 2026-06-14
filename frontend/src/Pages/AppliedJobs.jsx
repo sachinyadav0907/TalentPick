@@ -7,7 +7,7 @@ function AppliedJobs() {
   return (
     <div>
       <Navbar/>
-      <JobCard/>
+      <p>Apllied Job</p>
       <Footer/>
     </div>
   )
