@@ -3,7 +3,7 @@ import Job from "../Model/jobModel.js";
 export const createJob = async (req, res) => {
   try {
     if (req.user.role !== "recruiter") {
-      return res.status(403).json({ message: "Unauthorized user" });
+      return res.status(403).json({ message: "Forbidden" });
     }
     const frontendData = req.body;
     const jobData = {
@@ -39,7 +39,7 @@ export const fetchJobs = async (req, res) => {
 
     const mongodbQuery = Job.find(query)
       .populate("recruiter")
-      .sort({createdAt:-1, _id: -1 })
+      .sort({ updatedAt: -1, _id: -1 })
       .skip(skip)
       .limit(safeLimit)
       .lean();
@@ -90,5 +90,68 @@ export const DeleteJob = async (req, res) => {
     return res
       .status(500)
       .json({ success: false, message: "Internal Server Error" });
+  }
+};
+
+export const updateJob = async (req, res) => {
+  try {
+    if (req.user.role !== "recruiter") {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+    const frontendData = req.body;
+    const jobData = {
+      ...frontendData,
+      recruiter: req.user.id,
+    };
+    const job = await Job.findById(req.params.id);
+    if (!job)
+      return res.status(404).json({ success: false, message: "job not found" });
+    if (job.recruiter.toString() !== req.user.id.toString())
+      return res
+        .status(403)
+        .json({ success: false, message: "You can only Edit your own jobs" });
+    const updatedJob = await Job.findByIdAndUpdate(req.params.id, jobData, {
+      returnDocument: 'after',
+      runValidators: true,
+    });
+    return res.status(200).json({
+      success: true,
+      updatedJob,
+      message: "Job is updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
+export const fetchSingleJob = async (req, res) => {
+  try {
+    if (req.user.role !== "recruiter") {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+    const job = await Job.findById(req.params.id);
+    if (!job)
+      return res.status(404).json({
+        success: false,
+        message: "Job not found",
+      });
+    if (job.recruiter.toString() !== req.user.id.toString())
+      return res.status(403).json({
+        success: false,
+        message: "You can only fetch and edit your own jobs",
+      });
+    return res.status(200).json({
+      success: true,
+      job,
+      message: "Job data is fetched successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
   }
 };

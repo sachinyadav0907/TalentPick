@@ -95,7 +95,7 @@ export const editProfile = async (req, res) => {
     const response = await User.findByIdAndUpdate(
       req.user.id,
       { $set: updates },
-      { new: true },
+      { returnDocument: 'after' },
     );
     res.status(201).json({
       success: true,
