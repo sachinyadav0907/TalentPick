@@ -169,10 +169,10 @@ function JobCard({ job, onDeleteClick }) {
               Apply Now
             </button>
           ) : (
-            <button className="group flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/10 py-3 text-lg font-medium text-emerald-300 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-emerald-500/20">
+            <Link to={`/edit-job/${job._id}`} className="group flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/10 py-3 text-lg font-medium text-emerald-300 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-emerald-500/20">
               <FaRegEdit className="text-2xl transition-transform duration-300 group-hover:scale-110" />
               Edit Details
-            </button>
+            </Link>
           )}
         </div>
       </article>

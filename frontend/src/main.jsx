@@ -21,6 +21,7 @@ import GuestRoute from "./Components/GuestRoute.jsx";
 import { Toaster } from "react-hot-toast";
 import ExploreJobs from "./Pages/ExploreJobs.jsx";
 import {JobsProvider} from "./Contexts/JobsContext.jsx";
+import EditJob from "./Pages/EditJob.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -122,6 +123,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             element={
               <ProtectedRoute>
                 <PostJobs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit-job/:id"
+            element={
+              <ProtectedRoute>
+                <EditJob />
               </ProtectedRoute>
             }
           />
