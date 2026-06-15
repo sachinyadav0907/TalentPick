@@ -4,6 +4,7 @@ dotenv.config();
 import authRoutes from "./Routes/authRoutes.js";
 import profileRoutes from "./Routes/profileRoutes.js"
 import jobRoutes from "./Routes/jobRoutes.js"
+import feedbackRoutes from "./Routes/feedbackRoutes.js"
 import cookiesParser from "cookie-parser";
 import cors from "cors"
 import connectDB from "./Config/db.js";
@@ -24,6 +25,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api" , globalLimiter)
 app.use("/api/profile", profileRoutes)
 app.use("/api/job", jobRoutes);
+app.use("/api/feedback", feedbackRoutes)
 
 
 app.use((err, req, res, next) => {
