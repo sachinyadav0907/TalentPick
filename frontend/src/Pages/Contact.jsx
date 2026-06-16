@@ -6,6 +6,7 @@ import Navbar from "../Components/Navbar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const contactSchema = z.object({
   name: z
@@ -30,12 +31,14 @@ const contactSchema = z.object({
 });
 
 export default function ContactUs() {
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors},
   } = useForm({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -48,6 +51,7 @@ export default function ContactUs() {
 
   const onSubmit = async (data) => {
     try {
+      setIsSubmitting(true);
       console.log(data);
       await axios.post("http://localhost:5000/api/feedback/store",data)
       reset();
@@ -55,6 +59,8 @@ export default function ContactUs() {
     } catch (error) {
       console.error(error);
       toast.error(error.response?.data?.message||"Something went wrong");
+    }finally{
+      setIsSubmitting(false);
     }
   };
 
@@ -184,7 +190,6 @@ export default function ContactUs() {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
                   className="w-full md:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-lg transition"
                 >
                   {isSubmitting ? "Submitting..." : "Send Feedback"}

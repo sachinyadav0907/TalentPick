@@ -9,14 +9,15 @@ import { IoMdExit } from "react-icons/io";
 function Navbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const {user, isRecruiter} = useAuth();
+  const { user, isRecruiter } = useAuth();
   return (
     <>
       <nav className="w-full h-16 flex justify-between items-center sticky top-0 z-40 bg-slate-950 border-b border-white/10 px-3 text-slate-200">
         <AiOutlineMenuUnfold
           className="text-4xl opacity-70 cursor-pointer ownNav:hidden hover:text-violet-400 transition"
-          onClick={() => {setIsOpen(true)}
-          }
+          onClick={() => {
+            setIsOpen(true);
+          }}
         />
 
         <ul className="hidden ownNav:flex gap-8 opacity-90 items-center">
@@ -28,6 +29,19 @@ function Navbar() {
               Home
             </Link>
           </li>
+
+          {!isRecruiter && (
+            <li>
+              {" "}
+              <Link
+                to="/explore-jobs"
+                className="block px-3 py-2 rounded-lg text-lg font-medium hover:bg-slate-800 hover:text-violet-400 transition"
+                onClick={() => setIsOpen(false)}
+              >
+                Explore Jobs
+              </Link>
+            </li>
+          )}
 
           <li>
             {!isRecruiter ? (
@@ -84,16 +98,16 @@ function Navbar() {
             )}
           </li>
 
-          
-
-          
-            {isRecruiter && <li><Link
+          {isRecruiter && (
+            <li>
+              <Link
                 to="/profile"
                 className="text-lg font-medium hover:text-violet-400 transition"
               >
                 Profile
-              </Link></li>}
-          
+              </Link>
+            </li>
+          )}
         </ul>
 
         <img
