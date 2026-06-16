@@ -115,7 +115,7 @@ function ExploreJobs() {
 
       <div
         ref={loaderRef}
-        className="text-center py-5 text-white"
+        className="text-center py-5 text-white bg-[#081028]"
       >
         {loading && "Loading..."}
       </div>
