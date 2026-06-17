@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { FiSearch, FiFilter } from "react-icons/fi";
 import FilterModal from "../Components/FilterModal";
+import axios from "axios";
 
 function ExploreJobs() {
   const [jobs, setJobs] = useState([]);
@@ -15,12 +16,29 @@ function ExploreJobs() {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
+  const [appliedSearch, setAppliedSearch] = useState("");
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState({});
   const { fetchJobs } = useJobs();
 
   const loaderRef = useRef(null);
 
   const handleFilters = (filters) => {
-    console.log(filters);
+    console.log(filters)
+    setPage(1);
+    setJobs([]);
+    setFilter(filters);
+    setHasMore(true);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    setJobs([]);
+    setHasMore(true);
+    setPage(1);
+
+    setAppliedSearch(search);
   };
 
   useEffect(() => {
@@ -30,21 +48,25 @@ function ExploreJobs() {
       setLoading(true);
 
       try {
-        const response = await fetchJobs(page, 10);
+        const response = await fetchJobs({
+          page,
+          search: appliedSearch,
+          ...filter,
+        });
 
         const jobsData = response.data.payload;
         console.log(response);
 
-        setHasMore(response.data.hasMore);
+        setHasMore(response.data.pagination.hasMore);
 
-        setJobs((prev) => [...prev, ...jobsData]);
+        setJobs((prev) => (page === 1 ? jobsData : [...prev, ...jobsData]));
       } finally {
         setLoading(false);
       }
     };
 
     loadJobs();
-  }, [page]);
+  }, [page, appliedSearch, filter]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -69,19 +91,30 @@ function ExploreJobs() {
     <div>
       <Navbar />
       <div className="flex items-center justify-center gap-3 px-4 py-6 bg-[#081028]">
-        <div className="flex items-center overflow-hidden rounded-xl border border-slate-300 bg-white shadow-sm w-full max-w-4xl justify-between">
+        <form
+          className="flex items-center overflow-hidden rounded-xl border border-slate-300 bg-white shadow-sm w-full max-w-4xl justify-between"
+          onSubmit={handleSearch}
+        >
           <input
             type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="Job title, keyword, or company"
             className="px-4 py-2 text-lg md:text-xl outline-none"
           />
 
-          <button className="bg-blue-600 p-3 text-white hover:bg-blue-700 transition">
+          <button
+            type="submit"
+            className="bg-blue-600 p-3 text-white hover:bg-blue-700 transition"
+          >
             <FiSearch size={25} />
           </button>
-        </div>
+        </form>
 
-        <button className="flex items-center justify-center rounded-xl border border-slate-300 bg-white p-2 text-slate-700 hover:bg-slate-100 transition" onClick={()=>setShowFilters(true)}>
+        <button
+          className="flex items-center justify-center rounded-xl border border-slate-300 bg-white p-2 text-slate-700 hover:bg-slate-100 transition"
+          onClick={() => setShowFilters(true)}
+        >
           <FiFilter size={30} className="block md:hidden" />
 
           <span className="hidden md:block md:text-xl">Filter</span>

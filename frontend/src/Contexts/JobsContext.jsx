@@ -5,10 +5,25 @@ import toast from "react-hot-toast";
 const JobsContext = createContext();
 
 export const JobsProvider = ({ children }) => {
-  const fetchJobs = async (page, limit=10) => {
-    return axios.get(
-      `http://localhost:5000/api/job/fetch?page=${page}&limit=${limit}`,
-      {
+  const fetchJobs = async ({
+    page = 1,
+    limit = 10,
+    search = "",
+    salary = "",
+    jobType = "",
+    experience = "",
+    remote = "",
+  } = {}) => {
+    return axios.get("http://localhost:5000/api/job/fetch", {
+      params: {
+        page,
+        limit,
+        search,
+        salary,
+        jobType,
+        experience,
+        remote,
+      },
         withCredentials: true,
       },
     );}

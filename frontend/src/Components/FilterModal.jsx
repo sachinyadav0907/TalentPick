@@ -10,7 +10,7 @@ function FilterModal({
       salary: "",
       experience: "",
       jobType: "",
-      remoteOnly: false,
+      remote: false,
     },
   });
 
@@ -53,7 +53,7 @@ function FilterModal({
               <option value="0-3">₹0 - ₹3 LPA</option>
               <option value="3-6">₹3 - ₹6 LPA</option>
               <option value="6-10">₹6 - ₹10 LPA</option>
-              <option value="10+">₹10+ LPA</option>
+              <option value="10">₹10+ LPA</option>
             </select>
           </div>
 
@@ -71,7 +71,7 @@ function FilterModal({
               <option value="0">Fresher</option>
               <option value="1-3">1 - 3 Years</option>
               <option value="3-5">3 - 5 Years</option>
-              <option value="5+">5+ Years</option>
+              <option value="5">5+ Years</option>
             </select>
           </div>
 
@@ -86,10 +86,10 @@ function FilterModal({
               className="w-full rounded-xl border border-slate-600 bg-[#1E293B] p-3 text-white outline-none focus:border-blue-500"
             >
               <option value="">All Types</option>
-              <option value="full-time">Full Time</option>
-              <option value="part-time">Part Time</option>
-              <option value="contract">Contract</option>
-              <option value="internship">Internship</option>
+              <option value="Full Time">Full Time</option>
+              <option value="Part Time">Part Time</option>
+              <option value="Contract">Contract</option>
+              <option value="Internship">Internship</option>
             </select>
           </div>
 
@@ -97,13 +97,13 @@ function FilterModal({
           <div className="mb-6 flex items-center gap-3">
             <input
               type="checkbox"
-              id="remoteOnly"
-              {...register("remoteOnly")}
+              id="remote"
+              {...register("remote")}
               className="h-5 w-5 accent-blue-600"
             />
 
             <label
-              htmlFor="remoteOnly"
+              htmlFor="remote"
               className="text-slate-300"
             >
               Remote Only
