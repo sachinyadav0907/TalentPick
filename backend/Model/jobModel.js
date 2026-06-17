@@ -15,6 +15,12 @@ const jobSchema = new mongoose.Schema(
       trim: true,
     },
 
+    companyName: {
+      type:String,
+      required:true,
+      trim:true,
+    },
+
     location: {
       type: String,
       required: true,
@@ -82,6 +88,13 @@ const jobSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+jobSchema.index({
+  title: "text",
+  location: "text",
+  companyName: "text",
+  skills: "text",
+});
 
 const Job = mongoose.model("Job", jobSchema);
 

@@ -1,16 +1,24 @@
 import Job from "../Model/jobModel.js";
+import User from "../Model/userAuth.js";
 
 export const createJob = async (req, res) => {
   try {
     if (req.user.role !== "recruiter") {
       return res.status(403).json({ message: "Forbidden" });
     }
+    const companyNameResponse = await User.findById(req.user.id).select(
+      "profile.companyName -_id",
+    );
+    console.log(companyNameResponse);
+    const companyName = companyNameResponse.profile?.companyName;
     const frontendData = req.body;
     const jobData = {
       ...frontendData,
+      companyName,
       recruiter: req.user.id,
     };
     const response = await Job.create(jobData);
+    console.log(response);
     return res.status(201).json({
       success: true,
       payload: response,
@@ -24,40 +32,85 @@ export const createJob = async (req, res) => {
 
 export const fetchJobs = async (req, res) => {
   try {
-    const { page, limit } = req.query;
+    const { search, salary, jobType, experience, remote, page, limit } =
+      req.query;
 
     const safePage = Math.max(1, Number(page) || 1);
-
     const safeLimit = Math.min(50, Math.max(1, Number(limit) || 10));
 
     const skip = (safePage - 1) * safeLimit;
 
-    const query =
-      req.user.role === "recruiter" ? { recruiter: req.user.id } : {};
+    const query = {};
 
-    const totalJobs = await Job.countDocuments(query);
+    if (req.user.role === "jobseeker") {
+      if (search?.trim()) {
+        query.$text = {
+          $search: search.trim(),
+        };
+      }
+      if (salary?.trim()) {
+        const [min, max] = salary.split("-").map(Number);
 
-    const mongodbQuery = Job.find(query)
-      .populate("recruiter")
-      .sort({ updatedAt: -1, _id: -1 })
-      .skip(skip)
-      .limit(safeLimit)
-      .lean();
+        if (!Number.isNaN(min) && !Number.isNaN(max)) {
+          query["salary.min"] = { $lte: max };
+          query["salary.max"] = { $gte: min };
+        }
+      }
 
-    const jobs = await mongodbQuery;
+      if (jobType?.trim()) {
+        query.jobType = jobType.trim();
+      }
+
+      if (experience?.trim()) {
+        const [min, max] = experience.split("-").map(Number);
+
+        if (!Number.isNaN(min) && !Number.isNaN(max)) {
+          query["experience.min"] = { $lte: max };
+          query["experience.max"] = { $gte: min };
+        }
+      }
+
+      if (remote === 'true') {
+        query.workplaceType = "Remote";
+      }
+    } else if (req.user.role === "recruiter") {
+      query.recruiter = req.user.id;
+    }
+
+    console.log(query);
+
+    const [totalJobs, jobs] = await Promise.all([
+      Job.countDocuments(query),
+
+      Job.find(query)
+        .populate(
+          "recruiter",
+          "profile.profilePhoto.secure_url profile.companyName",
+        )
+        .sort({ updatedAt: -1, _id: -1 })
+        .skip(skip)
+        .limit(safeLimit)
+        .lean(),
+    ]);
 
     const hasMore = skip + jobs.length < totalJobs;
 
     return res.status(200).json({
       success: true,
       payload: jobs,
-      page: safePage,
-      totalJobs,
-      hasMore,
+
+      pagination: {
+        page: safePage,
+        limit: safeLimit,
+        totalJobs,
+        totalPages: Math.ceil(totalJobs / safeLimit),
+        hasMore,
+      },
+
       message: "Jobs fetched successfully",
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error retrieving jobs:", error);
 
     return res.status(500).json({
       success: false,
@@ -111,7 +164,7 @@ export const updateJob = async (req, res) => {
         .status(403)
         .json({ success: false, message: "You can only Edit your own jobs" });
     const updatedJob = await Job.findByIdAndUpdate(req.params.id, jobData, {
-      returnDocument: 'after',
+      returnDocument: "after",
       runValidators: true,
     });
     return res.status(200).json({

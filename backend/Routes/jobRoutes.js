@@ -9,6 +9,6 @@ router.post("/create", protectMiddleware, jobValidator, createJob)
 router.get("/fetch", protectMiddleware, fetchJobs);
 router.delete("/delete/:id", protectMiddleware, DeleteJob);
 router.patch("/update/:id", protectMiddleware, jobValidator, updateJob);
-router.get("/find/:id",protectMiddleware,fetchSingleJob)
+router.get("/find/:id",protectMiddleware,fetchSingleJob);
 
 export default router;
