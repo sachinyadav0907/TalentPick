@@ -9,6 +9,7 @@ import { useRef } from "react";
 import { FiSearch, FiFilter } from "react-icons/fi";
 import FilterModal from "../Components/FilterModal";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function ExploreJobs() {
   const [jobs, setJobs] = useState([]);
@@ -87,6 +88,19 @@ function ExploreJobs() {
     return () => observer.disconnect();
   }, [loading, hasMore]);
 
+  const handleApply = async(jobId)=>{
+    try {
+      await axios.post("http://localhost:5000/api/application/create",{jobId},
+        {
+          withCredentials:true,
+        }
+      );
+      toast.success("Applied successfully")
+    } catch (error) {
+      toast.error(error.response?.message || "Something went wrong")
+    }
+  }
+
   return (
     <div>
       <Navbar />
@@ -126,7 +140,7 @@ function ExploreJobs() {
         />
       </div>
       {jobs.map((job, index) => {
-        return <JobCard key={job._id} job={job} />;
+        return <JobCard key={job._id} job={job} onApply={handleApply} />;
       })}
       <div ref={loaderRef} className="text-center py-5 text-white bg-[#081028]">
         {loading && "Loading..."}

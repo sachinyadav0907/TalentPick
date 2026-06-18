@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { SiTicktick } from "react-icons/si";
 import { IoStarOutline } from "react-icons/io5";
@@ -16,8 +16,9 @@ import { LuCalendarClock } from "react-icons/lu";
 import { useAuth } from "../Contexts/AuthContext.jsx";
 import axios from "axios";
 
-function JobCard({ job, onDeleteClick }) {
+function JobCard({ job, onDeleteClick, onApply }) {
   const { isRecruiter } = useAuth();
+  const [applied, setApplied] = useState(false);
 
   const companyTags =
     "flex items-center gap-1 rounded-full border border-gray-600 bg-gray-800 px-3 py-1 text-xs text-green-400";
@@ -155,7 +156,9 @@ function JobCard({ job, onDeleteClick }) {
             </button>
           ) : (
             <button
-              onClick={() => onDeleteClick(job._id)}
+              onClick={() => {
+                onDeleteClick(job._id);
+              }}
               className="group flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 py-3 text-lg font-medium text-red-300 transition-all duration-300 hover:-translate-y-1 hover:border-red-500/40 hover:bg-red-500/20"
             >
               <RiDeleteBin6Line className="text-2xl transition-transform duration-300 group-hover:scale-110" />
@@ -164,12 +167,22 @@ function JobCard({ job, onDeleteClick }) {
           )}
 
           {!isRecruiter ? (
-            <button className="group flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-violet-600 to-indigo-600 py-3 text-lg font-medium text-white shadow-lg shadow-violet-900/30 transition-all duration-300 hover:-translate-y-1 hover:from-violet-500 hover:to-indigo-500">
+            <button
+              disabled={applied}
+              onClick={() => {
+                onApply(job._id);
+                setApplied(true);
+              }}
+              className={`group flex w-full items-center justify-center gap-2 rounded-xl  py-3 text-lg font-medium text-white ${applied ? "bg-gray-500 cursor-not-allowed" : "bg-linear-to-r from-violet-600 to-indigo-600 shadow-lg shadow-violet-900/30 transition-all duration-300 hover:-translate-y-1 hover:from-violet-500 hover:to-indigo-500"}`}
+            >
               <AiOutlineThunderbolt className="text-2xl transition-transform duration-300 group-hover:rotate-12" />
-              Apply Now
+              {applied ? "Applied" : "Apply Now"}
             </button>
           ) : (
-            <Link to={`/edit-job/${job._id}`} className="group flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/10 py-3 text-lg font-medium text-emerald-300 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-emerald-500/20">
+            <Link
+              to={`/edit-job/${job._id}`}
+              className="group flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/10 py-3 text-lg font-medium text-emerald-300 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-emerald-500/20"
+            >
               <FaRegEdit className="text-2xl transition-transform duration-300 group-hover:scale-110" />
               Edit Details
             </Link>
