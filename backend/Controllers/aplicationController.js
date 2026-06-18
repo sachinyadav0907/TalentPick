@@ -1,7 +1,7 @@
 import Application from "../Model/applicationModel.js";
 import Job from "../Model/jobModel.js";
 
-export const applicationController = async (req, res) => {
+export const createApplication = async (req, res) => {
   try {
     if (req.user.role !== "jobseeker") {
       return res.status(403).json({ success: false, message: "Forbidden" });

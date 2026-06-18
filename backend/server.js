@@ -29,7 +29,7 @@ app.use("/api", globalLimiter);
 app.use("/api/profile", profileRoutes);
 app.use("/api/job", jobRoutes);
 app.use("/api/feedback", feedbackRoutes);
-app.use("/api/jobs", applicationRoutes);
+app.use("/api/application", applicationRoutes);
 
 app.use((err, req, res, next) => {
   res.status(400).json({
