@@ -97,7 +97,7 @@ function ExploreJobs() {
       );
       toast.success("Applied successfully")
     } catch (error) {
-      toast.error(error.response?.message || "Something went wrong")
+      toast.error(error.response?.data?.message || "Something went wrong")
     }
   }
 

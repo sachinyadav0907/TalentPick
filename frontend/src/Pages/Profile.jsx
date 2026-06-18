@@ -40,7 +40,7 @@ function Profile() {
         setProfilePhoto(response.data.payload.profile.profilePhoto.secure_url);
         console.log(response.data.payload);
       } catch (error) {
-        toast.error(error?.response?.message || "Something went wrong");
+        toast.error(error?.response?.data?.message || "Something went wrong");
       }
     };
     fetchProfileData();
