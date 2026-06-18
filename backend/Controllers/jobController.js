@@ -77,8 +77,6 @@ export const fetchJobs = async (req, res) => {
       query.recruiter = req.user.id;
     }
 
-    console.log(query);
-
     const [totalJobs, jobs] = await Promise.all([
       Job.countDocuments(query),
 
