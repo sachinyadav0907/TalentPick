@@ -148,7 +148,7 @@ function JobCard({ job, onDeleteClick, onApply }) {
           </p>
         </div>
 
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+        { job.status ? <div className="flex justify-end"><p className={`uppercase text-2xl ${job.status === "pending" &&"text-yellow-200"} ${job.status === "accepted" &&"text-green-400"} ${job.status === "rejected" &&"text-red-700"}`}>{job.status}</p></div>:<div className="mt-6 flex flex-col gap-3 sm:flex-row">
           {!isRecruiter ? (
             <button className="group flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/70 py-3 text-lg font-medium text-slate-200 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:bg-slate-800">
               <CiBookmark className="text-2xl transition-transform duration-300 group-hover:scale-110" />
@@ -187,7 +187,7 @@ function JobCard({ job, onDeleteClick, onApply }) {
               Edit Details
             </Link>
           )}
-        </div>
+        </div>}
       </article>
     </div>
   );
