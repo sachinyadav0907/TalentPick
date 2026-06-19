@@ -7,7 +7,7 @@ import { fieldValidator } from "../Middleware/fieldCheckValidator.js";
 
 const router = express.Router();
 
-router.get("/data", protectMiddleware, fetchProfile)
+router.get("/data/:id", protectMiddleware, fetchProfile)
 router.patch(
   "/edit",
   protectMiddleware,

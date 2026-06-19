@@ -3,8 +3,10 @@ import { cloudinaryUpload } from "../Utility/CloudUpload.js";
 
 export const fetchProfile = async (req, res) => {
   try {
+    let roleFields;
+    let ownProfile;
     const profileFieldsByRole = {
-      jobseeker: `
+        jobseeker: `
     fullName email role
     profile.profilePhoto
     profile.jobseekerAbout
@@ -16,7 +18,7 @@ export const fetchProfile = async (req, res) => {
     profile.resume
     profile.jobseekerLinks
   `,
-      recruiter: `
+        recruiter: `
     fullName email role
     profile.profilePhoto
     profile.companyPhoneNumber
@@ -26,17 +28,23 @@ export const fetchProfile = async (req, res) => {
     profile.companyLocation
     profile.companyPreferredJob
   `,
-    };
+      };
+    if (req.user.id.toString() !== req.params.id.toString()) {
+      roleFields = "-password -createdAt -updatedAt";
+      ownProfile = false;
+    } else {
+      ownProfile = true;
+      roleFields = profileFieldsByRole[req.user.role]
+    }
 
-    const response = await User.findById(req.user.id).select(
-      profileFieldsByRole[req.user.role],
-    );
+    const response = await User.findById(req.params.id).select(roleFields);
     if (!response) {
       return res.status(404).json({ success: true, message: "User not found" });
     }
     return res.status(200).json({
       success: true,
       payload: response,
+      ownProfile,
       message: "Profile data is fetched successfully",
     });
   } catch (error) {
@@ -60,8 +68,8 @@ export const editProfile = async (req, res) => {
 
     const mergedProfile = {
       ...user.profile.toObject(),
-      ...req.profileData
-    }
+      ...req.profileData,
+    };
 
     const updates = {
       fullName,
@@ -95,7 +103,7 @@ export const editProfile = async (req, res) => {
     const response = await User.findByIdAndUpdate(
       req.user.id,
       { $set: updates },
-      { returnDocument: 'after' },
+      { returnDocument: "after" },
     );
     res.status(201).json({
       success: true,

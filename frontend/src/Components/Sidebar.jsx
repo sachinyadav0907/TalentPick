@@ -5,7 +5,7 @@ import { useAuth } from "../Contexts/AuthContext.jsx";
 import { FaRegSquarePlus } from "react-icons/fa6";
 
 function Sidebar({ isOpen, setIsOpen }) {
-  const { user, isRecruiter, profilePhoto } = useAuth();
+  const { user, isRecruiter, profilePhoto, profileId } = useAuth();
 
   return (
     <div
@@ -15,7 +15,7 @@ function Sidebar({ isOpen, setIsOpen }) {
     >
       <div className="flex justify-between items-center p-4 border-b border-white/10">
         <Link
-          to="/profile"
+          to={`/profile/${profileId}`}
           className="flex items-center gap-3"
           onClick={() => setIsOpen(false)}
         >

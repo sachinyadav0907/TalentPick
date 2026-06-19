@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [isLogin, setIsLogin] = useState(false);
   const [profileData, setProfileData]= useState();
   const [profilePhoto, setProfilePhoto] = useState("defaultPP.png")
+  const [profileId, setProfileId] = useState();
 
   useEffect(() => {
     const loginCheck = async () => {
@@ -24,6 +25,7 @@ export const AuthProvider = ({ children }) => {
         });
         const userInfo = JSON.stringify(response.data.payload);
         localStorage.setItem("userInfo", userInfo);
+        setProfileId(response.data.payload.id)
         setIsLogin(true);
         setUser(response.data.payload);
         setProfilePhoto(response.data.payload.profilePhoto)
@@ -37,7 +39,7 @@ export const AuthProvider = ({ children }) => {
   const isRecruiter = user?.role === "recruiter";
   return (
     <AuthContext.Provider
-      value={{ isLogin, setIsLogin, setUser, user, isRecruiter, profileData, setProfileData, profilePhoto, setProfilePhoto}}
+      value={{ isLogin, setIsLogin, setUser, user, isRecruiter, profileData, setProfileData, profilePhoto, setProfilePhoto, profileId}}
     >
       {children}
     </AuthContext.Provider>
