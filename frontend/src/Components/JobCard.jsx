@@ -21,16 +21,16 @@ function JobCard({ job, onDeleteClick, onApply }) {
   const [applied, setApplied] = useState(false);
 
   const companyTags =
-    "flex items-center gap-1 rounded-full border border-gray-600 bg-gray-800 px-3 py-1 text-xs text-green-400";
+    "flex items-center gap-1 rounded-full border border-gray-600 bg-gray-800 px-3 py-1 text-sm text-green-400";
 
   const detailTags =
-    "flex items-center gap-2 rounded-lg bg-gray-900/70 border border-gray-700 px-3 py-3 text-sm text-gray-200";
+    "flex items-center gap-2 rounded-lg bg-gray-900/70 border border-gray-700 px-3 py-3 text-m text-gray-200";
 
   return (
     <div className="flex w-full justify-center bg-[#081028] p-4">
       <article className="w-full max-w-5xl rounded-2xl bg-gray-800 p-4 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div className="flex flex-col gap-4 sm:flex-row">
+          <div className="flex gap-4 sm:flex-row">
             <img
               src={job.recruiter?.profile?.profilePhoto?.secure_url}
               alt="Microsoft Logo"
@@ -40,7 +40,7 @@ function JobCard({ job, onDeleteClick, onApply }) {
             <div>
               <Link
                 to="#"
-                className="text-xl font-semibold text-white transition hover:text-blue-400 sm:text-2xl"
+                className="text-3xl font-semibold text-white transition hover:text-blue-400 sm:text-4xl"
               >
                 {job.recruiter?.profile?.companyName}
               </Link>
@@ -59,7 +59,7 @@ function JobCard({ job, onDeleteClick, onApply }) {
             </div>
           </div>
 
-          <p className="text-sm text-gray-400">Posted 2 days ago</p>
+          <p className="text-md text-gray-400">Posted 2 days ago</p>
         </div>
 
         <div className="my-5 border-t border-gray-700" />
@@ -69,7 +69,7 @@ function JobCard({ job, onDeleteClick, onApply }) {
             {job.title}
           </h1>
 
-          <div className="flex items-center gap-2 text-sm text-gray-300">
+          <div className="flex items-center gap-2 text-md text-gray-300">
             <LuCalendarClock />
             <span>Deadline:</span>
             <time dateTime="2026-06-08">{job.applicationDeadline}</time>
@@ -117,12 +117,12 @@ function JobCard({ job, onDeleteClick, onApply }) {
           </div>
         </div>
 
-        <p className="mt-3 text-right text-sm text-gray-400">120+ Applicants</p>
+        <p className="mt-3 text-right text-md text-gray-400">120+ Applicants</p>
 
         <div className="my-5 border-t border-gray-700" />
 
         <div>
-          <h2 className="mb-3 text-lg font-semibold text-white sm:text-xl">
+          <h2 className="mb-3 text-xl font-semibold text-white sm:text-2xl">
             Required Skills
           </h2>
 
@@ -130,7 +130,7 @@ function JobCard({ job, onDeleteClick, onApply }) {
             {job.skills?.map((skill, index) => (
               <span
                 key={index}
-                className="rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1 text-sm text-violet-300"
+                className="rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1 text-m text-violet-300"
               >
                 {skill}
               </span>
@@ -139,11 +139,11 @@ function JobCard({ job, onDeleteClick, onApply }) {
         </div>
 
         <div className="mt-5">
-          <h2 className="mb-2 text-lg font-semibold text-white sm:text-xl">
+          <h2 className="mb-2 text-xl font-semibold text-white sm:text-2xl">
             Job Description
           </h2>
 
-          <p className="text-sm leading-7 text-gray-300 sm:text-base">
+          <p className="text-m leading-7 text-gray-300 sm:text-lg">
             {job.description}
           </p>
         </div>
