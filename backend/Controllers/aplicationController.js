@@ -45,35 +45,59 @@ export const createApplication = async (req, res) => {
 
 export const fetchApplication = async (req, res) => {
   try {
-    const { page, limit } = req.query;
+    const { page, limit, jobId } = req.query;
     const safePage = Math.max(1, Number(page) || 1);
     const safeLimit = Math.min(50, Math.max(1, Number(limit) || 10));
 
     const skip = (safePage - 1) * safeLimit;
 
-    if (req.user.role !== "jobseeker") {
-      return res.status(403).json({ success: false, message: "Forbidden" });
-    }
-    const [totalJobs, jobs] = await Promise.all([
-      Application.countDocuments({
+    let countQuery;
+    let fetchQuery;
+
+    if (req.user.role === "jobseeker") {
+      countQuery = Application.countDocuments({
         userId: req.user.id,
-      }),
-      Application.find({ userId: req.user.id })
-        .populate({path:"jobId", populate:{
-          path:"recruiter",
-          select:"profile.profilePhoto.secure_url email profile.companyName"
-        }})
-        .sort({updatedAt:-1,_id:-1})
+      });
+      fetchQuery = Application.find({ userId: req.user.id })
+        .populate({
+          path: "jobId",
+          populate: {
+            path: "recruiter",
+            select: "profile.profilePhoto.secure_url email profile.companyName",
+          },
+        })
+        .sort({ updatedAt: -1, _id: -1 })
         .skip(skip)
         .limit(safeLimit)
-        .lean(),
-    ]);
+        .lean();
+    } else if (req.user.role === "recruiter") {
+      countQuery = Application.countDocuments({
+        jobId: jobId,
+      });
+      fetchQuery = Application.find({ jobId: jobId })
+        .populate({
+          path: "userId",
+          select: "fullName profile.profilePhoto.secure_url",
+        })
+        .sort({ updatedAt: -1, _id: -1 })
+        .skip(skip)
+        .limit(safeLimit)
+        .lean();
+    }
+    const [totalJobs, jobs] = await Promise.all([countQuery, fetchQuery]);
 
     const hasMore = skip + jobs.length < totalJobs;
 
-    return res.status(200).json({success:true,payload:jobs,hasMore, message:"Applied jobs are fetched successfully"})
+    return res.status(200).json({
+      success: true,
+      payload: jobs,
+      hasMore,
+      message: "Applied jobs are fetched successfully",
+    });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({success:false, message:"Internal server error"})
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
   }
 };
