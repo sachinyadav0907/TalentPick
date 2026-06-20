@@ -70,7 +70,7 @@ export const fetchJobs = async (req, res) => {
         }
       }
 
-      if (remote === 'true') {
+      if (remote === "true") {
         query.workplaceType = "Remote";
       }
     } else if (req.user.role === "recruiter") {
@@ -198,6 +198,43 @@ export const fetchSingleJob = async (req, res) => {
       success: true,
       job,
       message: "Job data is fetched successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
+export const applicantJobs = async (req, res) => {
+  try {
+    const { page, limit } = req.query;
+
+    const safePage = Math.max(1, Number(page) || 1);
+    const safeLimit = Math.min(50, Math.max(1, Number(limit) || 10));
+
+    const skip = (safePage - 1) * safeLimit;
+
+    if (req.user.role !== "recruiter")
+      return res.status(403).json({ success: false, message: "Forbidden" });
+
+    const totalCount = await Job.countDocuments({ recruiter: req.user.id });
+
+    const jobs = await Job.find({ recruiter: req.user.id })
+      .select("title")
+      .sort({ updatedAt: -1, _id: -1 })
+      .skip(skip)
+      .limit(safeLimit)
+      .lean();
+
+    const hasMore = jobs.length + skip < totalCount;
+
+    return res.status(200).json({
+      success: true,
+      payload: jobs,
+      hasMore,
+      message: "Jobs are fetched successfully",
     });
   } catch (error) {
     console.log(error);
