@@ -1,0 +1,108 @@
+import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import Navbar from "../Components/Navbar";
+import Footer from "../Components/Footer";
+import ApplicantCard from "../Components/ApplicantCard";
+
+function ShowApplicants() {
+  const { id } = useParams();
+
+  const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
+  const loaderRef = useRef(null);
+
+  useEffect(() => {
+    const fetchApplicants = async () => {
+      try {
+        setLoading(true);
+
+        const response = await axios.get(
+          `http://localhost:5000/api/application/fetch?page=${page}&limit=10&jobId=${id}`,
+          { withCredentials: true }
+        );
+
+        const applicants = response.data.payload || [];
+
+        const usersArray = applicants.map((applicant) => ({
+          ...applicant.userId,
+          status: applicant.status,
+          applicationId: applicant._id,
+        }));
+
+        setUsers((prev) => [...prev, ...usersArray]);
+
+        if (applicants.length < 10) {
+          setHasMore(false);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchApplicants();
+  }, [page, id]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (
+          entries[0].isIntersecting &&
+          !loading &&
+          hasMore
+        ) {
+          setPage((prev) => prev + 1);
+        }
+      },
+      {
+        rootMargin: "200px",
+      }
+    );
+
+    const currentLoader = loaderRef.current;
+
+    if (currentLoader) {
+      observer.observe(currentLoader);
+    }
+
+    return () => {
+      if (currentLoader) {
+        observer.unobserve(currentLoader);
+      }
+      observer.disconnect();
+    };
+  }, [loading, hasMore]);
+
+  return (
+    <div className="min-h-screen bg-[#081028]">
+      <Navbar />
+
+      <div className="flex flex-col items-center gap-5 py-8">
+        {users.map((user) => (
+          <ApplicantCard
+            key={user._id}
+            user={user}
+            jobId={id}
+          />
+        ))}
+
+        <div
+          ref={loaderRef}
+          className="py-5 text-center text-white"
+        >
+          {loading && "Loading..."}
+          {!hasMore && users.length > 0 && "No more applicants"}
+        </div>
+      </div>
+
+      <Footer />
+    </div>
+  );
+}
+
+export default ShowApplicants;

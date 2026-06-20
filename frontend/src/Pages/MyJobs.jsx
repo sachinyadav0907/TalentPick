@@ -35,7 +35,7 @@ function ExploreJobs() {
           ...response.data.payload,
         ]);
 
-        setHasMore(response.data.hasMore);
+        setHasMore(response.data.pagination.hasMore);
       } catch (error) {
         console.log(error);
       } finally {

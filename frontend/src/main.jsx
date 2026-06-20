@@ -22,6 +22,8 @@ import { Toaster } from "react-hot-toast";
 import ExploreJobs from "./Pages/ExploreJobs.jsx";
 import {JobsProvider} from "./Contexts/JobsContext.jsx";
 import EditJob from "./Pages/EditJob.jsx";
+import ShowApplicants from "./Pages/ShowApplicants.jsx";
+import NotFound from "./Components/NotFound.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -95,7 +97,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             }
           />
           <Route
-            path="/profile"
+            path="/profile/:id"
             element={
               <ProtectedRoute>
                 <Profile />
@@ -119,6 +121,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             }
           />
           <Route
+            path="/my-applicants/:id"
+            element={
+              <ProtectedRoute>
+                <ShowApplicants/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/post-jobs"
             element={
               <ProtectedRoute>
@@ -134,6 +144,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               </ProtectedRoute>
             }
           />
+          <Route path="*" element={<NotFound/>}/>
         </Routes>
       </AuthProvider>
     </JobsProvider>
