@@ -8,13 +8,10 @@ import axios from "axios";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const stored = localStorage.getItem("userInfo");
-    return stored ? JSON.parse(stored) : null;
-  });
+  const [user, setUser] = useState();
   const [isLogin, setIsLogin] = useState(false);
   const [profileData, setProfileData]= useState();
-  const [profilePhoto, setProfilePhoto] = useState("defaultPP.png")
+  const [profilePhoto, setProfilePhoto] = useState("/defaultPP.png")
   const [profileId, setProfileId] = useState();
 
   useEffect(() => {
@@ -28,7 +25,9 @@ export const AuthProvider = ({ children }) => {
         setProfileId(response.data.payload.id)
         setIsLogin(true);
         setUser(response.data.payload);
-        setProfilePhoto(response.data.payload.profilePhoto)
+        console.log(response.data.payload)
+        setProfilePhoto(response.data.payload.profilePhoto);
+        console.log(response.data.payload.profilePhoto)
       } catch (error) {
         setIsLogin(false);
         console.log(error?.response?.data?.message||"something went wrong");
@@ -39,7 +38,7 @@ export const AuthProvider = ({ children }) => {
   const isRecruiter = user?.role === "recruiter";
   return (
     <AuthContext.Provider
-      value={{ isLogin, setIsLogin, setUser, user, isRecruiter, profileData, setProfileData, profilePhoto, setProfilePhoto, profileId}}
+      value={{ isLogin, setIsLogin, setUser, user, isRecruiter, profileData, setProfileData, profilePhoto, setProfilePhoto, profileId, setProfileId}}
     >
       {children}
     </AuthContext.Provider>

@@ -31,7 +31,7 @@ const loginSchema = z.object({
 
 function Login() {
   const navigate = useNavigate();
-  const { setIsLogin, setUser } = useAuth();
+  const { setIsLogin, setUser, setProfileId, setProfilePhoto } = useAuth();
   const [eyeOpen, setEyeOpen] = useState(false);
   const eyeToggle = () => {
     setEyeOpen(!eyeOpen);
@@ -63,6 +63,8 @@ function Login() {
           JSON.stringify(response.data.payload),
         );
         setIsLogin(true);
+        setProfileId(response.data.payload.id);
+        setProfilePhoto(response.data.payload.profilePhoto)
         setUser(response.data.payload);
         navigate("/home");
       

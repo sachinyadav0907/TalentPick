@@ -24,6 +24,7 @@ function Profile() {
   const {
     setIsLogin,
     user,
+    setUser,
     setProfileData,
     profileData,
     setProfilePhoto,
@@ -43,13 +44,14 @@ function Profile() {
         setProfileData(response.data.payload);
         setProfilePhoto(response.data.payload.profile.profilePhoto.secure_url);
         setRole(response.data.payload.role)
-        setOwnProfile(response.data.ownProfile)
+        setOwnProfile(response.data.ownProfile);
+        console.log(response.data.payload.profile.profilePhoto.secure_url)
       } catch (error) {
         toast.error(error?.response?.data?.message || "Something went wrong");
       }
     };
     fetchProfileData();
-  }, []);
+  }, [id]);
 
   const handleLogout = async () => {
     try {
@@ -63,6 +65,9 @@ function Profile() {
       });
       localStorage.clear();
       setIsLogin(false);
+      setProfileData();
+      setUser();
+      setProfilePhoto("/defaultPP.png")
       navigate("/login");
     } catch (error) {
       console.log(error.message);

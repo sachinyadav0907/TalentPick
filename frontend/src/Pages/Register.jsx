@@ -58,7 +58,7 @@ const registerSchema = z
 
 function Register() {
   const Navigate = useNavigate();
-  const { setIsLogin, setUser } = useAuth();
+  const { setIsLogin, setUser, setProfileId } = useAuth();
   const [eyeOpen, setEyeOpen] = useState(false);
   const eyeToggle = () => {
     setEyeOpen(!eyeOpen);
@@ -89,6 +89,7 @@ function Register() {
       });
       localStorage.setItem("userInfo", JSON.stringify(response.data.payload));
       setIsLogin(true);
+      setProfileId(response.data.payload.id);
       setUser(response.data.payload);
       Navigate("/");
     } catch (error) {
