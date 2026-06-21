@@ -1,4 +1,4 @@
-import User from "../Model/userAuth.js";
+import User from "../Model/userModel.js";
 import bcrypt from "bcryptjs";
 import { validationResult } from "express-validator";
 import { generateToken } from "../Utility/generateToken.js";
@@ -46,16 +46,17 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ success:true, message: "User not found" });
+    if (!user) return res.status(404).json({ success:false, message: "User not found" });
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
-      return res.status(401).json({ message: "Username or password is wrong" });
+      return res.status(401).json({success:false, message: "Username or password is wrong" });
     const token = generateToken(user);
     const payload = {
       id: user._id,
       fullName: user.fullName,
       email: user.email,
       role: user.role,
+      profilePhoto:user.profile.profilePhoto.secure_url
     };
     res.cookie("token", token, {
       httpOnly: true,
@@ -63,7 +64,7 @@ export const login = async (req, res) => {
       sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.status(200).json({success:true,  payload, message: "Logged in successfully" });
+    return res.status(200).json({success:true,payload:payload, message: "Logged in successfully" });
   } catch (error) {
     res.status(500).json({success:false ,message: "Interal server error"});
   }

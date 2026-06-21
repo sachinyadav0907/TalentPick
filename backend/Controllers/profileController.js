@@ -1,12 +1,14 @@
-import User from "../Model/userAuth.js";
+import User from "../Model/userModel.js";
 import { cloudinaryUpload } from "../Utility/CloudUpload.js";
+import mongoose from "mongoose";
 
 export const fetchProfile = async (req, res) => {
   try {
+    const { id } = req.params;
     let roleFields;
     let ownProfile;
     const profileFieldsByRole = {
-        jobseeker: `
+      jobseeker: `
     fullName email role
     profile.profilePhoto
     profile.jobseekerAbout
@@ -18,7 +20,7 @@ export const fetchProfile = async (req, res) => {
     profile.resume
     profile.jobseekerLinks
   `,
-        recruiter: `
+      recruiter: `
     fullName email role
     profile.profilePhoto
     profile.companyPhoneNumber
@@ -28,16 +30,31 @@ export const fetchProfile = async (req, res) => {
     profile.companyLocation
     profile.companyPreferredJob
   `,
-      };
-    if (req.user.id.toString() !== req.params.id.toString()) {
+    };
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "User id is required",
+      });
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid user id",
+      });
+    }
+
+    if (req.user.id.toString() !== id.toString()) {
       roleFields = "-password -createdAt -updatedAt";
       ownProfile = false;
     } else {
       ownProfile = true;
-      roleFields = profileFieldsByRole[req.user.role]
+      roleFields = profileFieldsByRole[req.user.role];
     }
 
-    const response = await User.findById(req.params.id).select(roleFields);
+    const response = await User.findById(id).select(roleFields);
     if (!response) {
       return res.status(404).json({ success: true, message: "User not found" });
     }
