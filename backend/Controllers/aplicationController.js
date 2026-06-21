@@ -66,7 +66,7 @@ export const fetchApplication = async (req, res) => {
             select: "profile.profilePhoto.secure_url email profile.companyName",
           },
         })
-        .sort({ updatedAt: -1, _id: -1 })
+        .sort({ updatedAt: 1, _id: -1 })
         .skip(skip)
         .limit(safeLimit)
         .lean();
@@ -79,7 +79,7 @@ export const fetchApplication = async (req, res) => {
           path: "userId",
           select: "fullName profile.profilePhoto.secure_url",
         })
-        .sort({ updatedAt: -1, _id: -1 })
+        .sort({ updatedAt: 1, _id: -1 })
         .skip(skip)
         .limit(safeLimit)
         .lean();
@@ -94,6 +94,33 @@ export const fetchApplication = async (req, res) => {
       hasMore,
       message: "Applied jobs are fetched successfully",
     });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
+export const changeStatus = async (req, res) => {
+  try {
+    const { userId, jobId, status } = req.body;
+
+    if (req.user.role !== "recruiter")
+      return res.status(403).json({ success: false, message: "Forbidden" });
+
+    const application = await Application.findOne({ userId, jobId });
+
+    if (!application)
+      return res
+        .status(404)
+        .json({ succes: false, message: "User or job not found" });
+
+    await application.updateOne({ status });
+
+    return res
+      .status(200)
+      .json({ succes: true, message: "Applicant status updated successfully" });
   } catch (error) {
     console.log(error);
     return res
