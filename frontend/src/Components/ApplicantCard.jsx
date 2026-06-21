@@ -1,46 +1,103 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaCheck, FaTimes } from "react-icons/fa";
+import {
+  FaCheck,
+  FaTimes,
+  FaUser,
+  FaExternalLinkAlt,
+} from "react-icons/fa";
 
+const ApplicantCard = ({ user, onAccept, onReject }) => {
+  const [status, setStatus] = useState(user.status);
 
-const ApplicantCard = ({
-  user,jobId
-}) => {
+  const currentStatus = status || user.status;
+
+  const handleAccept = async () => {
+    const success = await onAccept("accepted", user._id);
+
+    if (success) {
+      setStatus("accepted");
+    }
+  };
+
+  const handleReject = async () => {
+    const success = await onReject("rejected", user._id);
+
+    if (success) {
+      setStatus("rejected");
+    }
+  };
+
   return (
-    <div className="w-full max-w-3xl mx-auto px-4">
-      <div className="flex flex-col md:flex-row items-center justify-around gap-3 rounded-2xl border border-gray-700 bg-gray-800 p-2 shadow-md transition-all duration-300 hover:border-gray-600 hover:shadow-lg">
+    <div className="w-full max-w-4xl mx-auto">
+      <div className="group flex flex-col md:flex-row items-center justify-between gap-6 rounded-2xl border border-slate-700 bg-slate-800/80 backdrop-blur-sm p-5 shadow-lg transition-all duration-300 hover:border-cyan-500/40 hover:shadow-cyan-500/10">
         
-        {/* Profile Section */}
-        <div className="flex items-center gap-4 ">
+        {/* Left Section */}
+        <div className="flex items-center gap-4">
           <img
             src={user.profile?.profilePhoto?.secure_url}
-            alt="ProfilePhoto"
-            className="h-20 w-20 rounded-full object-cover border-2 border-gray-600"
+            alt={user.fullName}
+            className="h-20 w-20 rounded-full object-cover border-2 border-cyan-500 shadow-md"
           />
+
+          <div>
+            <Link
+              to={`/profile/${user._id}`}
+              className="text-xl md:text-2xl font-semibold text-white hover:text-cyan-400 transition"
+            >
+              {user.fullName}
+            </Link>
+
+            <div className="mt-2 flex items-center gap-2 text-sm text-slate-400">
+              <FaUser />
+              <span>Job Applicant</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Section */}
+        <div className="flex items-center gap-3 flex-wrap justify-center">
+          
+          {currentStatus === "pending" && (
+            <>
+              <button
+                onClick={handleAccept}
+                className="flex items-center gap-2 rounded-xl bg-green-500/15 border border-green-500/30 px-5 py-2.5 text-green-400 font-medium transition hover:bg-green-500/25 hover:scale-105"
+              >
+                <FaCheck />
+                Accept
+              </button>
+
+              <button
+                onClick={handleReject}
+                className="flex items-center gap-2 rounded-xl bg-red-500/15 border border-red-500/30 px-5 py-2.5 text-red-400 font-medium transition hover:bg-red-500/25 hover:scale-105"
+              >
+                <FaTimes />
+                Reject
+              </button>
+            </>
+          )}
+
+          {currentStatus === "accepted" && (
+            <span className="rounded-full border border-green-500/30 bg-green-500/15 px-5 py-2 text-md font-semibold text-green-400">
+              ✓ Accepted
+            </span>
+          )}
+
+          {currentStatus === "rejected" && (
+            <span className="rounded-full border border-red-500/30 bg-red-500/15 px-5 py-2 text-md font-semibold text-red-400">
+              ✕ Rejected
+            </span>
+          )}
 
           <Link
             to={`/profile/${user._id}`}
-            className="text-2xl font-semibold text-white transition hover:text-cyan-400"
+            className="flex items-center gap-2 rounded-xl bg-cyan-600 px-4 py-2 text-white font-medium transition hover:bg-cyan-500"
           >
-            {user.fullName}
+            View Profile
+            <FaExternalLinkAlt size={12} />
           </Link>
         </div>
-
-        {/* Buttons */}
-          {user.status === "pending" && (<div className="flex flex-wrap justify-center gap-3"><button
-            className="group flex items-center justify-center gap-2 rounded-xl border border-green-500/20 bg-green-500/10 px-5 py-3 text-lg font-medium text-green-300 transition-all duration-300 hover:-translate-y-1 hover:border-green-500/40 hover:bg-green-500/20"
-          >
-            <FaCheck size={25} />
-            Accept
-          </button>
-
-          <button
-            className="group flex items-center justify-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 px-5 py-3 text-lg font-medium text-red-300 transition-all duration-300 hover:-translate-y-1 hover:border-red-500/40 hover:bg-red-500/20"
-          >
-            <FaTimes size={28} />
-            Reject
-          </button></div>)}
-        
       </div>
     </div>
   );

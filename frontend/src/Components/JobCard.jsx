@@ -20,6 +20,18 @@ function JobCard({ job, onDeleteClick, onApply }) {
   const { isRecruiter } = useAuth();
   const [applied, setApplied] = useState(false);
 
+  const statusStyles = {
+    pending: "border-yellow-500/30 bg-yellow-500/10 text-yellow-400",
+    accepted: "border-green-500/30 bg-green-500/10 text-green-400",
+    rejected: "border-red-500/30 bg-red-500/10 text-red-400",
+  };
+
+  const statusIcons = {
+    pending: "⏳",
+    accepted: "✓",
+    rejected: "✕",
+  };
+
   const companyTags =
     "flex items-center gap-1 rounded-full border border-gray-600 bg-gray-800 px-3 py-1 text-sm text-green-400";
 
@@ -148,46 +160,56 @@ function JobCard({ job, onDeleteClick, onApply }) {
           </p>
         </div>
 
-        { job.status ? <div className="flex justify-end"><p className={`uppercase text-2xl ${job.status === "pending" &&"text-yellow-200"} ${job.status === "accepted" &&"text-green-400"} ${job.status === "rejected" &&"text-red-700"}`}>{job.status}</p></div>:<div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          {!isRecruiter ? (
-            <button className="group flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/70 py-3 text-lg font-medium text-slate-200 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:bg-slate-800">
-              <CiBookmark className="text-2xl transition-transform duration-300 group-hover:scale-110" />
-              Save Job
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                onDeleteClick(job._id);
-              }}
-              className="group flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 py-3 text-lg font-medium text-red-300 transition-all duration-300 hover:-translate-y-1 hover:border-red-500/40 hover:bg-red-500/20"
+        {job.status ? (
+          <div className="flex justify-end">
+            <span
+              className={`rounded-full border px-4 py-2 text-md font-semibold uppercase tracking-wide ${statusStyles[job.status]}`}
             >
-              <RiDeleteBin6Line className="text-2xl transition-transform duration-300 group-hover:scale-110" />
-              Remove Job
-            </button>
-          )}
+              {statusIcons[job.status]} {job.status}
+            </span>
+          </div>
+        ) : (
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            {!isRecruiter ? (
+              <button className="group flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/70 py-3 text-lg font-medium text-slate-200 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:bg-slate-800">
+                <CiBookmark className="text-2xl transition-transform duration-300 group-hover:scale-110" />
+                Save Job
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  onDeleteClick(job._id);
+                }}
+                className="group flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 py-3 text-lg font-medium text-red-300 transition-all duration-300 hover:-translate-y-1 hover:border-red-500/40 hover:bg-red-500/20"
+              >
+                <RiDeleteBin6Line className="text-2xl transition-transform duration-300 group-hover:scale-110" />
+                Remove Job
+              </button>
+            )}
 
-          {!isRecruiter ? (
-            <button
-              disabled={applied}
-              onClick={() => {
-                onApply(job._id);
-                setApplied(true);
-              }}
-              className={`group flex w-full items-center justify-center gap-2 rounded-xl  py-3 text-lg font-medium text-white ${applied ? "bg-gray-500 cursor-not-allowed" : "bg-linear-to-r from-violet-600 to-indigo-600 shadow-lg shadow-violet-900/30 transition-all duration-300 hover:-translate-y-1 hover:from-violet-500 hover:to-indigo-500"}`}
-            >
-              <AiOutlineThunderbolt className="text-2xl transition-transform duration-300 group-hover:rotate-12" />
-              {applied ? "Applied" : "Apply Now"}
-            </button>
-          ) : (
-            <Link
-              to={`/edit-job/${job._id}`}
-              className="group flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/10 py-3 text-lg font-medium text-emerald-300 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-emerald-500/20"
-            >
-              <FaRegEdit className="text-2xl transition-transform duration-300 group-hover:scale-110" />
-              Edit Details
-            </Link>
-          )}
-        </div>}
+            {!isRecruiter ? (
+              <button
+                disabled={applied}
+                onClick={() => {
+                  onApply(job._id);
+                  setApplied(true);
+                }}
+                className={`group flex w-full items-center justify-center gap-2 rounded-xl  py-3 text-lg font-medium text-white ${applied ? "bg-gray-500 cursor-not-allowed" : "bg-linear-to-r from-violet-600 to-indigo-600 shadow-lg shadow-violet-900/30 transition-all duration-300 hover:-translate-y-1 hover:from-violet-500 hover:to-indigo-500"}`}
+              >
+                <AiOutlineThunderbolt className="text-2xl transition-transform duration-300 group-hover:rotate-12" />
+                {applied ? "Applied" : "Apply Now"}
+              </button>
+            ) : (
+              <Link
+                to={`/edit-job/${job._id}`}
+                className="group flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/10 py-3 text-lg font-medium text-emerald-300 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-emerald-500/20"
+              >
+                <FaRegEdit className="text-2xl transition-transform duration-300 group-hover:scale-110" />
+                Edit Details
+              </Link>
+            )}
+          </div>
+        )}
       </article>
     </div>
   );

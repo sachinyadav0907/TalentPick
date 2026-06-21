@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import ApplicantCard from "../Components/ApplicantCard";
+import toast from "react-hot-toast"
 
 function ShowApplicants() {
   const { id } = useParams();
@@ -78,6 +79,30 @@ function ShowApplicants() {
     };
   }, [loading, hasMore]);
 
+  const handleAccept = async(status,userId)=>{
+    try {
+      await axios.patch("http://localhost:5000/api/application/status", {userId:userId,jobId:id,status:status},{
+        withCredentials:true,
+      });
+      return true;
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong");
+      return false;
+    }
+  };
+
+  const handleReject = async(status,userId)=>{
+    try {
+      await axios.patch("http://localhost:5000/api/application/status", {userId:userId,jobId:id,status:status},{
+        withCredentials:true,
+      });
+      return true;
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong");
+      return false;
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#081028]">
       <Navbar />
@@ -88,6 +113,8 @@ function ShowApplicants() {
             key={user._id}
             user={user}
             jobId={id}
+            onAccept={handleAccept}
+            onReject={handleReject}
           />
         ))}
 
