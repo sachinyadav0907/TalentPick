@@ -25,7 +25,6 @@ function ExploreJobs() {
   const loaderRef = useRef(null);
 
   const handleFilters = (filters) => {
-    console.log(filters)
     setPage(1);
     setJobs([]);
     setFilter(filters);
@@ -61,6 +60,8 @@ function ExploreJobs() {
         setHasMore(response.data.pagination.hasMore);
 
         setJobs((prev) => (page === 1 ? jobsData : [...prev, ...jobsData]));
+      } catch (error) {
+        console.error("Failed to fetch jobs:", error);
       } finally {
         setLoading(false);
       }
@@ -88,18 +89,55 @@ function ExploreJobs() {
     return () => observer.disconnect();
   }, [loading, hasMore]);
 
-  const handleApply = async(jobId)=>{
+  const handleApply = async (jobId) => {
     try {
-      await axios.post("http://localhost:5000/api/application/create",{jobId},
+      await axios.post(
+        "http://localhost:5000/api/application/create",
+        { jobId },
         {
-          withCredentials:true,
-        }
+          withCredentials: true,
+        },
       );
-      toast.success("Applied successfully")
+      toast.success("Applied successfully");
+      return true;
     } catch (error) {
-      toast.error(error.response?.data?.message || "Something went wrong")
+      toast.error(error.response?.data?.message || "Something went wrong");
+      return false;
     }
-  }
+  };
+
+  const handleSave = async (jobId) => {
+    try {
+      await axios.post(
+        "http://localhost:5000/api/job/save/create",
+        { jobId },
+        {
+          withCredentials: true,
+        },
+      );
+      toast.success("Saved successfully");
+      return true;
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong");
+      return false;
+    }
+  };
+
+  const handleUnsave = async (jobId) => {
+    try {
+      await axios.delete(
+        `http://localhost:5000/api/job/save/delete/${jobId}`,
+        {
+          withCredentials: true,
+        },
+      );
+      toast.success("Unsaved successfully");
+      return true;
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong");
+      return false;
+    }
+  };
 
   return (
     <div>
@@ -139,8 +177,16 @@ function ExploreJobs() {
           onApply={handleFilters}
         />
       </div>
-      {jobs.map((job, index) => {
-        return <JobCard key={job._id} job={job} onApply={handleApply} />;
+      {jobs.map((job) => {
+        return (
+          <JobCard
+            key={job._id}
+            job={job}
+            onApply={handleApply}
+            onSave={handleSave}
+            onUnsave={handleUnsave}
+          />
+        );
       })}
       <div ref={loaderRef} className="text-center py-5 text-white bg-[#081028]">
         {loading && "Loading..."}

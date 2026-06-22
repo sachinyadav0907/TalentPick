@@ -7,18 +7,20 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { BsBriefcase } from "react-icons/bs";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { FaRegEdit } from "react-icons/fa";
+import { FaRegEdit} from "react-icons/fa";
 import { MdWorkOutline } from "react-icons/md";
 import { PiGraduationCap } from "react-icons/pi";
 import { BiRupee } from "react-icons/bi";
 import { BsPeople } from "react-icons/bs";
 import { LuCalendarClock } from "react-icons/lu";
 import { useAuth } from "../Contexts/AuthContext.jsx";
+import { GoBookmarkSlash } from "react-icons/go";
 import axios from "axios";
 
-function JobCard({ job, onDeleteClick, onApply }) {
+function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
   const { isRecruiter } = useAuth();
   const [applied, setApplied] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   const statusStyles = {
     pending: "border-yellow-500/30 bg-yellow-500/10 text-yellow-400",
@@ -171,10 +173,25 @@ function JobCard({ job, onDeleteClick, onApply }) {
         ) : (
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             {!isRecruiter ? (
-              <button className="group flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/70 py-3 text-lg font-medium text-slate-200 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:bg-slate-800">
-                <CiBookmark className="text-2xl transition-transform duration-300 group-hover:scale-110" />
+              ((saved || isSaved ) ? (<button
+                onClick={() => {
+                  onUnsave(job._id);
+                  setSaved(false);
+                }}
+                className={`group flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/70 py-3 text-lg font-medium text-slate-200 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:bg-slate-800`}
+              >
+              <GoBookmarkSlash className="text-2xl transition-transform duration-300 group-hover:scale-110"/>
+                Unsave Job
+              </button>) : (<button
+                onClick={() => {
+                  onSave(job._id);
+                  setSaved(true);
+                }}
+                className={`group flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/70 py-3 text-lg font-medium text-slate-200 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:bg-slate-800`}
+              >
+              <CiBookmark className="text-2xl transition-transform duration-300 group-hover:scale-110"/>
                 Save Job
-              </button>
+              </button>))
             ) : (
               <button
                 onClick={() => {
