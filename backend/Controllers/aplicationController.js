@@ -36,7 +36,7 @@ export const createApplication = async (req, res) => {
       .status(201)
       .json({ success: true, message: "Job applied successfully" });
   } catch (error) {
-    console.log(error);
+    console.log("Application create Error" ,error);
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });
@@ -95,7 +95,7 @@ export const fetchApplication = async (req, res) => {
       message: "Applied jobs are fetched successfully",
     });
   } catch (error) {
-    console.log(error);
+    console.log("Application fetch error",error);
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });
@@ -122,7 +122,7 @@ export const changeStatus = async (req, res) => {
       .status(200)
       .json({ succes: true, message: "Applicant status updated successfully" });
   } catch (error) {
-    console.log(error);
+    console.log("Status change error",error);
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });

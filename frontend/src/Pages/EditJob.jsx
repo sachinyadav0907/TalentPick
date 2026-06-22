@@ -106,7 +106,6 @@ const EditJob = () => {
             withCredentials: true,
           },
         );
-        console.log(response);
 
         reset({
           ...response.data.job,
@@ -122,7 +121,6 @@ const EditJob = () => {
   }, [id, reset]);
 
   const handleJob = async (data) => {
-    console.log(data);
     try {
       const jobPromise = axios.patch(
         `http://localhost:5000/api/job/update/${id}`,

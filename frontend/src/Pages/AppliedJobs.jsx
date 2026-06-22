@@ -36,7 +36,6 @@ function AppliedJobs() {
 
         setHasMore(response.data.hasMore);
 
-        console.log("Response:", response.data);
       } catch (error) {
         console.error("Error fetching applied jobs:", error);
       } finally {

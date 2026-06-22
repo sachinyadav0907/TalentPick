@@ -25,9 +25,7 @@ export const AuthProvider = ({ children }) => {
         setProfileId(response.data.payload.id)
         setIsLogin(true);
         setUser(response.data.payload);
-        console.log(response.data.payload)
         setProfilePhoto(response.data.payload.profilePhoto);
-        console.log(response.data.payload.profilePhoto)
       } catch (error) {
         setIsLogin(false);
         console.log(error?.response?.data?.message||"something went wrong");

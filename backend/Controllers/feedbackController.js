@@ -6,7 +6,8 @@ export const feedbackStorage = async(req, res)=>{
     await Feedback.create(feedbackData);
     return res.status(200).json({success:true, message:"Feedback is taken"});
   } catch (error) {
-    console.log(error);
+    console.log("Feedback save error",error);
     return res.status(500).json({success:true, message:"Internal server error"});
   }
 };
+

@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema(
     profile: {
       profilePhoto: {
         type: { secure_url: String, public_id: String },
-        default: {secure_url: "defaultPP.png", public_id: null},
+        default: {secure_url: "/defaultPP.png", public_id: null},
       },
 
       jobseekerAbout: {

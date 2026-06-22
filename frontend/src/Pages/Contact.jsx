@@ -52,7 +52,6 @@ export default function ContactUs() {
   const onSubmit = async (data) => {
     try {
       setIsSubmitting(true);
-      console.log(data);
       await axios.post("http://localhost:5000/api/feedback/store",data)
       reset();
       navigate("/home");

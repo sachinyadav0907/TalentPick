@@ -65,7 +65,7 @@ export const fetchProfile = async (req, res) => {
       message: "Profile data is fetched successfully",
     });
   } catch (error) {
-    console.log(error);
+    console.log("Profile fetch error",error);
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });
@@ -128,7 +128,7 @@ export const editProfile = async (req, res) => {
       message: "uploaded succesfully",
     });
   } catch (error) {
-    console.log(error);
+    console.log("Edit profile Error",error);
     res.status(500).json({ success: false, message: error.message });
   }
 };

@@ -45,7 +45,6 @@ function Profile() {
         setProfilePhoto(response.data.payload.profile.profilePhoto.secure_url);
         setRole(response.data.payload.role)
         setOwnProfile(response.data.ownProfile);
-        console.log(response.data.payload.profile.profilePhoto.secure_url)
       } catch (error) {
         toast.error(error?.response?.data?.message || "Something went wrong");
       }

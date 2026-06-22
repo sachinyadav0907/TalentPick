@@ -95,7 +95,6 @@ const PostJob = () => {
   });
 
   const handleJob = async (data) => {
-    console.log(data);
     try {
       const jobPromise = axios.post(
         "http://localhost:5000/api/job/create",
