@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar.jsx";
 import Footer from "../Components/Footer.jsx";
 import {
@@ -39,7 +39,11 @@ const EditProfileSchema = z.object({
       .or(z.literal("")),
     companyDescription: z.string().optional(),
     companyLocation: z.string().optional(),
-    companyWebsite : z.string().url("Enter a valid LinkedIn URL").optional().or(z.literal("")),
+    companyWebsite: z
+      .string()
+      .url("Enter a valid LinkedIn URL")
+      .optional()
+      .or(z.literal("")),
     companyPhoneNumber: z
       .string()
       .regex(/^[6-9]\d{9}$/, "Enter a valid phone number")
@@ -47,9 +51,21 @@ const EditProfileSchema = z.object({
       .or(z.literal("")),
     jobseekerLinks: z
       .object({
-        github: z.string().url("Enter a valid GitHub URL").optional().or(z.literal("")),
-        linkedin: z.string().url("Enter a valid LinkedIn URL").optional().or(z.literal("")),
-        portfolio: z.string().url("Enter a valid Portfolio URL").optional().or(z.literal("")),
+        github: z
+          .string()
+          .url("Enter a valid GitHub URL")
+          .optional()
+          .or(z.literal("")),
+        linkedin: z
+          .string()
+          .url("Enter a valid LinkedIn URL")
+          .optional()
+          .or(z.literal("")),
+        portfolio: z
+          .string()
+          .url("Enter a valid Portfolio URL")
+          .optional()
+          .or(z.literal("")),
       })
       .optional(),
   }),
@@ -76,6 +92,7 @@ function EditProfile() {
     resolver: zodResolver(EditProfileSchema),
   });
   const profilePhotoFile = watch("profilePhoto");
+  const resumeFile = watch("resume");
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -167,7 +184,7 @@ function EditProfile() {
 
       setProfileData(response.data.payload);
 
-      navigate("/profile");
+      navigate(`/profile/${profileId}`);
     } catch (error) {
       toast.error("Something went wrong");
     }
@@ -258,15 +275,25 @@ function EditProfile() {
                   </div>
 
                   <div>
-                    <label className="block text-slate-300 mb-2">Resume</label>
+                    <label
+                      htmlFor="resumeId"
+                      className="block text-slate-300 mb-2"
+                    >
+                      Resume
+                    </label>
 
-                    <label className="flex items-center justify-between gap-4 bg-slate-800 border border-slate-700 rounded-xl px-4 py-4 cursor-pointer hover:border-indigo-500 transition">
+                    <label
+                      htmlFor="resumeId"
+                      className="flex items-center justify-between gap-4 bg-slate-800 border border-slate-700 rounded-xl px-4 py-4 cursor-pointer hover:border-indigo-500 transition"
+                    >
                       <div className="flex items-center gap-3 text-slate-300">
                         <FaFilePdf className="text-red-500 text-2xl" />
-                        Upload Resume
+
+                        <span>{resumeFile?.[0]?.name || "Upload Resume"}</span>
                       </div>
 
                       <input
+                        id="resumeId"
                         type="file"
                         className="hidden"
                         {...register("resume")}

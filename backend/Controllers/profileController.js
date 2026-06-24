@@ -110,8 +110,9 @@ export const editProfile = async (req, res) => {
         resume.buffer,
         req.user.id,
         "jobportal/resume",
-        "raw",
+        "auto",
       );
+      console.log("Resume Result", resumeResult)
       updates.profile.resume = {
         secure_url: resumeResult.secure_url,
         public_id: resumeResult.public_id,
