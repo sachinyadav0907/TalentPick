@@ -40,6 +40,27 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
   const detailTags =
     "flex items-center gap-2 rounded-lg bg-gray-900/70 border border-gray-700 px-3 py-3 text-m text-gray-200";
 
+    const handleApply = async()=>{
+      const success = await onApply(job._id);
+      if(success){
+        setApplied(true);
+      }
+    };
+
+    const handleSave = async()=>{
+      const success = await onSave(job._id);
+      if(success){
+        setSaved(true);
+      }
+    }
+
+    const handleUnsave = async()=>{
+      const success = await onUnsave(job._id);
+      if(success){
+        setSaved(false);
+      }
+    }
+
   return (
     <div className="flex w-full justify-center bg-[#081028] p-4">
       <article className="w-full max-w-5xl rounded-2xl bg-gray-800 p-4 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:p-6">
@@ -174,19 +195,13 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             {!isRecruiter ? (
               ((saved || isSaved ) ? (<button
-                onClick={() => {
-                  onUnsave(job._id);
-                  setSaved(false);
-                }}
+                onClick={handleUnsave}
                 className={`group flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/70 py-3 text-lg font-medium text-slate-200 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:bg-slate-800`}
               >
               <GoBookmarkSlash className="text-2xl transition-transform duration-300 group-hover:scale-110"/>
                 Unsave Job
               </button>) : (<button
-                onClick={() => {
-                  onSave(job._id);
-                  setSaved(true);
-                }}
+                onClick={handleSave}
                 className={`group flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/70 py-3 text-lg font-medium text-slate-200 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:bg-slate-800`}
               >
               <CiBookmark className="text-2xl transition-transform duration-300 group-hover:scale-110"/>
@@ -207,10 +222,7 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
             {!isRecruiter ? (
               <button
                 disabled={applied}
-                onClick={() => {
-                  onApply(job._id);
-                  setApplied(true);
-                }}
+                onClick={handleApply}
                 className={`group flex w-full items-center justify-center gap-2 rounded-xl  py-3 text-lg font-medium text-white ${applied ? "bg-gray-500 cursor-not-allowed" : "bg-linear-to-r from-violet-600 to-indigo-600 shadow-lg shadow-violet-900/30 transition-all duration-300 hover:-translate-y-1 hover:from-violet-500 hover:to-indigo-500"}`}
               >
                 <AiOutlineThunderbolt className="text-2xl transition-transform duration-300 group-hover:rotate-12" />
