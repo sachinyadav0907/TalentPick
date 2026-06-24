@@ -64,6 +64,7 @@ function EditProfile() {
     profileData,
     setProfilePhoto,
     profilePhoto,
+    profileId,
   } = useAuth();
   const {
     register,
@@ -80,7 +81,7 @@ function EditProfile() {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/profile/data",
+          `http://localhost:5000/api/profile/data/${profileId}`,
           { withCredentials: true },
         );
         reset({
