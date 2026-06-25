@@ -15,6 +15,8 @@ import { BsPeople } from "react-icons/bs";
 import { LuCalendarClock } from "react-icons/lu";
 import { useAuth } from "../Contexts/AuthContext.jsx";
 import { GoBookmarkSlash } from "react-icons/go";
+import { formatDistanceToNow } from "date-fns";
+import { format } from "date-fns";
 import axios from "axios";
 
 function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
@@ -80,19 +82,24 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
 
               <div className="mt-2 flex flex-wrap gap-2">
                 <div className={companyTags}>
-                  <SiTicktick />
+                  <SiTicktick size={10}/>
                   <span>Verified Company</span>
                 </div>
 
                 <div className={companyTags}>
-                  <IoStarOutline />
+                  <IoStarOutline size={10}/>
                   <span>Top Rated</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <p className="text-xs sm:text-sm text-gray-400">Posted 2 days ago</p>
+          <p className="text-xs sm:text-sm text-gray-400">
+            Posted{" "}
+            {formatDistanceToNow(new Date(job.createdAt), {
+              addSuffix: true,
+            })}
+          </p>
         </div>
 
         <div className="my-5 border-t border-gray-700" />
@@ -102,10 +109,14 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
             {job.title}
           </h1>
 
-          <div className="flex items-center gap-2 text-sm sm:text-base text-gray-300">
+          <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-300">
             <LuCalendarClock />
             <span>Deadline:</span>
-            <time dateTime="2026-06-08">{job.applicationDeadline}</time>
+            <time dateTime={job.applicationDeadline}>
+              {job.applicationDeadline
+                ? format(new Date(job.applicationDeadline), "dd MMM yyyy")
+                : "Open until filled"}
+            </time>
           </div>
         </div>
 
@@ -150,9 +161,6 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
           </div>
         </div>
 
-        <p className="mt-3 text-right text-xs sm:text-sm text-gray-400">
-          120+ Applicants
-        </p>
         <div className="my-5 border-t border-gray-700" />
 
         <div>
