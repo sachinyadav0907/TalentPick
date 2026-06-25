@@ -4,16 +4,17 @@ import { Link } from "react-router-dom";
 
 function JobsApplicants({job}) {
   return (
-    <div className="flex justify-center items-center p-8">
+    <div className="flex justify-center items-center p-3">
       <article className="w-full max-w-3xl bg-gray-900 border border-gray-700 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <h2 className="text-white text-3xl sm:text-4xl font-bold text-center sm:text-left">
+        <div className="flex flex-row items-center justify-between">
+          <h2 className="text-white text-lg sm:text-2xl font-bold text-center sm:text-left">
             {job.title}
           </h2>
 
           <Link
             to={`/my-applicants/${job._id}`}
             className="
+            text-xs sm:text-sm md:text-base
             flex gap-2 justify-center 
           px-6 py-3
           rounded-xl
@@ -27,7 +28,7 @@ function JobsApplicants({job}) {
           active:scale-95
         "
           >
-            <FaUsers className="text-xl"/>
+            <FaUsers className="text-xm my-auto"/>
             Show Applicants
           </Link>
         </div>

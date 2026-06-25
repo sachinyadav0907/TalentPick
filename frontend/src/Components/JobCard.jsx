@@ -7,7 +7,7 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { BsBriefcase } from "react-icons/bs";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { FaRegEdit} from "react-icons/fa";
+import { FaRegEdit } from "react-icons/fa";
 import { MdWorkOutline } from "react-icons/md";
 import { PiGraduationCap } from "react-icons/pi";
 import { BiRupee } from "react-icons/bi";
@@ -35,35 +35,33 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
   };
 
   const companyTags =
-    "flex items-center gap-1 rounded-full border border-gray-600 bg-gray-800 px-3 py-1 text-sm text-green-400";
-
+    "flex items-center gap-1 rounded-full border border-gray-600 bg-gray-800 px-3 py-1 text-xs text-green-400";
   const detailTags =
-    "flex items-center gap-2 rounded-lg bg-gray-900/70 border border-gray-700 px-3 py-3 text-m text-gray-200";
-
-    const handleApply = async()=>{
-      const success = await onApply(job._id);
-      if(success){
-        setApplied(true);
-      }
-    };
-
-    const handleSave = async()=>{
-      const success = await onSave(job._id);
-      if(success){
-        setSaved(true);
-      }
+    "flex items-center gap-2 rounded-lg bg-gray-900/70 border border-gray-700 px-3 py-3 text-sm sm:text-sm text-gray-200";
+  const handleApply = async () => {
+    const success = await onApply(job._id);
+    if (success) {
+      setApplied(true);
     }
+  };
 
-    const handleUnsave = async()=>{
-      const success = await onUnsave(job._id);
-      if(success){
-        setSaved(false);
-      }
+  const handleSave = async () => {
+    const success = await onSave(job._id);
+    if (success) {
+      setSaved(true);
     }
+  };
+
+  const handleUnsave = async () => {
+    const success = await onUnsave(job._id);
+    if (success) {
+      setSaved(false);
+    }
+  };
 
   return (
     <div className="flex w-full justify-center bg-[#081028] p-4">
-      <article className="w-full max-w-5xl rounded-2xl bg-gray-800 p-4 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:p-6">
+      <article className="w-full max-w-5xl rounded-2xl bg-gray-800 p-4 text-sm shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex gap-4 sm:flex-row">
             <img
@@ -75,7 +73,7 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
             <div>
               <Link
                 to="#"
-                className="text-3xl font-semibold text-white transition hover:text-blue-400 sm:text-4xl"
+                className="text-xl sm:text-2xl lg:text-3xl font-semibold text-white transition hover:text-blue-400"
               >
                 {job.recruiter?.profile?.companyName}
               </Link>
@@ -94,17 +92,17 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
             </div>
           </div>
 
-          <p className="text-md text-gray-400">Posted 2 days ago</p>
+          <p className="text-xs sm:text-sm text-gray-400">Posted 2 days ago</p>
         </div>
 
         <div className="my-5 border-t border-gray-700" />
 
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <h1 className="text-2xl font-bold text-white sm:text-3xl">
+          <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
             {job.title}
           </h1>
 
-          <div className="flex items-center gap-2 text-md text-gray-300">
+          <div className="flex items-center gap-2 text-sm sm:text-base text-gray-300">
             <LuCalendarClock />
             <span>Deadline:</span>
             <time dateTime="2026-06-08">{job.applicationDeadline}</time>
@@ -120,44 +118,45 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
           </div>
 
           <div className={detailTags}>
-            <HiOutlineBuildingOffice2 className="text-lg text-violet-400" />
+            <HiOutlineBuildingOffice2 className="text-md text-violet-400" />
             <span>{job.location}</span>
           </div>
 
           <div className={detailTags}>
-            <CiLocationOn className="text-lg text-violet-400" />
+            <CiLocationOn className="text-md text-violet-400" />
             <span>{job.workplaceType}</span>
           </div>
 
           <div className={detailTags}>
-            <BsBriefcase className="text-lg text-violet-400" />
+            <BsBriefcase className="text-md text-violet-400" />
             <span>{job.jobType}</span>
           </div>
 
           <div className={detailTags}>
-            <MdWorkOutline className="text-lg text-violet-400" />
+            <MdWorkOutline className="text-md text-violet-400" />
             <span>
               {job.experience.min} - {job.experience.max} Years Experience
             </span>
           </div>
 
           <div className={detailTags}>
-            <PiGraduationCap className="text-lg text-violet-400" />
+            <PiGraduationCap className="text-md text-violet-400" />
             <span>{job.education}</span>
           </div>
 
           <div className={detailTags}>
-            <BsPeople className="text-lg text-violet-400" />
+            <BsPeople className="text-md text-violet-400" />
             <span>{job.openings} Openings</span>
           </div>
         </div>
 
-        <p className="mt-3 text-right text-md text-gray-400">120+ Applicants</p>
-
+        <p className="mt-3 text-right text-xs sm:text-sm text-gray-400">
+          120+ Applicants
+        </p>
         <div className="my-5 border-t border-gray-700" />
 
         <div>
-          <h2 className="mb-3 text-xl font-semibold text-white sm:text-2xl">
+          <h2 className="mb-3 text-base sm:text-lg lg:text-xl font-semibold text-white">
             Required Skills
           </h2>
 
@@ -165,7 +164,7 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
             {job.skills?.map((skill, index) => (
               <span
                 key={index}
-                className="rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1 text-m text-violet-300"
+                className="rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1 text-xs sm:text-sm text-violet-300"
               >
                 {skill}
               </span>
@@ -174,11 +173,11 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
         </div>
 
         <div className="mt-5">
-          <h2 className="mb-2 text-xl font-semibold text-white sm:text-2xl">
+          <h2 className="mb-2 text-base sm:text-lg lg:text-xl font-semibold text-white">
             Job Description
           </h2>
 
-          <p className="text-m leading-7 text-gray-300 sm:text-lg">
+          <p className="leading-7 text-sm sm:text- text-gray-300">
             {job.description}
           </p>
         </div>
@@ -186,7 +185,7 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
         {job.status ? (
           <div className="flex justify-end">
             <span
-              className={`rounded-full border px-4 py-2 text-md font-semibold uppercase tracking-wide ${statusStyles[job.status]}`}
+              className={`rounded-full border px-4 py-2 text-sm sm:text-base font-semibold uppercase tracking-wide ${statusStyles[job.status]}`}
             >
               {statusIcons[job.status]} {job.status}
             </span>
@@ -194,25 +193,29 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
         ) : (
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             {!isRecruiter ? (
-              ((saved || isSaved ) ? (<button
-                onClick={handleUnsave}
-                className={`group flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/70 py-3 text-lg font-medium text-slate-200 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:bg-slate-800`}
-              >
-              <GoBookmarkSlash className="text-2xl transition-transform duration-300 group-hover:scale-110"/>
-                Unsave Job
-              </button>) : (<button
-                onClick={handleSave}
-                className={`group flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/70 py-3 text-lg font-medium text-slate-200 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:bg-slate-800`}
-              >
-              <CiBookmark className="text-2xl transition-transform duration-300 group-hover:scale-110"/>
-                Save Job
-              </button>))
+              saved || isSaved ? (
+                <button
+                  onClick={handleUnsave}
+                  className={`group flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/70 py-3 text-sm sm:text-base lg:text-lg font-medium text-slate-200 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:bg-slate-800`}
+                >
+                  <GoBookmarkSlash className="text-2xl transition-transform duration-300 group-hover:scale-110" />
+                  Unsave Job
+                </button>
+              ) : (
+                <button
+                  onClick={handleSave}
+                  className={`group flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/70 py-3 text-base font-medium text-slate-200 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:bg-slate-800`}
+                >
+                  <CiBookmark className="text-2xl transition-transform duration-300 group-hover:scale-110" />
+                  Save Job
+                </button>
+              )
             ) : (
               <button
                 onClick={() => {
                   onDeleteClick(job._id);
                 }}
-                className="group flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 py-3 text-lg font-medium text-red-300 transition-all duration-300 hover:-translate-y-1 hover:border-red-500/40 hover:bg-red-500/20"
+                className="group flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 py-3 text-sm sm:text-base lg:text-lg font-medium text-red-300 transition-all duration-300 hover:-translate-y-1 hover:border-red-500/40 hover:bg-red-500/20"
               >
                 <RiDeleteBin6Line className="text-2xl transition-transform duration-300 group-hover:scale-110" />
                 Remove Job
@@ -223,7 +226,11 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
               <button
                 disabled={applied}
                 onClick={handleApply}
-                className={`group flex w-full items-center justify-center gap-2 rounded-xl  py-3 text-lg font-medium text-white ${applied ? "bg-gray-500 cursor-not-allowed" : "bg-linear-to-r from-violet-600 to-indigo-600 shadow-lg shadow-violet-900/30 transition-all duration-300 hover:-translate-y-1 hover:from-violet-500 hover:to-indigo-500"}`}
+                className={`group flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm sm:text-base lg:text-base font-medium text-white ${
+                  applied
+                    ? "bg-gray-500 cursor-not-allowed"
+                    : "bg-linear-to-r from-violet-600 to-indigo-600 shadow-lg shadow-violet-900/30 transition-all duration-300 hover:-translate-y-1 hover:from-violet-500 hover:to-indigo-500"
+                }`}
               >
                 <AiOutlineThunderbolt className="text-2xl transition-transform duration-300 group-hover:rotate-12" />
                 {applied ? "Applied" : "Apply Now"}
@@ -231,7 +238,7 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
             ) : (
               <Link
                 to={`/edit-job/${job._id}`}
-                className="group flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/10 py-3 text-lg font-medium text-emerald-300 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-emerald-500/20"
+                className="group flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/10 py-3 text-sm sm:text-base font-medium text-emerald-300 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-emerald-500/20"
               >
                 <FaRegEdit className="text-2xl transition-transform duration-300 group-hover:scale-110" />
                 Edit Details

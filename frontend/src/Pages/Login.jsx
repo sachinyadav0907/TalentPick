@@ -80,9 +80,9 @@ function Login() {
       <div className="flex items-center justify-center px-4 py-10">
         <div className="w-full max-w-md rounded-2xl border border-white/10 bg-slate-900/80 p-8 shadow-2xl backdrop-blur-xl">
           <div className="mb-8 text-center">
-            <h1 className="text-4xl font-bold text-white">Welcome Back</h1>
+            <h1 className="text-3xl font-bold text-white">Welcome Back</h1>
 
-            <p className="mt-2 text-slate-300">
+            <p className="mt-2 text-slate-300 text-md">
               Login to continue your journey
             </p>
           </div>
@@ -171,24 +171,15 @@ function Login() {
               )}
             </div>
 
-            <div className="flex justify-end">
-              <Link
-                to="/forgot-password"
-                className="text-sm text-violet-400 hover:text-violet-300"
-              >
-                Forgot Password?
-              </Link>
-            </div>
-
             <button
               type="submit"
-              className="rounded-xl bg-linear-to-r from-violet-600 to-blue-600 py-3 font-medium text-white transition duration-300 hover:opacity-90 focus:scale-95 active:scale-95"
+              className="rounded-xl mt-4 bg-linear-to-r from-violet-600 to-blue-600 py-3 font-medium text-white transition duration-300 hover:opacity-90 focus:scale-95 active:scale-95"
             >
               Login
             </button>
           </form>
 
-          <div className="mt-6 text-center">
+          <div className="mt-6 text-center text-sm">
             <p className="text-slate-300">
               New here?{" "}
               <Link

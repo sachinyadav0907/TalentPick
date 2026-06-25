@@ -4,15 +4,19 @@ import axios from "axios";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import JobCard from "../Components/JobCard";
+import EmptyState from "../Components/EmptyState";
 import ConfirmationPopup from "../Components/ConfirmationPopup";
 import { useJobs } from "../Contexts/JobsContext";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function ExploreJobs() {
   const [jobs, setJobs] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+
+  const navigate = useNavigate();
 
   const [confirmIsOpen, setConfirmIsOpen] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState(null);
@@ -30,10 +34,7 @@ function ExploreJobs() {
 
         const response = await fetchJobs(page, 10);
 
-        setJobs((prev) => [
-          ...prev,
-          ...response.data.payload,
-        ]);
+        setJobs((prev) => [...prev, ...response.data.payload]);
 
         setHasMore(response.data.pagination.hasMore);
       } catch (error) {
@@ -55,7 +56,7 @@ function ExploreJobs() {
       },
       {
         rootMargin: "200px",
-      }
+      },
     );
 
     if (loaderRef.current) {
@@ -76,14 +77,12 @@ function ExploreJobs() {
         `http://localhost:5000/api/job/delete/${selectedJobId}`,
         {
           withCredentials: true,
-        }
+        },
       );
 
       toast.success("Job deleted successfully");
 
-      setJobs((prev) =>
-        prev.filter((job) => job._id !== selectedJobId)
-      );
+      setJobs((prev) => prev.filter((job) => job._id !== selectedJobId));
 
       setConfirmIsOpen(false);
       setSelectedJobId(null);
@@ -95,29 +94,42 @@ function ExploreJobs() {
 
   return (
     <>
-      <Navbar />
+      <div className="min-h-screen flex flex-col bg-[#081028]">
+        <Navbar />
 
-      {jobs.map((job) => (
-        <JobCard
-          key={job._id}
-          job={job}
-          onDeleteClick={handleDeleteClick}
+        <main className="flex-1 flex flex-col">
+          {!loading && jobs.length === 0 ? (
+            <EmptyState
+              title="No Jobs Posted"
+              description="You haven't posted any jobs yet. Start by creating your first job posting."
+              buttonText="Post a Job"
+              onButtonClick={() => navigate("/post-jobs")}
+            />
+          ) : (
+            <div className="flex-1 flex flex-col gap-5 py-8">
+              {jobs.map((job) => (
+                <JobCard
+                  key={job._id}
+                  job={job}
+                  onDeleteClick={handleDeleteClick}
+                />
+              ))}
+
+              <div ref={loaderRef} className="py-5 text-center text-white">
+                {loading && "Loading..."}
+                {!hasMore && jobs.length > 0 && "No more jobs"}
+              </div>
+            </div>
+          )}
+        </main>
+
+        <ConfirmationPopup
+          confirmIsOpen={confirmIsOpen}
+          setConfirmIsOpen={setConfirmIsOpen}
+          title="Remove Job"
+          message="This action cannot be undone. Are you sure you want to remove this job?"
+          onConfirm={deleteJob}
         />
-      ))}
-
-      <ConfirmationPopup
-        confirmIsOpen={confirmIsOpen}
-        setConfirmIsOpen={setConfirmIsOpen}
-        title="Remove Job"
-        message="This action cannot be undone. Are you sure you want to remove this job?"
-        onConfirm={deleteJob}
-      />
-
-      <div
-        ref={loaderRef}
-        className="text-center py-5 text-white bg-[#081028]"
-      >
-        {loading && "Loading..."}
       </div>
 
       <Footer />

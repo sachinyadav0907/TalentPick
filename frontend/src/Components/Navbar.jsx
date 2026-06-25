@@ -12,9 +12,9 @@ function Navbar() {
   const { user, isRecruiter, profileId } = useAuth();
   return (
     <>
-      <nav className="w-full h-20 flex justify-between items-center sticky top-0 z-40 bg-slate-950 border-b border-white/10 px-3 text-slate-200">
+      <nav className="w-full h-14 flex justify-between items-center sticky top-0 z-40 bg-slate-950 border-b border-white/10 px-3 text-slate-200">
         <AiOutlineMenuUnfold
-          className="text-5xl opacity-70 cursor-pointer ownNav:hidden hover:text-violet-400 transition"
+          className="text-4xl opacity-70 cursor-pointer ownNav:hidden hover:text-violet-400 transition"
           onClick={() => {
             setIsOpen(true);
           }}
@@ -24,7 +24,7 @@ function Navbar() {
           <li>
             <Link
               to="/home"
-              className="text-2xl font-medium hover:text-violet-400 transition"
+              className="text-lg font-medium hover:text-violet-400 transition"
             >
               Home
             </Link>
@@ -35,7 +35,7 @@ function Navbar() {
               {" "}
               <Link
                 to="/explore-jobs"
-                className="block px-3 py-2 rounded-lg text-2xl font-medium hover:bg-slate-800 hover:text-violet-400 transition"
+                className="block px-3 py-2 rounded-lg text-lg font-medium hover:bg-slate-800 hover:text-violet-400 transition"
                 onClick={() => setIsOpen(false)}
               >
                 Explore Jobs
@@ -47,14 +47,14 @@ function Navbar() {
             {!isRecruiter ? (
               <Link
                 to="/applied-jobs"
-                className="text-2xl font-medium hover:text-violet-400 transition"
+                className="text-lg font-medium hover:text-violet-400 transition"
               >
                 Applied Jobs
               </Link>
             ) : (
               <Link
                 to="/post-jobs"
-                className="flex items-center gap-1 text-2xl font-medium hover:text-violet-400 transition"
+                className="flex items-center gap-1 text-lg font-medium hover:text-violet-400 transition"
               >
                 <FaRegSquarePlus className="text-xl" />
                 <span>Post Jobs</span>
@@ -66,14 +66,14 @@ function Navbar() {
             {!isRecruiter ? (
               <Link
                 to="/saved-jobs"
-                className="text-2xl font-medium hover:text-violet-400 transition"
+                className="text-lg font-medium hover:text-violet-400 transition"
               >
                 Saved Jobs
               </Link>
             ) : (
               <Link
                 to="/my-applicants"
-                className="text-2xl font-medium hover:text-violet-400 transition"
+                className="text-lg font-medium hover:text-violet-400 transition"
               >
                 My Applicants
               </Link>
@@ -84,14 +84,14 @@ function Navbar() {
             {!isRecruiter ? (
               <Link
                 to={`/profile/${profileId}`}
-                className="text-2xl font-medium hover:text-violet-400 transition"
+                className="text-lg font-medium hover:text-violet-400 transition"
               >
                 Profile
               </Link>
             ) : (
               <Link
                 to="/my-jobs"
-                className="text-2xl font-medium hover:text-violet-400 transition"
+                className="text-lg font-medium hover:text-violet-400 transition"
               >
                 My Jobs
               </Link>
@@ -102,7 +102,7 @@ function Navbar() {
             <li>
               <Link
                 to={`/profile/${profileId}`}
-                className="text-2xl font-medium hover:text-violet-400 transition"
+                className="text-lg font-medium hover:text-violet-400 transition"
               >
                 Profile
               </Link>

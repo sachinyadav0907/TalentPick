@@ -2,14 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer.jsx";
 import JobCard from "../Components/JobCard.jsx";
+import EmptyState from "../Components/EmptyState.jsx";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function SavedJobs() {
   const [jobs, setJobs] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const navigate = useNavigate();
 
   const loaderRef = useRef(null);
 
@@ -78,7 +81,12 @@ function SavedJobs() {
       toast.success("Applied successfully");
       return true;
     } catch (error) {
-      toast.error(error.response?.data?.message || "Something went wrong");
+      const message = error.response?.data?.message || "Something went wrong"
+
+      toast.error(message);
+      if(message === "You have already applied for this job"){
+        return true;
+      }
       return false;
     }
   };
@@ -101,16 +109,44 @@ function SavedJobs() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      {jobs.map((job) => {
-        return <JobCard key={job._id} job={job} onApply={handleApply} isSaved={true} onUnsave={handleUnsave} />;
-      })}
-      <div ref={loaderRef} className="text-center py-5 text-white bg-[#081028]">
-        {loading && "Loading..."}
-      </div>
-      <Footer />
-    </div>
+    <>
+  <div className="min-h-screen flex flex-col bg-[#081028]">
+    <Navbar />
+
+    <main className="flex-1">
+      {!loading && jobs.length === 0 ? (
+        <EmptyState
+          title="No Saved Jobs"
+          description="You haven't saved any jobs yet. Browse available jobs and save the ones you're interested in."
+          buttonText="Explore Jobs"
+          onButtonClick={() => navigate("/explore-jobs")}
+        />
+      ) : (
+        <div className="flex flex-col gap-5 py-8">
+          {jobs.map((job) => (
+            <JobCard
+              key={job._id}
+              job={job}
+              onApply={handleApply}
+              isSaved={true}
+              onUnsave={handleUnsave}
+            />
+          ))}
+
+          <div
+            ref={loaderRef}
+            className="py-5 text-center text-white"
+          >
+            {loading && "Loading..."}
+            {!hasMore && jobs.length > 0 && "No more saved jobs"}
+          </div>
+        </div>
+      )}
+    </main>
+  </div>
+
+  <Footer />
+</>
   );
 }
 

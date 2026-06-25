@@ -103,7 +103,7 @@ function Register() {
       <div className="flex items-center justify-center px-4 py-10">
         <div className="w-full max-w-md rounded-2xl border border-white/10 bg-slate-900/80 p-8 shadow-2xl backdrop-blur-xl">
           <div className="mb-8 text-center">
-            <h1 className="text-4xl font-bold text-white">Create Account</h1>
+            <h1 className="text-3xl font-bold text-white">Create Account</h1>
 
             <p className="mt-2 text-slate-300">
               Join us and start your journey today
@@ -288,7 +288,7 @@ function Register() {
             </button>
           </form>
 
-          <div className="mt-6 text-center">
+          <div className="mt-6 text-center text-sm">
             <p className="text-slate-300">
               Already have an account?{" "}
               <Link

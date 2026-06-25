@@ -21,7 +21,7 @@ function Help() {
     },
     {
       title: "Contact Us",
-      description: "Email: support@jobportal.com\nPhone: +91 9876543210",
+      description: "Email: ysachin8600@gmail.com\nPhone: +91 8369474170",
     },
   ];
 
@@ -37,9 +37,9 @@ function Help() {
         "Register as a recruiter and access the recruiter dashboard to create and manage job listings.",
     },
     {
-      question: "Can I reset my password?",
+      question: "Can I Change my role?",
       answer:
-        "Yes, use the 'Forgot Password' option available on the login page.",
+        "No, You can not change your role as for security reasons.",
     },
   ];
 
@@ -50,11 +50,11 @@ function Help() {
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="bg-slate-900 border border-white/10 rounded-3xl shadow-xl p-8 md:p-10">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-slate-100">
+            <h1 className="text-2xl md:text-3xl font-bold text-slate-100">
               Help & Support
             </h1>
 
-            <p className="text-slate-400 mt-4 text-lg">
+            <p className="text-slate-400 mt-4 text-md">
               Need assistance? Find answers to common questions and support
               resources.
             </p>
@@ -66,11 +66,11 @@ function Help() {
                 key={index}
                 className="bg-slate-800/70 border border-white/10 rounded-2xl p-6 hover:border-violet-500/40 hover:-translate-y-1 transition-all duration-300"
               >
-                <h2 className="text-2xl font-semibold text-slate-100 mb-3">
+                <h2 className="text-xl font-semibold text-slate-100 mb-3">
                   {card.title}
                 </h2>
 
-                <p className="text-slate-400 whitespace-pre-line leading-relaxed">
+                <p className="text-slate-400 whitespace-pre-line leading-relaxed text-md">
                   {card.description}
                 </p>
               </div>
@@ -78,7 +78,7 @@ function Help() {
           </div>
 
           <div className="mt-12 bg-slate-800/40 border border-violet-500/20 rounded-2xl p-6 md:p-8">
-            <h2 className="text-3xl font-bold text-violet-400 mb-8">
+            <h2 className="text-xl font-bold text-violet-400 mb-8">
               Frequently Asked Questions
             </h2>
 

@@ -10,15 +10,15 @@ function Unauthorized() {
       <Navbar />
 
       <div className="flex items-center justify-center px-4 py-10">
-        <div className="w-full max-w-xl rounded-3xl border border-white/10 bg-slate-900/80 p-8 text-center shadow-2xl backdrop-blur-xl sm:p-12">
+        <div className="w-full max-w-xl rounded-3xl border border-white/10 bg-slate-900/80 p-8 text-center shadow-2xl backdrop-blur-xl sm:p-12">  
 
           <div className="mb-6 flex justify-center">
             <div className="rounded-full bg-red-500/10 p-5 border border-red-500/20">
-              <TfiFaceSad className="text-6xl text-red-400" />
+              <TfiFaceSad className="text-5xl text-red-400" />
             </div>
           </div>
 
-          <h1 className="bg-linear-to-r from-red-400 to-pink-500 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl">
+          <h1 className="bg-linear-to-r from-red-400 to-pink-500 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent sm:text-4xl">
             Oops!!!!
           </h1>
 
@@ -26,7 +26,7 @@ function Unauthorized() {
             You are not logged in
           </p>
 
-          <p className="mt-3 text-sm leading-relaxed text-slate-400 sm:text-base">
+          <p className="mt-3 text-xs leading-relaxed text-slate-400 sm:text-sm">
             Login or create an account to continue exploring this page
             and unlock all features.
           </p>

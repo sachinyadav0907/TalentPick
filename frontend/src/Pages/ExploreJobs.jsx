@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import { useJobs } from "../Contexts/JobsContext";
+import EmptyState from "../Components/EmptyState";
 import JobCard from "../Components/JobCard";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -10,6 +11,7 @@ import { FiSearch, FiFilter } from "react-icons/fi";
 import FilterModal from "../Components/FilterModal";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function ExploreJobs() {
   const [jobs, setJobs] = useState([]);
@@ -21,6 +23,7 @@ function ExploreJobs() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState({});
   const { fetchJobs } = useJobs();
+  const navigate = useNavigate();
 
   const loaderRef = useRef(null);
 
@@ -101,7 +104,12 @@ function ExploreJobs() {
       toast.success("Applied successfully");
       return true;
     } catch (error) {
-      toast.error(error.response?.data?.message || "Something went wrong");
+      const message = error.response?.data?.message || "Something went wrong"
+
+      toast.error(message);
+      if(message === "You have already applied for this job"){
+        return true;
+      }
       return false;
     }
   };
@@ -118,7 +126,12 @@ function ExploreJobs() {
       toast.success("Saved successfully");
       return true;
     } catch (error) {
-      toast.error(error.response?.data?.message || "Something went wrong");
+      const message = error.response?.data?.message || "Something went wrong"
+
+      toast.error(message);
+      if(message === "Job already saved"){
+        return true;
+      }
       return false;
     }
   };
@@ -140,59 +153,81 @@ function ExploreJobs() {
   };
 
   return (
-    <div>
-      <Navbar />
-      <div className="flex items-center justify-center gap-3 px-4 py-6 bg-[#081028]">
-        <form
-          className="flex items-center overflow-hidden rounded-xl border border-slate-300 bg-white shadow-sm w-full max-w-4xl justify-between"
-          onSubmit={handleSearch}
-        >
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Job title, keyword, or company"
-            className="px-4 py-2 text-lg md:text-xl outline-none"
-          />
+   <>
+  <div className="min-h-screen flex flex-col bg-[#081028]">
+    <Navbar />
 
-          <button
-            type="submit"
-            className="bg-blue-600 p-3 text-white hover:bg-blue-700 transition"
-          >
-            <FiSearch size={25} />
-          </button>
-        </form>
+    {/* Search & Filter */}
+    <div className="flex items-center justify-center gap-3 px-4 py-6">
+      <form
+        className="flex items-center overflow-hidden rounded-xl border border-slate-300 bg-white shadow-sm w-full max-w-4xl justify-between"
+        onSubmit={handleSearch}
+      >
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Job title, keyword, or company"
+          className="grow bg-gray-200 px-4 py-2 text-md outline-none md:text-lg"
+        />
 
         <button
-          className="flex items-center justify-center rounded-xl border border-slate-300 bg-white p-2 text-slate-700 hover:bg-slate-100 transition"
-          onClick={() => setShowFilters(true)}
+          type="submit"
+          className="bg-blue-600 p-3 text-white transition hover:bg-blue-700"
         >
-          <FiFilter size={30} className="block md:hidden" />
-
-          <span className="hidden md:block md:text-xl">Filter</span>
+          <FiSearch size={20} />
         </button>
-        <FilterModal
-          showFilters={showFilters}
-          setShowFilters={setShowFilters}
-          onApply={handleFilters}
-        />
-      </div>
-      {jobs.map((job) => {
-        return (
-          <JobCard
-            key={job._id}
-            job={job}
-            onApply={handleApply}
-            onSave={handleSave}
-            onUnsave={handleUnsave}
-          />
-        );
-      })}
-      <div ref={loaderRef} className="text-center py-5 text-white bg-[#081028]">
-        {loading && "Loading..."}
-      </div>
-      <Footer />
+      </form>
+
+      <button
+        className="flex items-center justify-center rounded-xl border border-slate-300 bg-gray-100 p-2 text-slate-700 transition hover:bg-slate-100"
+        onClick={() => setShowFilters(true)}
+      >
+        <FiFilter size={22} className="block md:hidden" />
+        <span className="hidden md:block md:text-lg">Filter</span>
+      </button>
+
+      <FilterModal
+        showFilters={showFilters}
+        setShowFilters={setShowFilters}
+        onApply={handleFilters}
+      />
     </div>
+
+    <main className="flex-1">
+      {!loading && jobs.length === 0 ? (
+        <EmptyState
+          title="No Jobs Found"
+          description="We couldn't find any jobs matching your search or filters. Try changing your search criteria or return to the home page."
+          buttonText="Go Home"
+          onButtonClick={() => navigate("/")}
+        />
+      ) : (
+        <div className="flex flex-col gap-5 pb-8">
+          {jobs.map((job) => (
+            <JobCard
+              key={job._id}
+              job={job}
+              onApply={handleApply}
+              onSave={handleSave}
+              onUnsave={handleUnsave}
+            />
+          ))}
+
+          <div
+            ref={loaderRef}
+            className="py-5 text-center text-white"
+          >
+            {loading && "Loading..."}
+            {!hasMore && jobs.length > 0 && "No more jobs"}
+          </div>
+        </div>
+      )}
+    </main>
+  </div>
+
+  <Footer />
+</>
   );
 }
 

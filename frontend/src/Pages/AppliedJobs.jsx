@@ -4,12 +4,15 @@ import axios from "axios";
 import Navbar from "../Components/Navbar.jsx";
 import Footer from "../Components/Footer.jsx";
 import JobCard from "../Components/JobCard.jsx";
+import EmptyState from "../Components/EmptyState.jsx";
+import { useNavigate } from "react-router-dom";
 
 function AppliedJobs() {
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const navigate = useNavigate();
 
   const loaderRef = useRef(null);
 
@@ -35,7 +38,6 @@ function AppliedJobs() {
         setAppliedJobs((prev) => [...prev, ...jobsArray]);
 
         setHasMore(response.data.hasMore);
-
       } catch (error) {
         console.error("Error fetching applied jobs:", error);
       } finally {
@@ -73,19 +75,35 @@ function AppliedJobs() {
   }, [loading, hasMore]);
 
   return (
-    <div>
-      <Navbar />
+    <>
+      <div className="min-h-screen flex flex-col bg-[#081028]">
+        <Navbar />
 
-      {appliedJobs.map((job) => (
-        <JobCard key={job._id} job={job} />
-      ))}
+        <main className="flex-1">
+          {!loading && appliedJobs.length === 0 ? (
+            <EmptyState
+              title="No Applied Jobs"
+              description="You haven't applied to any jobs yet. Explore available opportunities and submit your first application."
+              buttonText="Explore Jobs"
+              onButtonClick={() => navigate("/explore-jobs")}
+            />
+          ) : (
+            <div className="flex flex-col gap-5 py-8">
+              {appliedJobs.map((job) => (
+                <JobCard key={job._id} job={job} />
+              ))}
 
-      {loading && <p>Loading...</p>}
-
-      {hasMore && <div ref={loaderRef} style={{ height: "20px" }} />}
+              <div ref={loaderRef} className="py-5 text-center text-white">
+                {loading && "Loading..."}
+                {!hasMore && appliedJobs.length > 0 && "No more jobs"}
+              </div>
+            </div>
+          )}
+        </main>
+      </div>
 
       <Footer />
-    </div>
+    </>
   );
 }
 

@@ -84,7 +84,7 @@ function Profile() {
       <Navbar />
 
       <div className="flex justify-center items-center p-4 sm:p-6 flex-1">
-        <div className="w-full max-w-5xl bg-slate-900 rounded-3xl shadow-lg border border-slate-800 overflow-hidden">
+        <div className="w-full max-w-4xl bg-slate-900 rounded-3xl shadow-lg border border-slate-800 overflow-hidden">
           <div className="h-40 sm:h-52 bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 relative">
             {ownProfile && (
               <Link
@@ -109,7 +109,7 @@ function Profile() {
             {!isRecruiter ? (
               <div className="flex flex-col gap-8">
                 <div className="text-center sm:text-left">
-                  <h1 className="text-3xl sm:text-5xl font-bold text-white">
+                  <h1 className="text-xl sm:text-3xl font-bold text-white uppercase">
                     {profileData?.fullName}
                   </h1>
 
@@ -120,7 +120,7 @@ function Profile() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold text-white mb-3">
+                  <h2 className="text-lg font-semibold text-white mb-3">
                     About
                   </h2>
 
@@ -130,7 +130,7 @@ function Profile() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold text-white mb-4">
+                  <h2 className="text-lg font-semibold text-white mb-4">
                     Skills
                   </h2>
 
@@ -147,16 +147,16 @@ function Profile() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold text-white mb-4">
+                  <h2 className="text-lg font-semibold text-white mb-4">
                     Resume
                   </h2>
 
                   <div className="bg-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
-                      <FaFilePdf className="text-red-500 text-3xl" />
+                      <FaFilePdf className="text-red-500 text-xl" />
 
                       <div>
-                        <p className="text-white font-medium">
+                        <p className="text-white font-medium text-sm">
                           {profileData?.profile?.resume?.public_id}
                         </p>
                         <p className="text-slate-400 text-sm">
@@ -165,7 +165,7 @@ function Profile() {
                       </div>
                     </div>
 
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 text-sm">
                       <a
                         href={profileData?.profile?.resume?.secure_url}
                         target="_blank"
@@ -186,11 +186,11 @@ function Profile() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold text-white mb-4">
+                  <h2 className="text-lg font-semibold text-white mb-4">
                     Links
                   </h2>
 
-                  <div className="flex flex-wrap gap-4">
+                  <div className="flex flex-wrap gap-4 text-sm">
                     <a
                       href={profileData?.profile?.jobseekerLinks?.github}
                       className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 transition px-4 py-3 rounded-xl text-slate-200"
@@ -216,7 +216,7 @@ function Profile() {
                     </a>
                   </div>
                 </div>
-                <div className="flex flex-wrap justify-center gap-8 text-xl text-gray-400">
+                <div className="flex flex-wrap justify-center gap-8 text-md text-gray-400">
                   <p>Email : {profileData?.email}</p>
                   <p>
                     Contact No: {profileData?.profile?.jobseekerPhoneNumber}
@@ -227,7 +227,7 @@ function Profile() {
                     className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2 active:scale-95 focus:scale-95"
                     onClick={handleLogout}
                   >
-                    <IoMdExit className="text-xl" />
+                    <IoMdExit className="text-sm" />
                     Logout
                   </button>
                 )}
@@ -235,31 +235,29 @@ function Profile() {
             ) : (
               <div className="flex flex-col gap-8">
                 <div className="text-center sm:text-left">
-                  <h1 className="text-3xl sm:text-5xl font-bold text-white">
+                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
                     {profileData?.profile?.companyName}
                   </h1>
 
-                  <p className="text-indigo-400 mt-2 text-lg sm:text-xl">
+                  <p className="mt-2 text-sm sm:text-base lg:text-lg text-indigo-400">
                     Hiring Developers Worldwide
                   </p>
 
-                  <div className="flex justify-center sm:justify-start items-center gap-2 text-slate-400 mt-3">
-                    <FaMapMarkerAlt />
+<div className="mt-3 flex items-center justify-center sm:justify-start gap-2 text-xs sm:text-sm text-slate-400">                    <FaMapMarkerAlt />
                     <span>{profileData?.profile?.companyLocation}</span>
                   </div>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-semibold text-white mb-3">
-                    Company Description
+<h2 className="mb-3 text-base sm:text-lg lg:text-xl font-semibold text-white">                    Company Description
                   </h2>
 
-                  <p className="text-slate-300 leading-7">
+                  <p className="text-sm sm:text-base text-slate-300 leading-7">
                     {profileData?.profile?.companyDescription}
                   </p>
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold text-white mb-4">
+                  <h2 className="mb-4 text-base sm:text-lg lg:text-xl font-semibold text-white">
                     Currently Hiring
                   </h2>
 
@@ -268,7 +266,7 @@ function Profile() {
                       (role, index) => (
                         <span
                           key={index}
-                          className="bg-slate-800 text-slate-200 px-4 py-2 rounded-xl text-sm"
+                          className="rounded-xl bg-slate-800 px-4 py-2 text-xs sm:text-sm text-slate-200"
                         >
                           {role}
                         </span>
@@ -278,28 +276,28 @@ function Profile() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold text-white mb-4">
+                  <h2 className="mb-4 text-base sm:text-lg lg:text-xl font-semibold text-white">
                     Website
                   </h2>
 
                   <a
                     href={profileData?.profile?.companyWebsite}
-                    className="flex items-center gap-2 w-fit bg-slate-800 hover:bg-slate-700 transition px-4 py-3 rounded-xl text-slate-200"
+                    className="flex w-fit items-center gap-2 rounded-xl bg-slate-800 px-4 py-3 text-sm sm:text-base text-slate-200 transition hover:bg-slate-700"
                   >
                     <FaGlobe />
                     {profileData?.profile?.companyWebsite}
                   </a>
                 </div>
-                <div className="flex flex-wrap justify-center gap-8 text-xl text-gray-400">
+                <div className="flex flex-wrap justify-center gap-8 text-sm sm:text-base text-gray-400">
                   <p>Email : {profileData?.email}</p>
                   <p>Contact No: {profileData?.profile?.companyPhoneNumber}</p>
                 </div>
                 {ownProfile && (
                   <button
-                    className="w-full sm:w-fit bg-red-600 hover:bg-red-500 transition px-5 py-3 rounded-xl text-white flex items-center justify-center gap-2 active:scale-95 focus:scale-95"
+                    className="flex w-full sm:w-fit items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-3 text-sm sm:text-base font-medium text-white transition hover:bg-red-500 active:scale-95 focus:scale-95"
                     onClick={handleLogout}
                   >
-                    <IoMdExit className="text-xl" />
+                    <IoMdExit className="text-md" />
                     Logout
                   </button>
                 )}
