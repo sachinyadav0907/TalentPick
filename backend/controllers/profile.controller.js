@@ -1,5 +1,5 @@
-import User from "../Model/userModel.js";
-import { cloudinaryUpload } from "../Utility/CloudUpload.js";
+import User from "../models/user.model.js";
+import { cloudinaryUpload } from "../utils/CloudUpload.js";
 import mongoose from "mongoose";
 
 export const fetchProfile = async (req, res) => {

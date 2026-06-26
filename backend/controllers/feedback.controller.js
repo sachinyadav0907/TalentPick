@@ -1,4 +1,4 @@
-import Feedback from "../Model/feedbackModel.js"
+import Feedback from "../models/feedback.model.js"
 
 export const feedbackStorage = async(req, res)=>{
   try {

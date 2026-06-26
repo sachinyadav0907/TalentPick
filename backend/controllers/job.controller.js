@@ -1,6 +1,6 @@
-import Job from "../Model/jobModel.js";
-import User from "../Model/userModel.js";
-import SavedJob from "../Model/savedJobModel.js";
+import Job from "../models/job.model.js";
+import User from "../models/user.model.js";
+import SavedJob from "../models/savedJob.model.js";
 
 export const createJob = async (req, res) => {
   try {

@@ -1,4 +1,4 @@
-import cloudinary from "../Config/cloudinaryConfig.js";
+import cloudinary from "../config/cloudinary.js";
 
 export const cloudinaryUpload = (buffer,id, folder, resourceType="image") => {
   return new Promise((resolve, reject) => {

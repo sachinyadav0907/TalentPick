@@ -1,4 +1,4 @@
-import verifyToken from "../Utility/verifyToken.js"
+import verifyToken from "../utils/verifyToken.js"
 
 export const protectMiddleware = (req, res, next) => {
   try {
