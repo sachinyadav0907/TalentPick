@@ -4,7 +4,97 @@ TalentPick is a full-stack MERN-based job portal designed to bridge the gap betw
 
 ---
 
+## Screenshots
+
+### Home Page
+
+![Home Page](./Screenshots/home.png)
+
+### Search Jobs
+
+![Search Jobs](./Screenshots/search-jobs.png)
+
+### User Profile
+
+![Profile](./Screenshots/profile.png)
+
+### Edit Profile
+
+![Edit Profile](./Screenshots/edit-profile.png)
+
+### My Jobs
+
+![My Jobs](./Screenshots/my-jobs.png)
+
+### Applicant Tracking
+
+![Applicant Tracking](./Screenshots/applicants-tracking.png)
+
+### Mobile View
+
+![Mobile View](./Screenshots/mobile.png)
+
+---
 ## Features
+
+### 🔐 Authentication & Authorization
+
+* Secure user registration and login
+* JWT-based authentication
+* Role-based access control (Candidate & Recruiter)
+* Protected routes
+* Password encryption using bcrypt
+
+### 👤 User Profile Management
+
+* Create and manage professional profiles
+* Update personal and professional information
+* Upload and update profile picture
+* Upload and update resume
+* Cloudinary integration for media storage
+* Recruiters can view candidate profiles and resumes
+
+### 💼 Job Management
+
+#### Candidate Features
+
+* Browse all available jobs
+* Search jobs by title or keywords
+* Filter jobs by location and category
+* Apply for jobs
+* Save jobs for later
+* Track applied jobs
+
+#### Recruiter Features
+
+* Create job postings
+* Update existing job listings
+* Delete job postings
+* View all posted jobs
+* Track applicants for each job
+* Accept or reject job applications
+* View applicant profiles and resumes
+
+### 🛡️ Security
+
+* JWT Authentication
+* Password hashing using bcrypt
+* Protected API routes
+* API rate limiting
+* Input validation
+* Environment variable protection
+* Secure authentication workflow
+
+### 🎨 Frontend Experience
+
+* Responsive user interface
+* Modern UI built with Tailwind CSS
+* React Router-based navigation
+* Context API for state management
+* Optimized user interactions
+* Clean and intuitive user experience
+
+---
 
 ### Authentication & Authorization
 
@@ -50,11 +140,10 @@ TalentPick is a full-stack MERN-based job portal designed to bridge the gap betw
 ### Frontend
 
 - React.js
-- Vite
 - React Router DOM
 - Axios
 - Context API
-- CSS3
+- Taiwind CSS
 
 ### Backend
 
@@ -204,57 +293,46 @@ The backend server will run at:
 ```bash
 http://localhost:5000
 ```
-
----
-
-## Screenshots
-
-### Home Page
-
-![Home Page](./Screenshots/home.png)
-
-### User Profile
-
-![Profile](./Screenshots/profile.png)
-
-### Edit Profile
-
-![Edit Profile](./Screenshots/edit-profile.png)
-
-### My Jobs
-
-![My Jobs](./Screenshots/my-jobs.png)
-
-### Mobile View
-
-![Mobile View](./Screenshots/mobile.png)
 ---
 
 ## Core Functionalities
 
-- User Authentication and Authorization
-- Profile Creation and Management
-- Cloud-Based Image Uploads
-- Job Posting and Management
-- Protected API Routes
-- Secure Backend Architecture
-- Responsive Frontend Design
-- State Management using Context API
+* JWT Authentication & Role-Based Authorization
+* Candidate & Recruiter Role Management
+* Professional Profile Management
+* Profile Picture Upload
+* Resume Upload & Management
+* Cloudinary Integration
+* Job Posting & Management
+* Job Search & Filtering
+* Saved Jobs
+* Apply for Jobs
+* Applicant Tracking System
+* Accept & Reject Applications
+* Recruiter Profile Access
+* Protected API Routes
+* Responsive Frontend Design
+* State Management using Context API
 
 ---
 
 ## Future Enhancements
 
-- Resume Upload Support
-- Job Application Tracking
-- Saved Jobs Functionality
-- Recruiter Dashboard
-- Admin Management Panel
-- Advanced Search and Filtering
-- Email Notifications
-- Real-Time Updates
+* Admin Dashboard
+* Real-Time Chat Between Recruiters & Candidates
+* Modern UI/UX Improvements
+* Email Notifications
+* Docker Containerization
+* Nginx Reverse Proxy
+* CI/CD Pipeline using GitHub Actions
+* Production Deployment
+* Redis Caching
+* Interview Scheduling
+* Real-Time Notifications
+* Analytics Dashboard
 
 ---
+
 
 ## License
 
