@@ -342,7 +342,7 @@ This project is licensed under the MIT License.
 
 ## Author
 
-**Sachin**
+**Sachin Yadav**
 
 BSc Information Technology Student  
 MERN Stack Developer | DevOps Enthusiast
