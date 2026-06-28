@@ -22,6 +22,10 @@ TalentPick is a full-stack MERN-based job portal designed to bridge the gap betw
 
 ![Edit Profile](./Screenshots/edit-profile.png)
 
+### Post Job
+
+![Post Job](./Screenshots/post-job.png)
+
 ### My Jobs
 
 ![My Jobs](./Screenshots/my-jobs.png)
@@ -342,7 +346,7 @@ This project is licensed under the MIT License.
 
 ## Author
 
-**Sachin**
+**Sachin Yadav**
 
 BSc Information Technology Student  
 MERN Stack Developer | DevOps Enthusiast
