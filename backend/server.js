@@ -24,18 +24,28 @@ app.use(
   }),
 );
 
+app.use("/api", globalLimiter);
+
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/job", jobRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/application", applicationRoutes);
-app.use("/api", globalLimiter);
-
 
 app.use((err, req, res, next) => {
-  res.status(400).json({
-    message: err.message,
-    stack: err.stack,
+  const statusCode = err.statusCode || err.status || 500;
+
+  console.error(err);
+
+  res.status(statusCode).json({
+    success: false,
+    message:
+      process.env.NODE_ENV === "production" && statusCode === 500
+        ? "Internal Server Error"
+        : err.message,
+    ...(process.env.NODE_ENV !== "production" && {
+      stack: err.stack,
+    }),
   });
 });
 
