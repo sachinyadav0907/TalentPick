@@ -12,10 +12,11 @@ import {
 } from "react-icons/fa";
 import { useAuth } from "../Contexts/AuthContext.jsx";
 import { IoMdExit } from "react-icons/io";
-import axios from "axios";
+
 import toast from "react-hot-toast";
 import { success } from "zod";
 import { useEffect } from "react";
+import api from "../api/axiox.js";
 
 function Profile() {
   const { id } = useParams();
@@ -37,9 +38,8 @@ function Profile() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/profile/data/${id}`,
-          { withCredentials: true },
+        const response = await api.get(
+          `/profile/data/${id}`
         );
         setProfileData(response.data.payload);
         setProfilePhoto(response.data.payload.profile.profilePhoto.secure_url);
@@ -55,9 +55,7 @@ function Profile() {
 
   const handleLogout = async () => {
     try {
-      const logoutPromise = axios.get("http://localhost:5000/api/auth/logout", {
-        withCredentials: true,
-      });
+      const logoutPromise = api.get("/auth/logout");
       await toast.promise(logoutPromise, {
         loading: "Logging Out....",
         success: (res) => res.data.message,

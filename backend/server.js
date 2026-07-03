@@ -19,10 +19,16 @@ connectDB();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     credentials: true,
   }),
 );
+
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+  });
+});
 
 app.use("/api", globalLimiter);
 
@@ -50,5 +56,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(process.env.PORT, () => {
-  console.log(`Server is runnning on http://localhost:${process.env.PORT}/`);
+  console.log(`Server running on port ${process.env.PORT}`);
 });

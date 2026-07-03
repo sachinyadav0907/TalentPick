@@ -7,7 +7,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FiEyeOff } from "react-icons/fi";
 import { FiEye } from "react-icons/fi";
-import axios from "axios";
 import { useAuth } from "../Contexts/AuthContext.jsx";
 import toast from "react-hot-toast";
 
@@ -75,12 +74,9 @@ function Register() {
 
   const handleRegister = async (data) => {
     try {
-      const registerPromise = axios.post(
-        "http://localhost:5000/api/auth/register",
-        data,
-        {
-          withCredentials: true,
-        },
+      const registerPromise = api.post(
+        "/auth/register",
+        data
       );
       const response = await toast.promise(registerPromise, {
         loading: "Registering User",

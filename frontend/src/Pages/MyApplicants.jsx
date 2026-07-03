@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../Components/Navbar.jsx";
 import Footer from "../Components/Footer.jsx";
 import EmptyState from "../Components/EmptyState";
-import axios from "axios";
+
 import JobsApplicants from "../Components/JobsApplicants.jsx";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axiox.js";
 
 function MyApplicant() {
   const [jobs, setJobs] = useState([]);
@@ -22,11 +23,8 @@ function MyApplicant() {
       try {
         setLoading(true);
 
-        const response = await axios.get(
-          `http://localhost:5000/api/job/applicant-jobs?page=${page}&limit=10`,
-          {
-            withCredentials: true,
-          },
+        const response = await api.get(
+          `/job/applicant-jobs?page=${page}&limit=10`,
         );
 
         setJobs((prev) => [...prev, ...response.data.payload]);

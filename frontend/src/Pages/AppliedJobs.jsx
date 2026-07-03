@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
 
 import Navbar from "../Components/Navbar.jsx";
 import Footer from "../Components/Footer.jsx";
 import JobCard from "../Components/JobCard.jsx";
 import EmptyState from "../Components/EmptyState.jsx";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axiox.js";
 
 function AppliedJobs() {
   const [appliedJobs, setAppliedJobs] = useState([]);
@@ -21,11 +21,8 @@ function AppliedJobs() {
       try {
         setLoading(true);
 
-        const response = await axios.get(
-          `http://localhost:5000/api/application/fetch?page=${page}`,
-          {
-            withCredentials: true,
-          },
+        const response = await api.get(
+          `/application/fetch?page=${page}`,
         );
 
         const jobs = response.data.payload || [];

@@ -3,9 +3,9 @@ import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer.jsx";
 import JobCard from "../Components/JobCard.jsx";
 import EmptyState from "../Components/EmptyState.jsx";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axiox.js";
 
 function SavedJobs() {
   const [jobs, setJobs] = useState([]);
@@ -23,11 +23,8 @@ function SavedJobs() {
       setLoading(true);
 
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/job/save/fetch?page=${page}&limit=10`,
-          {
-            withCredentials: true,
-          },
+        const response = await api.get(
+          `/job/save/fetch?page=${page}&limit=10`,
         );
 
         const jobsData = response.data.payload;
@@ -71,8 +68,8 @@ function SavedJobs() {
 
   const handleApply = async (jobId) => {
     try {
-      await axios.post(
-        "http://localhost:5000/api/application/create",
+      await api.post(
+        "/application/create",
         { jobId },
         {
           withCredentials: true,
@@ -93,8 +90,8 @@ function SavedJobs() {
 
   const handleUnsave = async (jobId) => {
     try {
-      await axios.delete(
-        `http://localhost:5000/api/job/save/delete/${jobId}`,
+      await api.delete(
+        `/job/save/delete/${jobId}`,
         {
           withCredentials: true,
         },

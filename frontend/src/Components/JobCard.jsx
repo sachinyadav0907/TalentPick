@@ -17,7 +17,6 @@ import { useAuth } from "../Contexts/AuthContext.jsx";
 import { GoBookmarkSlash } from "react-icons/go";
 import { formatDistanceToNow } from "date-fns";
 import { format } from "date-fns";
-import axios from "axios";
 
 function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
   const { isRecruiter } = useAuth();

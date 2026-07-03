@@ -13,10 +13,10 @@ import {
 import { useAuth } from "../Contexts/AuthContext.jsx";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axiox.js";
 
 const EditProfileSchema = z.object({
   fullName: z.string().min(2, "Name is required"),
@@ -97,9 +97,8 @@ function EditProfile() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/profile/data/${profileId}`,
-          { withCredentials: true },
+        const response = await api.get(
+          `/profile/data/${profileId}`,
         );
         reset({
           ...response.data.payload,
@@ -166,12 +165,10 @@ function EditProfile() {
         formData.append("resume", data.resume[0]);
       }
 
-      const editPromise = axios.patch(
-        "http://localhost:5000/api/profile/edit",
+      const editPromise = api.patch(
+        "/profile/edit",
         formData,
-        {
-          withCredentials: true,
-        },
+
       );
 
       const response = await toast.promise(editPromise, {

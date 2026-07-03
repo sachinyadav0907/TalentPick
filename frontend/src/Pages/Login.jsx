@@ -7,9 +7,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FiEyeOff } from "react-icons/fi";
 import { FiEye } from "react-icons/fi";
-import axios from "axios";
+
 import { useAuth } from "../Contexts/AuthContext.jsx";
 import toast from "react-hot-toast";
+import api from "../api/axiox.js";
 
 const loginSchema = z.object({
   role: z.enum(["jobseeker", "recruiter"], {
@@ -46,12 +47,7 @@ function Login() {
 
   const loginHandler = async (data) => {
     try{
-    const loginPromise = axios.post("http://localhost:5000/api/auth/login", data, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const loginPromise = api.post("/auth/login", data);
 
     const response = await toast.promise(loginPromise,{
       loading : "Logging in .....",

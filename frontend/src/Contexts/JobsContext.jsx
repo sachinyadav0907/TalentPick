@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
+import api from "../api/axiox.js";
 
 const JobsContext = createContext();
 
@@ -14,7 +14,7 @@ export const JobsProvider = ({ children }) => {
     experience = "",
     remote = "",
   } = {}) => {
-    return axios.get("http://localhost:5000/api/job/fetch", {
+    return api.get("/job/fetch", {
       params: {
         page,
         limit,
@@ -24,7 +24,6 @@ export const JobsProvider = ({ children }) => {
         experience,
         remote,
       },
-        withCredentials: true,
       },
     );}
 

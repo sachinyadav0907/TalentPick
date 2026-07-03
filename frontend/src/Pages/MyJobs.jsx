@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
 
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
@@ -9,6 +8,7 @@ import ConfirmationPopup from "../Components/ConfirmationPopup";
 import { useJobs } from "../Contexts/JobsContext";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axiox";
 
 function ExploreJobs() {
   const [jobs, setJobs] = useState([]);
@@ -73,11 +73,8 @@ function ExploreJobs() {
 
   const deleteJob = async () => {
     try {
-      await axios.delete(
-        `http://localhost:5000/api/job/delete/${selectedJobId}`,
-        {
-          withCredentials: true,
-        },
+      await api.delete(
+        `/job/delete/${selectedJobId}`,
       );
 
       toast.success("Job deleted successfully");

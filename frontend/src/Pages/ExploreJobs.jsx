@@ -9,9 +9,10 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { FiSearch, FiFilter } from "react-icons/fi";
 import FilterModal from "../Components/FilterModal";
-import axios from "axios";
+
 import toast from "react-hot-toast";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import api from "../api/axiox";
 
 function ExploreJobs() {
   const [searchParams] = useSearchParams();
@@ -106,12 +107,9 @@ function ExploreJobs() {
 
   const handleApply = async (jobId) => {
     try {
-      await axios.post(
-        "http://localhost:5000/api/application/create",
+      await api.post(
+        "/application/create",
         { jobId },
-        {
-          withCredentials: true,
-        },
       );
       toast.success("Applied successfully");
       return true;
@@ -128,12 +126,9 @@ function ExploreJobs() {
 
   const handleSave = async (jobId) => {
     try {
-      await axios.post(
-        "http://localhost:5000/api/job/save/create",
+      await api.post(
+        "/job/save/create",
         { jobId },
-        {
-          withCredentials: true,
-        },
       );
       toast.success("Saved successfully");
       return true;
@@ -150,9 +145,7 @@ function ExploreJobs() {
 
   const handleUnsave = async (jobId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/job/save/delete/${jobId}`, {
-        withCredentials: true,
-      });
+      await api.delete(`/job/save/delete/${jobId}`);
       toast.success("Unsaved successfully");
       return true;
     } catch (error) {

@@ -13,10 +13,10 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import toast from "react-hot-toast";
 import ErrorMessage from "../Components/ErrorMessage.jsx";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axiox.js";
 
 const jobSchema = z.object({
   title: z
@@ -96,12 +96,9 @@ const PostJob = () => {
 
   const handleJob = async (data) => {
     try {
-      const jobPromise = axios.post(
-        "http://localhost:5000/api/job/create",
-        data,
-        {
-          withCredentials: true,
-        },
+      const jobPromise = api.post(
+        "/job/create",
+        data
       );
 
       const createJob = await toast.promise(jobPromise, {

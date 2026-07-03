@@ -13,11 +13,12 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+
 import toast from "react-hot-toast";
 import ErrorMessage from "../Components/ErrorMessage.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import api from "../api/axiox.js";
 
 const jobSchema = z.object({
   title: z
@@ -100,11 +101,8 @@ const EditJob = () => {
   useEffect(() => {
     const jobFetch = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/job/find/${id}`,
-          {
-            withCredentials: true,
-          },
+        const response = await api.get(
+          `/job/find/${id}`,
         );
 
         reset({
@@ -122,12 +120,9 @@ const EditJob = () => {
 
   const handleJob = async (data) => {
     try {
-      const jobPromise = axios.patch(
-        `http://localhost:5000/api/job/update/${id}`,
+      const jobPromise = api.patch(
+        `/job/update/${id}`,
         data,
-        {
-          withCredentials: true,
-        },
       );
 
       const updateJob = await toast.promise(jobPromise, {

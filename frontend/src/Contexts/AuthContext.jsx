@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { useEffect } from "react";
 import { useState } from "react";
 import { json } from "zod";
-import axios from "axios";
+import api from "../api/axiox.js"
 
 const AuthContext = createContext();
 
@@ -17,9 +17,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const loginCheck = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/auth/verify", {
-          withCredentials: true,
-        });
+        const response = await api.get("/auth/verify");
         const userInfo = JSON.stringify(response.data.payload);
         localStorage.setItem("userInfo", userInfo);
         setProfileId(response.data.payload.id)

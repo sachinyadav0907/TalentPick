@@ -4,9 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Footer from "../Components/Footer";
 import Navbar from "../Components/Navbar";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import api from "../api/axiox.js";
 
 const contactSchema = z.object({
   name: z
@@ -52,7 +52,7 @@ export default function ContactUs() {
   const onSubmit = async (data) => {
     try {
       setIsSubmitting(true);
-      await axios.post("http://localhost:5000/api/feedback/store",data)
+      await api.post("/feedback/store",data)
       reset();
       navigate("/home");
     } catch (error) {

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import ApplicantCard from "../Components/ApplicantCard";
 import toast from "react-hot-toast";
 import EmptyState from "../Components/EmptyState";
+import api from "../api/axiox";
 
 function ShowApplicants() {
   const { id } = useParams();
@@ -22,9 +22,8 @@ function ShowApplicants() {
       try {
         setLoading(true);
 
-        const response = await axios.get(
-          `http://localhost:5000/api/application/fetch?page=${page}&limit=10&jobId=${id}`,
-          { withCredentials: true },
+        const response = await api.get(
+          `/application/fetch?page=${page}&limit=10&jobId=${id}`,
         );
 
         const applicants = response.data.payload || [];
@@ -78,12 +77,9 @@ function ShowApplicants() {
 
   const handleAccept = async (status, userId) => {
     try {
-      await axios.patch(
-        "http://localhost:5000/api/application/status",
+      await api.patch(
+        "/application/status",
         { userId: userId, jobId: id, status: status },
-        {
-          withCredentials: true,
-        },
       );
       return true;
     } catch (error) {
@@ -94,12 +90,9 @@ function ShowApplicants() {
 
   const handleReject = async (status, userId) => {
     try {
-      await axios.patch(
-        "http://localhost:5000/api/application/status",
+      await api.patch(
+        "/application/status",
         { userId: userId, jobId: id, status: status },
-        {
-          withCredentials: true,
-        },
       );
       return true;
     } catch (error) {
