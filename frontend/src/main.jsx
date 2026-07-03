@@ -24,9 +24,11 @@ import {JobsProvider} from "./Contexts/JobsContext.jsx";
 import EditJob from "./Pages/EditJob.jsx";
 import ShowApplicants from "./Pages/ShowApplicants.jsx";
 import NotFound from "./Components/NotFound.jsx";
+import ScrollToTop from "./Components/ScrollToTop.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
+  <ScrollToTop/>
     <Toaster
       position="top-right"
       toastOptions={{
