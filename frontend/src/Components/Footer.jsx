@@ -1,11 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  FaFacebook,
-  FaTwitterSquare,
-  FaLinkedin,
-  FaInstagramSquare,
-} from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaInstagramSquare } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
 
 function Footer() {
   const footerLink =
@@ -25,15 +21,13 @@ function Footer() {
           />
 
           <p className="text-gray-300 mt-4 text-sm leading-6">
-            Connecting talent with opportunities — making hiring simple,
-            fast, and reliable for both recruiters and job seekers.
+            Connecting talent with opportunities — making hiring simple, fast,
+            and reliable for both recruiters and job seekers.
           </p>
         </div>
 
         <div>
-          <h2 className="text-white font-semibold text-lg mb-4">
-            Quick Links
-          </h2>
+          <h2 className="text-white font-semibold text-lg mb-4">Quick Links</h2>
 
           <div className="flex flex-col gap-2 text-sm">
             <Link to="/about-us" className={footerLink}>
@@ -55,42 +49,48 @@ function Footer() {
         </div>
 
         <div>
-          <h2 className="text-white font-semibold text-lg mb-4">
-            Follow Us
-          </h2>
+          <h2 className="text-white font-semibold text-lg mb-4">Follow Us</h2>
 
           <div className="flex gap-4">
-            <Link
-              to="#"
-              aria-label="Facebook"
+            <a
+              href="https://github.com/sachinyadav0907"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
               className={socialIcon}
             >
-              <FaFacebook />
-            </Link>
+              <FaGithub />
+            </a>
 
-            <Link
-              to="#"
+            <a
+              href="https://x.com/Sachiny0907"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Twitter"
               className={socialIcon}
             >
-              <FaTwitterSquare />
-            </Link>
+              <FaSquareXTwitter />
+            </a>
 
-            <Link
-              to="#"
+            <a
+              href="https://www.linkedin.com/in/sachinyadav0907"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="LinkedIn"
               className={socialIcon}
             >
               <FaLinkedin />
-            </Link>
+            </a>
 
-            <Link
-              to="#"
+            <a
+              href="https://www.instagram.com/sachin_y0912"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Instagram"
               className={socialIcon}
             >
               <FaInstagramSquare />
-            </Link>
+            </a>
           </div>
         </div>
       </div>
