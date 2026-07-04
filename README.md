@@ -4,6 +4,12 @@ TalentPick is a full-stack MERN-based job portal designed to bridge the gap betw
 
 ---
 
+## 🌐 Live Demo
+
+**Application:** https://talentpick.duckdns.org
+
+---
+
 ## Screenshots
 
 ### Home Page
@@ -173,19 +179,33 @@ TalentPick is a full-stack MERN-based job portal designed to bridge the gap betw
 
 ---
 
+### Deployment
+
+- Microsoft Azure Virtual Machine (Ubuntu)
+- Docker
+- Docker Compose
+- Nginx Reverse Proxy
+- Let's Encrypt SSL
+- DuckDNS
+
+---
+
 ## Project Structure
 
 ```bash
 TalentPick
 │
 ├── backend
-│   ├── Config
-│   ├── Controllers
-│   ├── Middleware
-│   ├── Model
-│   ├── Routes
-│   ├── Utility
+│   ├── config
+│   ├── controllers
+│   ├── middlewares
+│   ├── models
+│   ├── routes
+│   ├── utils
+│   ├── validators
 │   ├── .env
+│   ├── .dockerignore
+│   ├── Dockerfile
 │   ├── package.json
 │   ├── package-lock.json
 │   └── server.js
@@ -193,19 +213,30 @@ TalentPick
 ├── frontend
 │   ├── public
 │   ├── src
-│   │   ├── Components
-│   │   ├── Contexts
-│   │   ├── Pages
+│   │   ├── components
+│   │   ├── contexts
+│   │   ├── pages
 │   │   ├── index.css
 │   │   └── main.jsx
 │   │
+│   ├── .env.production
+│   ├── .dockerignore
+│   ├── Dockerfile
 │   ├── package.json
 │   ├── package-lock.json
 │   ├── vite.config.js
 │   ├── eslint.config.js
 │   └── index.html
 │
+├── deployment
+│   ├── DEPLOYMENT.md
+│   └── nginx.conf
+│
 ├── Screenshots
+│
+├── compose.yaml
+│
+├── .gitignore
 │
 └── README.md
 ```
@@ -299,6 +330,36 @@ http://localhost:5000
 ```
 ---
 
+# Docker Deployment
+
+## Build Backend Image
+
+```bash
+cd backend
+docker build -t talentpick-backend:latest .
+```
+
+## Build Frontend Image
+
+```bash
+cd frontend
+docker build -t talentpick-frontend:latest .
+```
+
+## Run using Docker Compose
+
+```bash
+docker compose up -d
+```
+
+## Stop Containers
+
+```bash
+docker compose down
+```
+
+---
+
 ## Core Functionalities
 
 * JWT Authentication & Role-Based Authorization
@@ -326,10 +387,7 @@ http://localhost:5000
 * Real-Time Chat Between Recruiters & Candidates
 * Modern UI/UX Improvements
 * Email Notifications
-* Docker Containerization
-* Nginx Reverse Proxy
 * CI/CD Pipeline using GitHub Actions
-* Production Deployment
 * Redis Caching
 * Interview Scheduling
 * Real-Time Notifications
@@ -337,6 +395,41 @@ http://localhost:5000
 
 ---
 
+# Production Deployment
+
+The application is deployed on a Microsoft Azure Ubuntu Virtual Machine using Docker containers managed with Docker Compose. Nginx acts as a reverse proxy to serve the React frontend and forward API requests to the Express backend. HTTPS is enabled using Let's Encrypt SSL certificates, and the application is accessible through a DuckDNS domain.
+
+### Deployment Stack
+
+- Azure Virtual Machine (Ubuntu)
+- Docker
+- Docker Compose
+- Nginx Reverse Proxy
+- Let's Encrypt SSL
+- DuckDNS
+- MongoDB Atlas
+
+### Architecture
+
+```
+Internet
+      │
+      ▼
+HTTPS (DuckDNS + SSL)
+      │
+      ▼
+Nginx
+ ├──────────────┐
+ │              │
+ ▼              ▼
+React        Express
+Frontend     Backend
+(Container) (Container)
+      │
+      ▼
+MongoDB Atlas
+```
+---
 
 ## License
 

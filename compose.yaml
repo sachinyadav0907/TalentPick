@@ -1,0 +1,24 @@
+services:
+  backend:
+    image: talentpick-backend:latest
+    container_name: talentpick-backend
+
+    env_file:
+      - ./backend/.env
+
+    ports:
+      - "5000:5000"
+
+    restart: unless-stopped
+
+  frontend:
+    image: talentpick-frontend:latest
+    container_name: talentpick-frontend
+
+    ports:
+      - "8080:80"
+
+    depends_on:
+      - backend
+
+    restart: unless-stopped
