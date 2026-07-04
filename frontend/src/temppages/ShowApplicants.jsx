@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "../Components/Navbar";
-import Footer from "../Components/Footer";
-import ApplicantCard from "../Components/ApplicantCard";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import ApplicantCard from "../components/ApplicantCard";
 import toast from "react-hot-toast";
-import EmptyState from "../Components/EmptyState";
+import EmptyState from "../components/EmptyState";
 import api from "../api/axiox";
 
 function ShowApplicants() {

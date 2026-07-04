@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../Components/Navbar';
-import Footer from '../Components/Footer.jsx';
+import Navbar from '../tempcomponents/Navbar.jsx';
+import Footer from '../tempcomponents/Footer.jsx';
 
 function TechUsed() {
   const sections = [

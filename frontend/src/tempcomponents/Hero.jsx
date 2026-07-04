@@ -4,7 +4,7 @@ import { FaRegSquarePlus } from "react-icons/fa6";
 import { GiHandBag } from "react-icons/gi";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { ImOffice } from "react-icons/im";
-import { useAuth } from "../Contexts/AuthContext.jsx";
+import { useAuth } from "../contexts/AuthContext.jsx";
 
 function Hero() {
   const [search, setSearch] = useState("");

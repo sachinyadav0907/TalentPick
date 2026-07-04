@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import Navbar from "../Components/Navbar";
-import Footer from "../Components/Footer.jsx";
-import JobCard from "../Components/JobCard.jsx";
-import EmptyState from "../Components/EmptyState.jsx";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer.jsx";
+import JobCard from "../components/JobCard.jsx";
+import EmptyState from "../components/EmptyState.jsx";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axiox.js";

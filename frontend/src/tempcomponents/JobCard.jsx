@@ -13,7 +13,7 @@ import { PiGraduationCap } from "react-icons/pi";
 import { BiRupee } from "react-icons/bi";
 import { BsPeople } from "react-icons/bs";
 import { LuCalendarClock } from "react-icons/lu";
-import { useAuth } from "../Contexts/AuthContext.jsx";
+import { useAuth } from "../tempcontext/AuthContext.jsx";
 import { GoBookmarkSlash } from "react-icons/go";
 import { formatDistanceToNow } from "date-fns";
 import { format } from "date-fns";

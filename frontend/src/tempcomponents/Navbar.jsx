@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { useNavigate, Link } from "react-router-dom";
-import Sidebar from "./Sidebar";
-import { useAuth } from "../Contexts/AuthContext.jsx";
+import Sidebar from "./Sidebar.jsx";
+import { useAuth } from "../tempcontext/AuthContext.jsx";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { IoMdExit } from "react-icons/io";
 

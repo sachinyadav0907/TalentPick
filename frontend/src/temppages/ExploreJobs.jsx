@@ -1,14 +1,14 @@
 import React from "react";
-import Navbar from "../Components/Navbar";
-import Footer from "../Components/Footer";
-import { useJobs } from "../Contexts/JobsContext";
-import EmptyState from "../Components/EmptyState";
-import JobCard from "../Components/JobCard";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { useJobs } from "../contexts/JobsContext";
+import EmptyState from "../components/EmptyState";
+import JobCard from "../components/JobCard";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { FiSearch, FiFilter } from "react-icons/fi";
-import FilterModal from "../Components/FilterModal";
+import FilterModal from "../components/FilterModal";
 
 import toast from "react-hot-toast";
 import { useNavigate, useSearchParams } from "react-router-dom";

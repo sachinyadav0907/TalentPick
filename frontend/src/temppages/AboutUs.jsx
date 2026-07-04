@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../Components/Navbar";
-import Footer from "../Components/Footer.jsx";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer.jsx";
 
 function AboutUs() {
   return (

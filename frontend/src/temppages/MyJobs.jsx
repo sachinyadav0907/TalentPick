@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import Navbar from "../Components/Navbar";
-import Footer from "../Components/Footer";
-import JobCard from "../Components/JobCard";
-import EmptyState from "../Components/EmptyState";
-import ConfirmationPopup from "../Components/ConfirmationPopup";
-import { useJobs } from "../Contexts/JobsContext";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import JobCard from "../components/JobCard";
+import EmptyState from "../components/EmptyState";
+import ConfirmationPopup from "../components/ConfirmationPopup";
+import { useJobs } from "../contexts/JobsContext";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axiox";

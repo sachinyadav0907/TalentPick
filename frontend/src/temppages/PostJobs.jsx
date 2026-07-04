@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../Components/Navbar.jsx";
-import Footer from "../Components/Footer.jsx";
+import Navbar from "../components/Navbar.jsx";
+import Footer from "../components/Footer.jsx";
 import {
   FaMapMarkerAlt,
   FaMoneyBillWave,
@@ -14,7 +14,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import ErrorMessage from "../Components/ErrorMessage.jsx";
+import ErrorMessage from "../components/ErrorMessage.jsx";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axiox.js";
 

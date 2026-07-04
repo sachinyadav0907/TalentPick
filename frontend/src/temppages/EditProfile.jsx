@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Components/Navbar.jsx";
-import Footer from "../Components/Footer.jsx";
+import Navbar from "../components/Navbar.jsx";
+import Footer from "../components/Footer.jsx";
 import {
   FaGithub,
   FaLinkedin,
@@ -10,7 +10,7 @@ import {
   FaPhoneAlt,
   FaPlus,
 } from "react-icons/fa";
-import { useAuth } from "../Contexts/AuthContext.jsx";
+import { useAuth } from "../contexts/AuthContext.jsx";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
