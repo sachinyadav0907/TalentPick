@@ -11,12 +11,13 @@ import readRateLimiter from "../middlewares/rate-limiters/read.rate-limiter.js";
 import uploadRateLimiter from "../middlewares/rate-limiters/upload.rate-limiter.js";
 
 const router = express.Router();
+router.use(protectMiddleware);
 
-router.get("/data/:id", readRateLimiter, protectMiddleware, fetchProfile);
+router.get("/users/:id", readRateLimiter, fetchProfile);
 router.patch(
-  "/edit",
+  "/users",
   uploadRateLimiter,
-  protectMiddleware,
+
   upload.fields([
     { name: "profilePhoto", maxCount: 1 },
     { name: "resume", maxCount: 1 },

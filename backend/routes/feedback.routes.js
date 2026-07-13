@@ -4,6 +4,6 @@ import feedbackRateLimiter from "../middlewares/rate-limiters/feedback.rate-limi
 
 const router = express.Router();
 
-router.post("/store",feedbackRateLimiter, feedbackStorage)
+router.post("/feedbacks",feedbackRateLimiter, feedbackStorage)
 
 export default router;

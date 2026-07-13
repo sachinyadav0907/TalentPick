@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
+import helmet from "helmet"
 import authRoutes from "./routes/auth.routes.js";
 import profileRoutes from "./routes/profile.routes.js";
 import jobRoutes from "./routes/job.routes.js";
@@ -11,8 +12,10 @@ import connectDB from "./config/db.js";
 import jwt from "jsonwebtoken";
 import globalLimiter from "./middlewares/rate-limiters/global.rate-limiter.js";
 import applicationRoutes from "./routes/application.routes.js";
+import savedJobsRoutes from "./routes/saveJobs.routes.js"
 
 const app = express();
+app.use(helmet());
 app.use(express.json());
 app.use(cookiesParser());
 connectDB();
@@ -33,10 +36,11 @@ app.get("/health", (req, res) => {
 app.use("/api", globalLimiter);
 
 app.use("/api/auth", authRoutes);
-app.use("/api/profile", profileRoutes);
-app.use("/api/job", jobRoutes);
-app.use("/api/feedback", feedbackRoutes);
-app.use("/api/application", applicationRoutes);
+app.use("/api", profileRoutes);
+app.use("/api", jobRoutes);
+app.use("/api", applicationRoutes);
+app.use("/api", savedJobsRoutes)
+app.use("/api", feedbackRoutes);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || err.status || 500;

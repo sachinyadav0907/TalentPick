@@ -6,15 +6,13 @@ import writeRateLimiter from "../middlewares/rate-limiters/write.rate-limiter.js
 import readRateLimiter from "../middlewares/rate-limiters/read.rate-limiter.js";
 
 const router = express.Router();
+router.use(protectMiddleware);
 
-router.post("/create",writeRateLimiter, protectMiddleware, jobValidator, createJob)
-router.get("/fetch",readRateLimiter, protectMiddleware, fetchJobs);
-router.delete("/delete/:id", readRateLimiter, protectMiddleware, DeleteJob);
-router.patch("/update/:id",writeRateLimiter, protectMiddleware, jobValidator, updateJob);
-router.get("/find/:id",readRateLimiter,protectMiddleware,fetchSingleJob);
-router.get("/applicant-jobs",readRateLimiter, protectMiddleware, applicantJobs)
-router.post("/save/create",writeRateLimiter, protectMiddleware, saveJob)
-router.get("/save/fetch",readRateLimiter, protectMiddleware, fetchSaveJob);
-router.delete("/save/delete/:jobId",readRateLimiter, protectMiddleware, UnsaveJob);
+router.post("/jobs",writeRateLimiter,  jobValidator, createJob)
+router.get("/jobs",readRateLimiter,  fetchJobs);
+router.delete("/jobs/:id", readRateLimiter,  DeleteJob);
+router.patch("/jobs/:id",writeRateLimiter,  jobValidator, updateJob);
+router.get("/jobs/:id",readRateLimiter,fetchSingleJob);
+router.get("/jobs/titles",readRateLimiter,  applicantJobs)
 
 export default router;
