@@ -97,7 +97,7 @@ const PostJob = () => {
   const handleJob = async (data) => {
     try {
       const jobPromise = api.post(
-        "/job/create",
+        "/jobs",
         data
       );
 

@@ -14,7 +14,7 @@ export const JobsProvider = ({ children }) => {
     experience = "",
     remote = "",
   } = {}) => {
-    return api.get("/job/fetch", {
+    return api.get("/jobs", {
       params: {
         page,
         limit,

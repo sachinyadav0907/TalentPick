@@ -23,7 +23,7 @@ function ShowApplicants() {
         setLoading(true);
 
         const response = await api.get(
-          `/application/fetch?page=${page}&limit=10&jobId=${id}`,
+          `/applications?page=${page}&limit=10&jobId=${id}`,
         );
 
         const applicants = response.data.payload || [];
@@ -78,7 +78,7 @@ function ShowApplicants() {
   const handleAccept = async (status, userId) => {
     try {
       await api.patch(
-        "/application/status",
+        "/applications",
         { userId: userId, jobId: id, status: status },
       );
       return true;
@@ -91,7 +91,7 @@ function ShowApplicants() {
   const handleReject = async (status, userId) => {
     try {
       await api.patch(
-        "/application/status",
+        "/applications",
         { userId: userId, jobId: id, status: status },
       );
       return true;

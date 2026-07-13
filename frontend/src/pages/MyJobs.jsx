@@ -74,7 +74,7 @@ function ExploreJobs() {
   const deleteJob = async () => {
     try {
       await api.delete(
-        `/job/delete/${selectedJobId}`,
+        `/jobs/${selectedJobId}`,
       );
 
       toast.success("Job deleted successfully");

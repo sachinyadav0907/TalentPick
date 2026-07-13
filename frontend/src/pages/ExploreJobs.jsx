@@ -108,7 +108,7 @@ function ExploreJobs() {
   const handleApply = async (jobId) => {
     try {
       await api.post(
-        "/application/create",
+        "/applications",
         { jobId },
       );
       toast.success("Applied successfully");
@@ -127,7 +127,7 @@ function ExploreJobs() {
   const handleSave = async (jobId) => {
     try {
       await api.post(
-        "/job/save/create",
+        "/saved-jobs",
         { jobId },
       );
       toast.success("Saved successfully");
@@ -145,7 +145,7 @@ function ExploreJobs() {
 
   const handleUnsave = async (jobId) => {
     try {
-      await api.delete(`/job/save/delete/${jobId}`);
+      await api.delete(`/saved-jobs/${jobId}`);
       toast.success("Unsaved successfully");
       return true;
     } catch (error) {

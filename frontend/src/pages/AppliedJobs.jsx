@@ -22,7 +22,7 @@ function AppliedJobs() {
         setLoading(true);
 
         const response = await api.get(
-          `/application/fetch?page=${page}`,
+          `/applications?page=${page}`,
         );
 
         const jobs = response.data.payload || [];

@@ -24,7 +24,7 @@ function MyApplicant() {
         setLoading(true);
 
         const response = await api.get(
-          `/job/applicant-jobs?page=${page}&limit=10`,
+          `/jobs/titles?page=${page}&limit=10`,
         );
 
         setJobs((prev) => [...prev, ...response.data.payload]);

@@ -38,9 +38,7 @@ function Profile() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await api.get(
-          `/profile/data/${id}`
-        );
+        const response = await api.get(`/users/${id}`);
         setProfileData(response.data.payload);
         setProfilePhoto(response.data.payload.profile.profilePhoto.secure_url);
         setRole(response.data.payload.role);
@@ -55,7 +53,7 @@ function Profile() {
 
   const handleLogout = async () => {
     try {
-      const logoutPromise = api.get("/auth/logout");
+      const logoutPromise = api.post("/auth/logout");
       await toast.promise(logoutPromise, {
         loading: "Logging Out....",
         success: (res) => res.data.message,
@@ -150,11 +148,11 @@ function Profile() {
                   </h2>
 
                   <div className="bg-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <FaFilePdf className="text-red-500 text-xl" />
+                    <div className="flex items-center gap-3 min-w-0">
+                      <FaFilePdf className="text-red-500 text-xl shrink-0" />
 
-                      <div>
-                        <p className="text-white font-medium text-sm">
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-white font-medium text-sm">
                           {profileData?.profile?.resume?.public_id}
                         </p>
                         <p className="text-slate-400 text-sm">
@@ -241,12 +239,16 @@ function Profile() {
                     Hiring Developers Worldwide
                   </p>
 
-<div className="mt-3 flex items-center justify-center sm:justify-start gap-2 text-xs sm:text-sm text-slate-400">                    <FaMapMarkerAlt />
+                  <div className="mt-3 flex items-center justify-center sm:justify-start gap-2 text-xs sm:text-sm text-slate-400">
+                    {" "}
+                    <FaMapMarkerAlt />
                     <span>{profileData?.profile?.companyLocation}</span>
                   </div>
                 </div>
                 <div>
-<h2 className="mb-3 text-base sm:text-lg lg:text-xl font-semibold text-white">                    Company Description
+                  <h2 className="mb-3 text-base sm:text-lg lg:text-xl font-semibold text-white">
+                    {" "}
+                    Company Description
                   </h2>
 
                   <p className="text-sm sm:text-base text-slate-300 leading-7">

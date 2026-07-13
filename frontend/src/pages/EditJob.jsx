@@ -102,7 +102,7 @@ const EditJob = () => {
     const jobFetch = async () => {
       try {
         const response = await api.get(
-          `/job/find/${id}`,
+          `/jobs/${id}`,
         );
 
         reset({
@@ -121,7 +121,7 @@ const EditJob = () => {
   const handleJob = async (data) => {
     try {
       const jobPromise = api.patch(
-        `/job/update/${id}`,
+        `/jobs/${id}`,
         data,
       );
 

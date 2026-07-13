@@ -24,7 +24,7 @@ function SavedJobs() {
 
       try {
         const response = await api.get(
-          `/job/save/fetch?page=${page}&limit=10`,
+          `/saved-jobs?page=${page}&limit=10`,
         );
 
         const jobsData = response.data.payload;
@@ -69,7 +69,7 @@ function SavedJobs() {
   const handleApply = async (jobId) => {
     try {
       await api.post(
-        "/application/create",
+        "/applications",
         { jobId },
         {
           withCredentials: true,
@@ -91,7 +91,7 @@ function SavedJobs() {
   const handleUnsave = async (jobId) => {
     try {
       await api.delete(
-        `/job/save/delete/${jobId}`,
+        `/saved-jobs/${jobId}`,
         {
           withCredentials: true,
         },

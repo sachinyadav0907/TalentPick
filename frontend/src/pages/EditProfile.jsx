@@ -98,7 +98,7 @@ function EditProfile() {
     const fetchProfileData = async () => {
       try {
         const response = await api.get(
-          `/profile/data/${profileId}`,
+          `/users/${profileId}`,
         );
         reset({
           ...response.data.payload,
@@ -166,7 +166,7 @@ function EditProfile() {
       }
 
       const editPromise = api.patch(
-        "/profile/edit",
+        "/users",
         formData,
 
       );

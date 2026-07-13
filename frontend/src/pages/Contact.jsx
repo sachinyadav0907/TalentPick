@@ -52,7 +52,7 @@ export default function ContactUs() {
   const onSubmit = async (data) => {
     try {
       setIsSubmitting(true);
-      await api.post("/feedback/store",data)
+      await api.post("/feedbacks",data)
       reset();
       navigate("/home");
     } catch (error) {
