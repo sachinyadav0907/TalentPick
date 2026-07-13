@@ -10,9 +10,9 @@ router.use(protectMiddleware);
 
 router.post("/jobs",writeRateLimiter,  jobValidator, createJob)
 router.get("/jobs",readRateLimiter,  fetchJobs);
+router.get("/jobs/titles",readRateLimiter,  applicantJobs)
 router.delete("/jobs/:id", readRateLimiter,  DeleteJob);
 router.patch("/jobs/:id",writeRateLimiter,  jobValidator, updateJob);
 router.get("/jobs/:id",readRateLimiter,fetchSingleJob);
-router.get("/jobs/titles",readRateLimiter,  applicantJobs)
 
 export default router;
