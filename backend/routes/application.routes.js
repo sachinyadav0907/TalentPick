@@ -7,7 +7,7 @@ import readRateLimiter from "../middlewares/rate-limiters/read.rate-limiter.js";
 const router = express.Router();
 router.use(protectMiddleware);
 
-router.post("applications", writeRateLimiter, createApplication);
+router.post("/applications", writeRateLimiter, createApplication);
 router.get("/applications",readRateLimiter,  fetchApplication);
 router.patch("/applications",writeRateLimiter, changeStatus);
 
