@@ -213,7 +213,15 @@ function Profile() {
                   </div>
                 </div>
                 <div className="flex flex-wrap justify-center gap-8 text-md text-gray-400">
-                  <p>Email : {profileData?.email}</p>
+                  <p>
+                    Email:{" "}
+                    <a
+                      href={`mailto:${profileData?.email}`}
+                      className="text-indigo-400 hover:underline"
+                    >
+                      {profileData?.email}
+                    </a>
+                  </p>
                   <p>
                     Contact No: {profileData?.profile?.jobseekerPhoneNumber}
                   </p>
@@ -235,7 +243,7 @@ function Profile() {
                     {profileData?.profile?.companyName}
                   </h1>
 
-                  <p className="mt-2 text-sm sm:text-base lg:text-lg text-indigo-400">
+                  <p className="mt-2 text-sm sm:text-base lg:text-lg text-indigo-200">
                     Hiring Developers Worldwide
                   </p>
 
@@ -289,7 +297,15 @@ function Profile() {
                   </a>
                 </div>
                 <div className="flex flex-wrap justify-center gap-8 text-sm sm:text-base text-gray-400">
-                  <p>Email : {profileData?.email}</p>
+                  <p>
+                    Email:{" "}
+                    <a
+                      href={`mailto:${profileData?.email}`}
+                      className="text-indigo-400 hover:underline"
+                    >
+                      {profileData?.email}
+                    </a>
+                  </p>
                   <p>Contact No: {profileData?.profile?.companyPhoneNumber}</p>
                 </div>
                 {ownProfile && (

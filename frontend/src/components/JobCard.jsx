@@ -73,7 +73,7 @@ function JobCard({ job, onDeleteClick, onApply, onSave, isSaved, onUnsave }) {
 
             <div>
               <Link
-                to="#"
+                to={`/profile/${job.recruiter._id}`}
                 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-white transition hover:text-blue-400"
               >
                 {job.recruiter?.profile?.companyName}
